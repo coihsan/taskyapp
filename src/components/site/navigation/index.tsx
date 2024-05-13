@@ -1,7 +1,3 @@
-import Image from 'next/image'
-import { UserButton } from '@clerk/nextjs'
-import UserAuth from '@/components/global/userAuth'
-import { dark } from '@clerk/themes';
 import Link from 'next/link'
 import { ModeToggle } from '@/components/global/ModeToggle';
 import Logo from '@/components/global/logo';
@@ -15,8 +11,6 @@ const Navigation = () =>{
                     <span className='border border-white/10 bg-white/5 px-1 py-px text-onyx-500 rounded-full text-[10px] font-bold'>Beta</span>
                 </Link>
                 <div className='flex items-center gap-1'>
-                    <UserAuth />
-                    <UserButton appearance={{baseTheme: dark}}/>
                     <ModeToggle />
                 </div>
             </nav>

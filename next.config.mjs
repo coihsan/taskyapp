@@ -2,9 +2,12 @@
 const nextConfig = {
     images:{
         domains:[
-            "uploadthing.com",
+            'uploadthing.com',
+            'utfs.io',
+            'subdomain',
         ]
-    }
+    },
+    reactStrictMode: false,
 };
 
 export default nextConfig;

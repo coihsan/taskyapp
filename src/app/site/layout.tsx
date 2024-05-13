@@ -1,9 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "../globals.css";
 import Navigation from "@/components/site/navigation"
-import { ClerkProvider } from '@clerk/nextjs'
 
 export const metadata: Metadata = {
   title: "TaskyApp",

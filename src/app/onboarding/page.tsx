@@ -1,24 +1,10 @@
-"use client";
+"use server";
 
 import * as React from "react";
-import { useUser } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
-import { completeOnboarding } from "./_actions";
+import { Sidebar } from "@/components/sidebar";
+const OnboardingComponent = () => {
 
-export default function OnboardingComponent() {
-  const [error, setError] = React.useState("");
-  const { user } = useUser();
-  const router = useRouter();
-
-  const handleSubmit = async (formData: FormData) => {
-    const res = await completeOnboarding(formData);
-    if (res?.message) {
-      await user?.reload();
-      router.push("/");
-    }
-    if (res?.error) {
-      setError(res?.error);
-    }
+  const handleSubmit = (formData: FormData) => {
   };
   return (
     <div>
@@ -35,9 +21,9 @@ export default function OnboardingComponent() {
           <p>Describe the type of your application.</p>
           <input type="text" name="applicationType" required />
         </div>
-        {error && <p className="text-red-600">Error: {error}</p>}
         <button type="submit">Submit</button>
       </form>
     </div>
   );
 }
+export default OnboardingComponent

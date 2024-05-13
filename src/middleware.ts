@@ -1,38 +1,30 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
-import { redirectToSignIn } from "@clerk/nextjs/server";
-import { NextRequest, NextResponse } from "next/server";
+import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
+import { NextResponse } from 'next/server'
 
-const isOnboardingRoute = createRouteMatcher(["/onboarding"])
-const isPublicRoute = createRouteMatcher(["/site"])
+import type { NextRequest } from 'next/server'
+import type { Database } from '@/lib/types/database.types'
 
-export default clerkMiddleware((auth, req: NextRequest) => {
-    const { userId, sessionClaims, redirectToSignIn } = auth();
+export async function middleware(req: NextRequest) {
+  const res = NextResponse.next()
 
-    const url = req.nextUrl
-    const searchParams = url.searchParams.toString()
-    let hostname = req.headers
+  // Create a Supabase client configured to use cookies
+  const supabase = createMiddlewareClient<Database>({ req, res })
 
-    if (userId && isOnboardingRoute(req)) {
-      return NextResponse.next();
-    }
+  // Refresh session if expired - required for Server Components
+  await supabase.auth.getSession()
 
-    if (url.pathname === '/' || (url.pathname === '/site' && url.host === process.env.NEXT_PUBLIC_DOMAIN)){
-      return NextResponse.rewrite(new URL('/site', req.url))
-    }
+  return res
+}
 
-    if (!userId && !isPublicRoute(req))
-      return redirectToSignIn({ returnBackUrl: req.url });
-
-    if (userId && !sessionClaims?.metadata?.onboardingComplete) {
-      const onboardingUrl = new URL("/onboarding", req.url);
-      return NextResponse.redirect(onboardingUrl);
-    }
-
-    // If the user is logged in and the route is protected, let them view.
-    if (userId && !isPublicRoute(req)) return NextResponse.next();
-  }
-);
-
+// Ensure the middleware is only called for relevant paths.
 export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
-};
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    '/((?!_next/static|_next/image|favicon.ico).*)',
+  ],
+}
