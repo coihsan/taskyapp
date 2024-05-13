@@ -83,4 +83,8 @@
     .borderStyle{
       @apply border border-black/20 dark:border-white/10
     }
+    .textHover{
+      @apply hover:text-lime-600 dark:hover:text-lime-400
+    }
+
   }

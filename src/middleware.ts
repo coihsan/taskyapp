@@ -6,6 +6,17 @@ import type { Database } from '@/lib/types/database.types'
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next()
+  const url = req.nextUrl
+  const searchParams = url.searchParams.toString()
+  let hostname = req.headers
+
+  if (
+    url.pathname === '/' ||
+    (url.pathname === '/site' && url.host === process.env.NEXT_PUBLIC_DOMAIN)
+  ) {
+    return NextResponse.rewrite(new URL('/site', req.url))
+  }
+
 
   // Create a Supabase client configured to use cookies
   const supabase = createMiddlewareClient<Database>({ req, res })

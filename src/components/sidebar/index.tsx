@@ -14,7 +14,8 @@ import {
 
 export function Sidebar() {
   return (
-    <Sheet>
+    <aside className="max-w-[300px] w-full">
+      <Sheet>
       <SheetTrigger asChild>
         <Button variant="outline">Open</Button>
       </SheetTrigger>
@@ -46,5 +47,6 @@ export function Sidebar() {
         </SheetFooter>
       </SheetContent>
     </Sheet>
+    </aside>
   )
 }

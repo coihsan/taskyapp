@@ -1,6 +1,11 @@
 import {navlink} from './types/types'
 import BoardIcons from '@/components/icons/board-split';
 import WorkspaceIcons from '@/components/icons/workspace';
+export const sitelink = [
+    {id: 0, title: 'Home', url: '/'},
+    {id: 1, title: 'Demo', url: '/demo'},
+    {id: 2, title: 'Support Me', url: '/supportme'},
+]
 export const sidebar = [
     {id: 1, title: 'Board', url: '/', icons: WorkspaceIcons },
     {id: 2, title: 'Schedule', url: '/schedule', icons: BoardIcons},
