@@ -18,20 +18,20 @@ export const sidebar = [
 export const coreFeature = [
     {
         id: 1,
-        title: 'Reminders & Notifications',
-        description: 'Emphasize the reminder and notification system of your app, ensuring that users never miss important deadlines or tasks.',
+        title: "Don't Miss Out!",
+        description: 'Emphasize the reminder and notification system of your account, ensuring that users never miss important deadlines or tasks.',
         icon: BoardIcons
     },
     {
         id: 2,
-        title: 'Team Collaboration',
-        description: 'Highlight the collaboration features of your app, allowing users to share tasks with others, assign tasks to team members, and track progress together.',
+        title: 'Work Together!',
+        description: 'Highlight the collaboration features of your account, allowing users to share tasks with others, assign tasks to team members, and track progress together.',
         icon: BoardIcons
     },
     {
         id: 4,
-        title: 'Security & Data Protection',
-        description: 'Assure users of the data security and privacy measures implemented in your app, protecting their sensitive information',
+        title: "It's Safe!",
+        description: 'Assure users of the data security and privacy measures implemented in your account, protecting their sensitive information',
         icon: BoardIcons
     }
 ]

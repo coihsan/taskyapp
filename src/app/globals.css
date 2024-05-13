@@ -84,7 +84,10 @@
       @apply border border-black/20 dark:border-white/10
     }
     .textHover{
-      @apply hover:text-lime-600 dark:hover:text-lime-400
+      @apply hover:text-lime-600 dark:hover:text-lime-400 transitionAll
+    }
+    .transitionAll{
+      @apply transition-all ease-linear duration-150
     }
 
   }
