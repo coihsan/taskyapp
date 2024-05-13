@@ -8,17 +8,21 @@ const isPublicRoute = createRouteMatcher(["/site"])
 export default clerkMiddleware((auth, req: NextRequest) => {
     const { userId, sessionClaims, redirectToSignIn } = auth();
 
-    // For users visiting /onboarding, don't try to redirect
+    const url = req.nextUrl
+    const searchParams = url.searchParams.toString()
+    let hostname = req.headers
+
     if (userId && isOnboardingRoute(req)) {
       return NextResponse.next();
     }
 
-    // If the user isn't signed in and the route is private, redirect to sign-in
+    if (url.pathname === '/' || (url.pathname === '/site' && url.host === process.env.NEXT_PUBLIC_DOMAIN)){
+      return NextResponse.rewrite(new URL('/site', req.url))
+    }
+
     if (!userId && !isPublicRoute(req))
       return redirectToSignIn({ returnBackUrl: req.url });
 
-    // Catch users who do not have `onboardingComplete: true` in their publicMetadata
-    // Redirect them to the /onboading route to complete onboarding
     if (userId && !sessionClaims?.metadata?.onboardingComplete) {
       const onboardingUrl = new URL("/onboarding", req.url);
       return NextResponse.redirect(onboardingUrl);
