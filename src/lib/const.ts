@@ -1,4 +1,4 @@
-import {navlink} from '../lib/types'
+import {navlink} from './types/types'
 import BoardIcons from '@/components/icons/board-split';
 import WorkspaceIcons from '@/components/icons/workspace';
 export const sidebar = [
