@@ -1,6 +1,6 @@
 export interface cardType {
     id: number;
-    title: string;
+    title?: string;
     tags?: string;
     createDate?: Date;
     subtask?: [
@@ -19,7 +19,7 @@ export interface navlink {
     id: number;
     title: string;
     url: string;
-    icons: any
+    icons: any;
 }
 
 export type boardProps = {

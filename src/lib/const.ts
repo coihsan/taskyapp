@@ -13,7 +13,7 @@ export const sidebar = [
 export const coreFeature = [
     {
         id: 1,
-        title: 'Reminders and notifications',
+        title: 'Reminders & Notifications',
         description: 'Emphasize the reminder and notification system of your app, ensuring that users never miss important deadlines or tasks.',
         icon: BoardIcons
     },
@@ -25,7 +25,7 @@ export const coreFeature = [
     },
     {
         id: 4,
-        title: 'Security and Data Protection',
+        title: 'Security & Data Protection',
         description: 'Assure users of the data security and privacy measures implemented in your app, protecting their sensitive information',
         icon: BoardIcons
     }

@@ -73,9 +73,14 @@
       @apply bg-background text-foreground;
     }
   }
-
-  @layer{
-    .boards{
-      @apply 
+.BoxCards{
+  box-shadow: inset 0 0 12px 4px rgba(255,255,255,.05);
+}
+  @layer utilities{
+    .CardStyle{
+      @apply border border-black/20 dark:border-white/15 bg-gradient-to-t from-black/10 dark:from-white/5 rounded-xl shadow-[0_0_12px_4px_rgba(0,0,0,0.05)_inset] dark:shadow-[0_0_12px_4px_rgba(255,255,255,0.05)_inset] ;
+    }
+    .borderStyle{
+      @apply border border-black/20 dark:border-white/10
     }
   }

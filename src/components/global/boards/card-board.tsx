@@ -1,7 +1,7 @@
 "use server"
-import { Card, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardFooter, CardHeader, CardTitle, CardDescription, Lab } from "@/components/ui/card";
 import React from "react";
-const Task = () =>{
+const AddTask = () =>{
     return(
         <div>
             <h1>Task</h1>
@@ -15,11 +15,22 @@ const ColumnBoard = ({children} : {children: React.ReactNode}) => {
         </section>
     )
 }
+const SubTask = () =>{
+    return(
+        <div>
+            <h1>SubTask</h1>
+        </div>
+    )
+}
 const CardBoards = () =>{
     return(
         <ColumnBoard>
             <h1>Cards</h1>
-            <Card />
+            <Card>
+                <CardHeader>
+                    <CardTitle>Card Title</CardTitle>
+                </CardHeader>
+            </Card>
         </ColumnBoard>
     )
 }
