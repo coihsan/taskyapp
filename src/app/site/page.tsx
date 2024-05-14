@@ -10,16 +10,16 @@ import ButtonLink from "@/components/global/ButtonLink";
 import GradientHero from "@/components/design/gradientHero";
 const Section = ({children} : {children : React.ReactNode} ) =>{
   return(
-    <section className="py-12">
+    <section className="container py-12">
       {children}
     </section>
   )
 }
 export default function Home() {
   return (
-      <section className="relative">
+      <section className="container mx-auto relative">
         <GradientHero />
-        <main className="container mx-auto">
+        <main className="">
           <section className="flex flex-col items-center justify-center pb-12 pt-12 md:pt-16 lg:pt-20 mx-auto">
             <div className="max-w-screen-md">
               <h1 className={`${archivo} font-bold text-4xl md:text-6xl lg:text-6xl text-center pb-6`}>Organize your daily Task and Projects with <span className="underline text-lime-500">TaskyApp</span></h1>
