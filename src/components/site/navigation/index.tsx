@@ -32,7 +32,6 @@ const Navigation = () =>{
                 </div>
                 <div className='flex items-center h-7 space-x-4'>
                     <Link className='textHover text-sm font-semibold uppercase px-4 py-2 border border-black/10 dark:border-white/10 rounded-md bg-onyx-50 dark:bg-white/5' href='/login'>Login</Link>
-                    <Separator orientation="vertical" />
                     <ModeToggle />
                 </div>
             </nav>
