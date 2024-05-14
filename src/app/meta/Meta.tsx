@@ -20,7 +20,6 @@ const Meta = ({siteTitle, description, canonical, thisSite} : MetaProps) => {
           <title>{siteTitle} | </title>
           <meta name="description" content={description} key="description" />
           <meta property="og:title" content="My page title" key="title" />
-          <link rel="icon" href="/favicon.ico" />
         <meta charSet="UTF-8" key="charset" />
         <meta
           name="viewport"

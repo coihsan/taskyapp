@@ -1,29 +1,16 @@
-"use server";
-
 import * as React from "react";
 import { Sidebar } from "@/components/sidebar";
-const OnboardingComponent = () => {
+import DashboardNav from "./_components/navigation";
 
-  const handleSubmit = (formData: FormData) => {
-  };
+const Dashboard = () => {
   return (
-    <div>
-      <h1>Welcome</h1>
-      <form action={handleSubmit}>
-        <div>
-          <label>Application Name</label>
-          <p>Enter the name of your application.</p>
-          <input type="text" name="applicationName" required />
-        </div>
-
-        <div>
-          <label>Application Type</label>
-          <p>Describe the type of your application.</p>
-          <input type="text" name="applicationType" required />
-        </div>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+    <section className="w-full h-screen overflow-scroll">
+      <DashboardNav />
+      <main>
+        Login Success
+      </main>
+    </section>
   );
-}
-export default OnboardingComponent
+};
+
+export default Dashboard;

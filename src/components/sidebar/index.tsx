@@ -11,42 +11,31 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { sidebar } from "@/lib/const"
+import clsx from "clsx"
+import Link from "next/link"
 
 export function Sidebar() {
+  const isActive = false;
+
   return (
     <aside className="max-w-[300px] w-full">
-      <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="outline">Open</Button>
-      </SheetTrigger>
-      <SheetContent>
-        <SheetHeader>
-          <SheetTitle>Edit profile</SheetTitle>
-          <SheetDescription>
-            Make changes to your profile here. Click save when you're done.
-          </SheetDescription>
-        </SheetHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input id="name" value="Pedro Duarte" className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
-            <Input id="username" value="@peduarte" className="col-span-3" />
-          </div>
-        </div>
-        <SheetFooter>
-          <SheetClose asChild>
-            <Button type="submit">Save changes</Button>
-          </SheetClose>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
+      <nav className="flex flex-col ">
+      {sidebar.map((item) => (
+        <Link
+          className={clsx(
+            'flex items-center h-11 py-2 gap-6 px-4 hover:bg-onyx-100 dark:hover:bg-onyx-800 gap-2 hover:ring-2 hover:ring-onyx-100 dark:hover:ring-onyx-800 rounded-md transitionAll',
+            isActive && 'borderStyle bg-onyx-50 dark:bg-onyx-900'
+          )}
+          href={item.url}
+          key={item.id}
+        >
+          <item.icons />
+          <span>{item.title}</span>
+        </Link>
+      ))}
+      </nav>
     </aside>
-  )
+  );
 }
+

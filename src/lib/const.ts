@@ -1,6 +1,11 @@
 import {navlink} from './types/types'
 import BoardIcons from '@/components/icons/board-split';
+import CalenderDate from '@/components/icons/calender-date';
 import WorkspaceIcons from '@/components/icons/workspace';
+import FluentTaskListSquare24Regular from '@/components/icons/task-square';
+import FluentDocumentFolder24Regular from '@/components/icons/document-folder';
+import FluentPeopleTeam24Regular from '@/components/icons/people-team';
+import FluentDataFunnel24Regular from '@/components/icons/data-funnel';
 export const sitelink = [
     {id: 0, title: 'Home', url: '/'},
     {id: 1, title: 'Demo', url: '/demo'},
@@ -8,10 +13,11 @@ export const sitelink = [
 ]
 export const sidebar = [
     {id: 1, title: 'Board', url: '/', icons: WorkspaceIcons },
-    {id: 2, title: 'Schedule', url: '/schedule', icons: BoardIcons},
-    {id: 3, title: 'Task', url: '/task', icons: BoardIcons},
-    {id: 4, title: 'Docs', url: '/docs', icons: BoardIcons},
-    {id: 5, title: 'Team', url: '/teams', icons: BoardIcons},
+    {id: 2, title: 'Schedule', url: '/schedule', icons: CalenderDate},
+    {id: 3, title: 'Task', url: '/task', icons: FluentTaskListSquare24Regular},
+    {id: 4, title: 'Memos', url: '/memos', icons: FluentDocumentFolder24Regular},
+    {id: 4, title: 'Funnel', url: '/funnel', icons: FluentDataFunnel24Regular},
+    {id: 5, title: 'Teams', url: '/teams', icons: FluentPeopleTeam24Regular},
 ]
 
 

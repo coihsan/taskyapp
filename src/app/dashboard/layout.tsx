@@ -1,4 +1,3 @@
-import { ThemeProvider } from "@/components/global/theme-provider";
 import type { Metadata } from "next";
 import { Sidebar } from "@/components/sidebar";
 export const metadata: Metadata = {

@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 
 const SiteLayout = ({children} : {children: React.ReactNode}) => {
   return (
-    <body className="">
+    <section className="">
     <Navigation />
         <main>{children}</main>
-    </body>
+    </section>
   );
 }
 export default SiteLayout

@@ -1,9 +1,9 @@
 "use client"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { FormEvent } from 'react'
-import { useRouter } from 'next/navigation'
-import { Button } from "@/components/ui/button"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { FormEvent } from 'react';
+import { useRouter } from 'next/navigation';
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -12,15 +12,14 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { login, signup } from './actions'
-import { z } from "zod"
-import Image from "next/image"
-import Logo from "@/components/global/logo"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Separator } from "@/components/ui/separator"
-import Link from "next/link"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { login, signup } from './actions';
+import { z } from "zod";
+import Logo from "@/components/global/logo";
+import { Checkbox } from "@/components/ui/checkbox";
+import Link from "next/link";
+
 export default function LoginPage() {
   const formSchema = z.object({
     username: z.string().min(2, {
@@ -33,6 +32,8 @@ export default function LoginPage() {
       username: "",
     },
   })
+  const router = useRouter();
+
   return (
     <section className='flex items-center justify-center flex-col h-screen'>
         <div className="flex items-center flex-col justify-center gap-3 w-full">
@@ -49,7 +50,7 @@ export default function LoginPage() {
                 <FormItem>
                 <FormLabel htmlFor="username">Username</FormLabel>
                 <FormControl>
-                  <Input type="username" name="username" placeholder="jhondoe@example.com" />
+                  <Input type="username" name="username" placeholder="enter your username" />
                 </FormControl>
               </FormItem>
               )} />
@@ -57,10 +58,10 @@ export default function LoginPage() {
               <FormItem>
                 <FormLabel htmlFor="password">Password</FormLabel>
                 <FormControl>
-                  <Input type="password" name="password" placeholder="*******" />
+                  <Input type="password" name="password" placeholder="enter your password" />
                 </FormControl>
               </FormItem>
-              <div className="flex justify-between items-center mt-3 *:text-sm">
+              <div className="flex justify-between items-center mt-3 *:text-sm p-2">
                 <div className="flex items-center gap-3">
                   <Checkbox id="password" />
                   <label htmlFor="password">Remember me</label>
@@ -79,6 +80,7 @@ export default function LoginPage() {
             </Form>
           </div>
         </div>
+          <Link href='/' className='mt-6'>Back to Home</Link>
     </section>
   )
 }
