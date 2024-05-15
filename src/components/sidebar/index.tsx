@@ -18,11 +18,12 @@ import { ModeToggle } from "../global/ModeToggle"
 import Logo from "../global/logo"
 import { PlusIcon } from "@radix-ui/react-icons"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/select"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectScrollDownButton, SelectScrollUpButton, SelectSeparator, SelectTrigger, SelectValue } from "../ui/select"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { ScrollArea } from "../ui/scroll-area"
 import { Separator } from "../ui/separator"
 import { workspaceExample } from "@/lib/const"
+import Image from "next/image"
 interface SidebarProps {
   children: React.ReactNode;
   borderTop?: boolean;
@@ -41,52 +42,77 @@ export function Sidebar() {
   const isActive = false;
 
   return (
-    <aside className="max-w-[260px] w-full relative">
-      <div className="">
+    <aside className="w-full relative">
       <SidebarContent borderBottom>
         <Logo />
       </SidebarContent>
       <SidebarContent borderBottom>
       <Select>
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Select a fruit" />
+      <SelectTrigger className="h-12 w-full">
+        <SelectValue placeholder="Select a organization" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectItem className="flex items-center gap-2" value="apple">
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-            <span>Apple</span>
+        <SelectLabel className="text-xs font-medium text-onyx-600 dark:text-onyx-500 uppercase">Your Own</SelectLabel>
+          <SelectItem value="apple">
+          <div className="flex items-center gap-4">
+            <div className="">
+            <Avatar>
+              <AvatarImage src="/profile.jpeg" alt="@shadcn" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            </div>
+              <p className="truncate">Freelancer.com</p>
+          </div>
+          </SelectItem>
+          <SelectItem value="bossco">
+          <div className="flex items-center gap-4">
+            <div className="">
+            <Avatar>
+              <AvatarImage src="/profile.jpeg" alt="@shadcn" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            </div>
+              <p className="truncate">PT. Bossco Indolestari</p>
+          </div>
           </SelectItem>
           <SelectItem value="banana">Banana</SelectItem>
           <SelectItem value="blueberry">Blueberry</SelectItem>
+        </SelectGroup>
+          <SelectSeparator />
+        <SelectGroup>
+          <SelectLabel className="text-xs font-medium text-onyx-600 dark:text-onyx-500 uppercase">Your Joined</SelectLabel>
           <SelectItem value="grapes">Grapes</SelectItem>
           <SelectItem value="pineapple">Pineapple</SelectItem>
         </SelectGroup>
+        <Button className="mt-4 w-full" variant={'default'}>
+          <PlusIcon className="w-4 h-4" />
+          New Organization
+        </Button>
       </SelectContent>
     </Select>
       </SidebarContent>
       <SidebarContent borderBottom>
       <span className="text-xs font-medium text-onyx-600 dark:text-onyx-500 uppercase">Menu</span>
-      <nav className="flex flex-col ">
+      <nav className="flex flex-col pt-4">
       {sidebar.map((item) => (
         <Link
           className={clsx(
-            'flex items-center text-sm h-9 py-2 gap-6 pl-2 hover:bg-onyx-100 dark:hover:bg-onyx-800 gap-2 hover:ring-2 hover:ring-onyx-100 dark:hover:ring-onyx-800 rounded-md transitionAll',
+            'flex items-center text-sm h-9 py-2 gap-6 pl-2 text-onyx-600 dark:text-onyx-400 font-semibold hover:bg-onyx-100 dark:hover:bg-onyx-800 gap-2 hover:ring-2 hover:ring-onyx-100 dark:hover:ring-onyx-800 rounded-md transitionAll',
             isActive && 'borderStyle bg-onyx-50 dark:bg-onyx-900'
           )}
           href={item.url}
           key={item.id}
         >
-          <item.icons />
+          <div className="text-onyx-600 dark:text-onyx-400">
+            <item.icons />
+          </div>
           <span>{item.title}</span>
         </Link>
       ))}
       </nav>
       </SidebarContent>
-      <SidebarContent>
+      <SidebarContent className="grid">
         <div className="flex items-center justify-between">
           <span className="text-xs font-medium text-onyx-600 dark:text-onyx-500 uppercase">Workpace</span>
           <TooltipProvider>
@@ -100,23 +126,26 @@ export function Sidebar() {
             </Tooltip>
           </TooltipProvider>
         </div>
-        <main>
+        <div className="pt-4">
             <Input placeholder="search..." />
-        </main>
-        <ScrollArea className="h-52">
-      <div className="pt-4 grid divide-y divide-onyx-100 dark:divide-onyx-800">
-        {workspaceExample.map((list) => (
-          <>
-            <Link href={list.url} key={list.id} className="text-sm w-full py-3 px-3 hover:bg-onyx-100 dark:hover:bg-onyx-800 rounded-md">
-              {list.name}
-            </Link>
-          </>
-        ))}
-      </div>
-    </ScrollArea>
+        </div>
+        <div className="w-full pt-4">
+          <div className="grid w-full">
+            {workspaceExample.map((list) => (
+                <Link href={list.url} key={list.id} className="text-sm h-12 px-3 hover:bg-onyx-100 dark:hover:bg-onyx-800 rounded-md flex items-center gap-4">
+                  <div className="size-6 flex items-center justify-center bg-lime-900 rounded-full">
+                    <list.icon />
+                  </div>
+                  <span>
+                    {list.name}
+                  </span>
+                </Link>
+            ))}
+          </div>
+        </div>
       </SidebarContent>
       <SidebarContent borderTop>
-      <footer className="absolute bottom-5 left-5 right-5 flex  justify-between ">
+      <footer className="flex items-center justify-between">
         <div className="*:text-sm flex items-center gap-3">
           <Link href="/privacy">Privacy</Link>
           <Link className="text-lime-600 dark:text-lime-400" href="/support">Support</Link>
@@ -124,7 +153,6 @@ export function Sidebar() {
           <ModeToggle />
       </footer>
       </SidebarContent>
-      </div>
     </aside>
   );
 }
