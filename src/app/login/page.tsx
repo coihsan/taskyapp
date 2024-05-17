@@ -48,11 +48,11 @@ export default function LoginPage() {
               <form action="" className="grid gap-5">
               <FormField control={form.control} name="username" render={({field}) =>(
                 <FormItem>
-                <FormLabel htmlFor="username">Username</FormLabel>
-                <FormControl>
-                  <Input type="username" name="username" placeholder="enter your username" />
-                </FormControl>
-              </FormItem>
+                  <FormLabel htmlFor="username">Username</FormLabel>
+                  <FormControl>
+                    <Input type="username" name="username" placeholder="enter your username" />
+                  </FormControl>
+                </FormItem>
               )} />
               <div className="grid">
               <FormItem>

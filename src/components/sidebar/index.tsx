@@ -1,3 +1,4 @@
+"use client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -24,13 +25,26 @@ import { ScrollArea } from "../ui/scroll-area"
 import { Separator } from "../ui/separator"
 import { workspaceExample } from "@/lib/const"
 import Image from "next/image"
+import NewOrganization from "./NewOrganization"
+import NewWorkspace from "../global/NewWorkspace"
+import EditWorkspace from "../global/edit-workspace"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../ui/command"
+import React from "react"
 interface SidebarProps {
   children: React.ReactNode;
   borderTop?: boolean;
   borderBottom?: boolean;
   className?: string;
 }
-
+const labels = [
+  "feature",
+  "bug",
+  "enhancement",
+  "documentation",
+  "design",
+  "question",
+  "maintenance",
+]
 const SidebarContent =({children, borderTop, borderBottom, className} : SidebarProps ) =>{
   return(
     <div className={clsx(borderTop && 'border-t border-onyx-100 dark:border-onyx-800', borderBottom && 'border-b border-onyx-100 dark:border-onyx-800', 'py-4 px-4', {className})}>
@@ -40,6 +54,8 @@ const SidebarContent =({children, borderTop, borderBottom, className} : SidebarP
 }
 export function Sidebar() {
   const isActive = false;
+  const [label, setLabel] = React.useState("feature")
+  const [open, setOpen] = React.useState(false)
 
   return (
     <aside className="w-full relative h-screen min-h-screen">
@@ -85,10 +101,8 @@ export function Sidebar() {
           <SelectItem value="grapes">Grapes</SelectItem>
           <SelectItem value="pineapple">Pineapple</SelectItem>
         </SelectGroup>
-        <Button className="mt-4 w-full" variant={'default'}>
-          <PlusIcon className="w-4 h-4" />
-          New Organization
-        </Button>
+        <SelectSeparator />
+        <NewOrganization />
       </SelectContent>
     </Select>
       </SidebarContent>
@@ -118,7 +132,7 @@ export function Sidebar() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="ghost"><PlusIcon /></Button>
+                <NewWorkspace />
               </TooltipTrigger>
               <TooltipContent>
                 <p>New Workpace</p>
@@ -127,18 +141,54 @@ export function Sidebar() {
           </TooltipProvider>
         </div>
         <div className="pt-4">
-            <Input placeholder="search..." />
+        <Command>
+          <CommandInput
+            placeholder="Search..."
+            autoFocus={true}
+            className="h-9"
+            />
+                  <CommandList>
+                    <CommandEmpty>No label found.</CommandEmpty>
+                    <CommandGroup>
+                      {workspaceExample.map((list) => (
+                        <CommandItem
+                          key={list.id}
+                          value={list.name}
+                          onSelect={(value) => {
+                            setLabel(value)
+                            setOpen(false)
+                          }}
+                        >
+                          <Link href={list.url} className="text-sm h-12 px-2 hover:bg-onyx-100 dark:hover:bg-onyx-800 rounded-md flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                            <div className="size-9 flex items-center justify-center bg-lime-900 rounded-md aspect-square">
+                              <list.icon />
+                            </div>
+                            <span>
+                              {list.name}
+                            </span>
+                          </div>
+                          <EditWorkspace />
+                        </Link>
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
         </div>
         <div className="w-full pt-4">
           <div className="grid w-full">
             {workspaceExample.map((list) => (
-                <Link href={list.url} key={list.id} className="text-sm h-12 pl-2 hover:bg-onyx-100 dark:hover:bg-onyx-800 rounded-md flex items-center gap-4">
-                  <div className="size-9 flex items-center justify-center bg-lime-900 rounded-md aspect-square">
-                    <list.icon />
+                <Link href={list.url} key={list.id} className="text-sm h-12 px-2 hover:bg-onyx-100 dark:hover:bg-onyx-800 rounded-md flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="size-9 flex items-center justify-center bg-lime-900 rounded-md aspect-square">
+                      <list.icon />
+                    </div>
+                    <span>
+                      {list.name}
+                    </span>
                   </div>
-                  <span>
-                    {list.name}
-                  </span>
+                  <EditWorkspace />
                 </Link>
             ))}
           </div>
