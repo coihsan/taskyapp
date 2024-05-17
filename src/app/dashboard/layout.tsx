@@ -12,8 +12,8 @@ export default function BoardingLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <section className="flex flex-1 overflow-hidden">
-        <aside className="w-[260px] h-full">
+      <section className="flex flex-1 overflow-hidden h-screen min-h-full">
+        <aside className="max-w-[260px] w-full h-full">
         <ScrollArea>
           <Sidebar />
           <ScrollBar orientation="horizontal" />

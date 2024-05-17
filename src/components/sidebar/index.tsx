@@ -42,27 +42,27 @@ export function Sidebar() {
   const isActive = false;
 
   return (
-    <aside className="w-full relative">
+    <aside className="w-full relative h-screen min-h-screen">
       <SidebarContent borderBottom>
         <Logo />
       </SidebarContent>
       <SidebarContent borderBottom>
       <Select>
-      <SelectTrigger className="h-12 w-full">
+      <SelectTrigger className="h-12">
         <SelectValue placeholder="Select a organization" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
         <SelectLabel className="text-xs font-medium text-onyx-600 dark:text-onyx-500 uppercase">Your Own</SelectLabel>
           <SelectItem value="apple">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 w-full overflow-hidden">
             <div className="">
             <Avatar>
               <AvatarImage src="/profile.jpeg" alt="@shadcn" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-            </div>
-              <p className="truncate">Freelancer.com</p>
+            </div>  
+              <p className="truncate overflow-hidden">Freelancer.com</p>
           </div>
           </SelectItem>
           <SelectItem value="bossco">
@@ -73,7 +73,7 @@ export function Sidebar() {
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             </div>
-              <p className="truncate">PT. Bossco Indolestari</p>
+              <p className="line-clamp-1">PT. Bossco Indolestari</p>
           </div>
           </SelectItem>
           <SelectItem value="banana">Banana</SelectItem>
@@ -132,8 +132,8 @@ export function Sidebar() {
         <div className="w-full pt-4">
           <div className="grid w-full">
             {workspaceExample.map((list) => (
-                <Link href={list.url} key={list.id} className="text-sm h-12 px-3 hover:bg-onyx-100 dark:hover:bg-onyx-800 rounded-md flex items-center gap-4">
-                  <div className="size-6 flex items-center justify-center bg-lime-900 rounded-full">
+                <Link href={list.url} key={list.id} className="text-sm h-12 pl-2 hover:bg-onyx-100 dark:hover:bg-onyx-800 rounded-md flex items-center gap-4">
+                  <div className="size-9 flex items-center justify-center bg-lime-900 rounded-md aspect-square">
                     <list.icon />
                   </div>
                   <span>

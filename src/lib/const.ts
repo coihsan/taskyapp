@@ -67,4 +67,16 @@ export const workspaceExample = [
         icon: WorkspaceIcons,
         url: "/"
     },
+    {
+        id: 4,
+        name: 'Workspace 5',
+        icon: WorkspaceIcons,
+        url: "/"
+    },
+    {
+        id: 5,
+        name: 'Workspace 6',
+        icon: WorkspaceIcons,
+        url: "/"
+    },
 ]
