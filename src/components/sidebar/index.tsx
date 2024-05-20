@@ -37,13 +37,10 @@ interface SidebarProps {
   className?: string;
 }
 const labels = [
-  "feature",
-  "bug",
-  "enhancement",
-  "documentation",
-  "design",
-  "question",
-  "maintenance",
+  "Up",
+  "To top",
+  "To down",
+  "down",
 ]
 const SidebarContent =({children, borderTop, borderBottom, className} : SidebarProps ) =>{
   return(
@@ -58,7 +55,7 @@ export function Sidebar() {
   const [open, setOpen] = React.useState(false)
 
   return (
-    <aside className="w-full relative h-screen min-h-screen">
+    <aside className="w-full max-w-64 relative h-screen min-h-screen">
       <SidebarContent borderBottom>
         <Logo />
       </SidebarContent>
@@ -140,16 +137,16 @@ export function Sidebar() {
             </Tooltip>
           </TooltipProvider>
         </div>
-        <div className="pt-4">
+        {/* <div className="pt-4">
         <Command>
           <CommandInput
             placeholder="Search..."
             autoFocus={true}
-            className="h-9"
+            className="h-full"
             />
                   <CommandList>
                     <CommandEmpty>No label found.</CommandEmpty>
-                    <CommandGroup>
+                    <CommandGroup heading={'By You'}>
                       {workspaceExample.map((list) => (
                         <CommandItem
                           key={list.id}
@@ -159,23 +156,25 @@ export function Sidebar() {
                             setOpen(false)
                           }}
                         >
-                          <Link href={list.url} className="text-sm h-12 px-2 hover:bg-onyx-100 dark:hover:bg-onyx-800 rounded-md flex items-center justify-between">
-                          <div className="flex items-center gap-4">
-                            <div className="size-9 flex items-center justify-center bg-lime-900 rounded-md aspect-square">
-                              <list.icon />
-                            </div>
-                            <span>
-                              {list.name}
-                            </span>
-                          </div>
+                          <div className="flex items-center justify-between">
+                            <Link href={list.url} className="text-sm h-12 px-2 hover:bg-onyx-100 dark:hover:bg-onyx-800 rounded-md flex items-center justify-between">
+                              <div className="flex items-center gap-4">
+                                <div className="size-9 flex items-center justify-center bg-lime-900 rounded-md aspect-square">
+                                  <list.icon />
+                                </div>
+                                <span className="w-full bg-white/10 overflow-hidden text-clip-1 text-nowrap">
+                                  {list.name}
+                                </span>
+                              </div>
+                            </Link>
                           <EditWorkspace />
-                        </Link>
+                          </div>
                         </CommandItem>
                       ))}
-                    </CommandGroup>
+                      </CommandGroup>
                   </CommandList>
                 </Command>
-        </div>
+        </div> */}
         <div className="w-full pt-4">
           <div className="grid w-full">
             {workspaceExample.map((list) => (
@@ -184,7 +183,7 @@ export function Sidebar() {
                     <div className="size-9 flex items-center justify-center bg-lime-900 rounded-md aspect-square">
                       <list.icon />
                     </div>
-                    <span>
+                    <span className="overflow-hidden text-clip-1 text-nowrap">
                       {list.name}
                     </span>
                   </div>

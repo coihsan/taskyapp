@@ -27,13 +27,10 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 const labels = [
-  "feature",
-  "bug",
-  "enhancement",
-  "documentation",
-  "design",
-  "question",
-  "maintenance",
+  "Up",
+  "To top",
+  "To down",
+  "down",
 ]
 
 const EditWorkspace = () => {

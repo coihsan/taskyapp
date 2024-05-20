@@ -45,37 +45,37 @@ export const coreFeature = [
 export const workspaceExample = [
     {
         id: 0,
-        name: 'Workspace 1',
+        name: 'TodoApp',
         icon: WorkspaceIcons,
         url: "/"
     },
     {
         id: 1,
-        name: 'Workspace 2',
+        name: 'MangolabsApp',
         icon: WorkspaceIcons,
         url: "/"
     },
     {
         id: 2,
-        name: 'Workspace 3',
+        name: 'E-Commerce',
         icon: WorkspaceIcons,
         url: "/"
     },
     {
         id: 3,
-        name: 'Workspace 4',
+        name: 'WorkbookApp',
         icon: WorkspaceIcons,
         url: "/"
     },
     {
         id: 4,
-        name: 'Workspace 5',
+        name: 'ScheduleApp',
         icon: WorkspaceIcons,
         url: "/"
     },
     {
         id: 5,
-        name: 'Workspace 6',
+        name: 'POS-Restaurant App',
         icon: WorkspaceIcons,
         url: "/"
     },
