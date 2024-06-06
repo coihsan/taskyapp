@@ -30,6 +30,7 @@ import NewWorkspace from "../global/NewWorkspace"
 import EditWorkspace from "../global/edit-workspace"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../ui/command"
 import React from "react"
+import { usePathname } from "next/navigation"
 interface SidebarProps {
   children: React.ReactNode;
   borderTop?: boolean;
@@ -51,6 +52,7 @@ const SidebarContent =({children, borderTop, borderBottom, className} : SidebarP
 }
 export function Sidebar() {
   const isActive = false;
+  const pathname = usePathname()
   const [label, setLabel] = React.useState("feature")
   const [open, setOpen] = React.useState(false)
 
@@ -109,8 +111,8 @@ export function Sidebar() {
       {sidebar.map((item) => (
         <Link
           className={clsx(
-            'flex items-center text-sm h-9 py-2 gap-6 pl-2 text-onyx-600 dark:text-onyx-400 font-semibold hover:bg-onyx-100 dark:hover:bg-onyx-800 gap-2 hover:ring-2 hover:ring-onyx-100 dark:hover:ring-onyx-800 rounded-md transitionAll',
-            isActive && 'borderStyle bg-onyx-50 dark:bg-onyx-900'
+            'flex items-center text-sm h-9 py-2 gap-6 pl-2 dark:text-onyx-400 font-semibold hover:bg-onyx-100 dark:hover:bg-onyx-800 gap-2 hover:ring-2 hover:ring-onyx-100 dark:hover:ring-onyx-800 rounded-md transitionAll',
+            {'borderStyle bg-onyx-50 dark:text-white dark:bg-onyx-900' : pathname === item.url}
           )}
           href={item.url}
           key={item.id}
