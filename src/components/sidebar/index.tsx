@@ -107,11 +107,11 @@ export function Sidebar() {
       </SidebarContent>
       <SidebarContent borderBottom>
       <span className="text-xs font-medium text-onyx-600 dark:text-onyx-500 uppercase">Menu</span>
-      <nav className="flex flex-col pt-4">
+      <nav className="flex flex-col gap-1 pt-4">
       {sidebar.map((item) => (
         <Link
           className={clsx(
-            'flex items-center text-sm h-9 py-2 gap-6 pl-2 dark:text-onyx-400 font-semibold hover:bg-onyx-100 dark:hover:bg-onyx-800 gap-2 hover:ring-2 hover:ring-onyx-100 dark:hover:ring-onyx-800 rounded-md transitionAll',
+            'flex items-center text-sm h-12 py-4 gap-6 pl-2 dark:text-onyx-400 font-semibold hover:bg-onyx-100 dark:hover:bg-onyx-800 gap-2 hover:ring-2 hover:ring-onyx-100 dark:hover:ring-onyx-800 rounded-md transitionAll',
             {'borderStyle bg-onyx-50 dark:text-white dark:bg-onyx-900' : pathname === item.url}
           )}
           href={item.url}
@@ -196,12 +196,9 @@ export function Sidebar() {
         </div>
       </SidebarContent>
       <SidebarContent borderTop>
-      <footer className="flex items-center justify-between">
-        <div className="*:text-sm flex items-center gap-3">
-          <Link href="/privacy">Privacy</Link>
-          <Link className="text-lime-600 dark:text-lime-400" href="/support">Support</Link>
-        </div>
-          <ModeToggle />
+      <footer className="flex items-center justify-evenly">
+          <Link className="text-xs" href="/privacy">Privacy</Link>
+          <Link className="text-lime-600 text-xs dark:text-lime-400" href="/support">Support</Link>
       </footer>
       </SidebarContent>
     </aside>

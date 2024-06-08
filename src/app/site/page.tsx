@@ -26,7 +26,7 @@ export default function Home() {
               <p className="text-center text-zinc-400 mx-auto">A Task Manager for personal or team projects including boards, schedule, daily task, project management like a roadmap, memos, boards, and more.</p>
               <div className="flex items-center justify-center gap-2 mt-6">
                 <ButtonLink text="Free! Get Started" variant="primary" href="/login" Icon={true} />
-                <ButtonLink text="Demo" variant="secondary" href="/demo" Icon={false} />
+                <ButtonLink text="About" variant="secondary" href="/demo" Icon={false} />
               </div>
             </div>
             <Image className="rounded-lg border border-white/20 mt-9" src={'/preview.webp'} width={1000} height={700} alt="preview" />

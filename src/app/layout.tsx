@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Meta } from "@/app/meta/Meta";
+import Navigation from "@/components/site/navigation";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
   title: "TaskyApp",
@@ -11,7 +13,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{children: React.ReactNode;}>) {
   return (
-      <html lang="en" suppressHydrationWarning>
+      <ClerkProvider>
+        <html lang="en" suppressHydrationWarning>
         <Meta />
         <body>
           <ThemeProvider
@@ -24,5 +27,6 @@ export default function RootLayout({ children }: Readonly<{children: React.React
           </ThemeProvider>
         </body>
       </html>
+      </ClerkProvider>
   );
 }
