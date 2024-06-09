@@ -5,7 +5,7 @@ import "./globals.css";
 import { Meta } from "@/app/meta/Meta";
 import Navigation from "@/components/site/navigation";
 import { ClerkProvider } from "@clerk/nextjs";
-
+import { dark, neobrutalism } from '@clerk/themes';
 export const metadata: Metadata = {
   title: "TaskyApp",
   description: "Organize your tasks with TaskyApp",
@@ -13,7 +13,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{children: React.ReactNode;}>) {
   return (
-      <ClerkProvider>
+      <ClerkProvider
+      appearance={{
+        baseTheme: [dark, neobrutalism]
+      }}
+      >
         <html lang="en" suppressHydrationWarning>
         <Meta />
         <body>

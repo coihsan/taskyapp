@@ -25,8 +25,8 @@ import { ScrollArea } from "../ui/scroll-area"
 import { Separator } from "../ui/separator"
 import { workspaceExample } from "@/lib/const"
 import Image from "next/image"
-import NewOrganization from "./NewOrganization"
-import NewWorkspace from "../global/NewWorkspace"
+import NewOrganization from "../global/forms/NewOrganization"
+import NewWorkspace from "../global/forms/NewWorkspace"
 import EditWorkspace from "../global/edit-workspace"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../ui/command"
 import React from "react"
@@ -111,13 +111,13 @@ export function Sidebar() {
       {sidebar.map((item) => (
         <Link
           className={clsx(
-            'flex items-center text-sm h-12 py-4 gap-6 pl-2 dark:text-onyx-400 font-semibold hover:bg-onyx-100 dark:hover:bg-onyx-800 gap-2 hover:ring-2 hover:ring-onyx-100 dark:hover:ring-onyx-800 rounded-md transitionAll',
-            {'borderStyle bg-onyx-50 dark:text-white dark:bg-onyx-900' : pathname === item.url}
+            'flex items-center text-sm h-9 gap-3 pl-2 text-muted-foreground font-medium hover:bg-onyx-100 dark:hover:bg-onyx-800 hover:ring-2 hover:ring-onyx-100 dark:hover:ring-onyx-800 rounded-md transitionAll',
+            {'borderStyle bg-onyx-50 text-lime-600 dark:text-lime-400 dark:bg-onyx-900' : pathname === item.url}
           )}
           href={item.url}
           key={item.id}
         >
-          <div className="text-onyx-600 dark:text-onyx-400">
+          <div className={clsx('text-muted-foreground', {'text-lime-600 dark:text-lime-400' : pathname === item.url})}>
             <item.icons />
           </div>
           <span>{item.title}</span>
