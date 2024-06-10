@@ -6,6 +6,7 @@ import FluentTaskListSquare24Regular from '@/components/icons/task-square';
 import FluentDocumentFolder24Regular from '@/components/icons/document-folder';
 import FluentPeopleTeam24Regular from '@/components/icons/people-team';
 import FluentDataFunnel24Regular from '@/components/icons/data-funnel';
+import { WorkflowsIcons } from '@/components/icons/workflows';
 export const sitelink = [
     {id: 0, title: 'Home', url: '/'},
     {id: 1, title: 'Demo', url: '/demo'},
@@ -17,7 +18,8 @@ export const sidebar = [
     {id: 3, title: 'Task', url: '/task', icons: FluentTaskListSquare24Regular},
     {id: 4, title: 'Memos', url: '/memos', icons: FluentDocumentFolder24Regular},
     {id: 5, title: 'Funnel', url: '/funnel', icons: FluentDataFunnel24Regular},
-    {id: 6, title: 'Teams', url: '/teams', icons: FluentPeopleTeam24Regular},
+    {id: 6, title: 'Workflows', url: '/workflows', icons: WorkflowsIcons},
+    {id: 7, title: 'Teams', url: '/teams', icons: FluentPeopleTeam24Regular},
 ]
 
 

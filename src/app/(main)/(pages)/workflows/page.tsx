@@ -1,7 +1,10 @@
+import React from 'react'
+import FlowPage from "./_components/workflow"
+
 const page = () => {
     return(
         <section>
-            <h1>All Workflows</h1>
+            Hello
         </section>
     )
 }

@@ -1,13 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    images:{
-        domains:[
-            'uploadthing.com',
-            'utfs.io',
-            'subdomain',
-        ]
+    images: {
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'img.clerk.com',
+        },
+        {
+          protocol: 'https',
+          hostname: 'ucarecdn.com',
+        },
+      ],
     },
-    reactStrictMode: false,
-};
-
-export default nextConfig;
+  }
+  
+  export default nextConfig

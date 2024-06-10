@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
-export const newBoard = () =>{
+export const NewBoard = () =>{
     const [board, setBoard] = useState(Array(undefined).fill(undefined))
     return [board, setBoard]
 }
 
-export const newTask = () =>{
+export const NewTask = () =>{
     const [task, setTask] = useState(Array(undefined).fill(undefined))
     return [task, setTask]
 }

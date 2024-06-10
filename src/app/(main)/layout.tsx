@@ -15,16 +15,16 @@ export default function BoardingLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <section className="flex overflow-hidden h-screen min-h-full py-2">
+      <main className="flex overflow-hidden h-screen min-h-full py-2">
         <aside className="">
         <ScrollArea>
           <Sidebar />
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
         </aside>
-        <main className="w-full">
+        <section className="w-full">
             {children}
-      </main>
       </section>
+      </main>
   );
 }
