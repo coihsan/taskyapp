@@ -35,7 +35,7 @@ export default function Home() {
             <h1 className="text-center text-4xl font-semibold pb-6">Some Features You Don’t Care About It</h1>
             <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {coreFeature.map((feature) => (
-              <Card className="p-4 CardStyle">
+              <Card key={feature.id} className="p-4 CardStyle">
                 <CardHeader className="flex items-center flex-col gap-3">
                   <div className="w-12 h-12 flex items-center justify-center rounded-xl borderStyle bg-gradient-to-b from-onyx-50 to-onyx-200 dark:from-onyx-600 dark:to-onyx-800 shadow-2xl">
                     <feature.icon />

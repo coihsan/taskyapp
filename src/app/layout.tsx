@@ -2,7 +2,6 @@ import { ThemeProvider } from "@/components/global/theme-provider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Meta } from "@/app/meta/Meta";
 import Navigation from "@/components/site/navigation";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark, neobrutalism } from '@clerk/themes';
@@ -19,7 +18,6 @@ export default function RootLayout({ children }: Readonly<{children: React.React
       }}
       >
         <html lang="en" suppressHydrationWarning>
-        <Meta />
         <body>
           <ThemeProvider
             attribute="class"

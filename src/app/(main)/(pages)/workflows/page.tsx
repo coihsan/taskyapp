@@ -4,7 +4,7 @@ import FlowPage from "./_components/workflow"
 const page = () => {
     return(
         <section>
-            Hello
+            <FlowPage />
         </section>
     )
 }
