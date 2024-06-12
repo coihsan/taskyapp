@@ -31,7 +31,7 @@ const nodes = [
 const FlowPage = () => {
   return (
     <div className='h-screen overflow-scroll'>
-      <ReactFlow nodes={nodes}>
+      <ReactFlow className='h-full' nodes={nodes}>
         <Background />
         <Controls />
       </ReactFlow>

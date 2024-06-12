@@ -18,7 +18,6 @@ const HeaderBar = () =>{
             <nav className="flex items-center gap-3 absolute right-4">
                 <AddTeam />
                 <UserButton />
-                <ModeToggle />
             </nav>
         </header>
     )

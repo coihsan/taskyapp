@@ -5,6 +5,8 @@ import { archivo } from "@/lib/fonts";
 import { coreFeature } from "@/lib/const";
 import GradientHero from "@/components/design/gradientHero";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
+import Navigation from "@/components/site/navigation";
+import FooterSite from "@/components/site/footer";
 const Section = ({children} : {children : React.ReactNode} ) =>{
   return(
     <section className="container py-12">
@@ -15,11 +17,12 @@ const Section = ({children} : {children : React.ReactNode} ) =>{
 export default function Home() {
   return (
       <section className="relative">
+        <Navigation />
         <GradientHero />
         <main className="container mx-auto">
           <section className="flex flex-col items-center justify-center pb-12 pt-12 md:pt-16 lg:pt-20 mx-auto">
             <div className="max-w-screen-md">
-              <h1 className={`${archivo} font-bold text-4xl md:text-6xl lg:text-6xl text-center pb-6`}>Organize your daily Task and Projects with <span className="underline text-lime-500">TaskyApp</span></h1>
+              <h1 className={`${archivo} font-bold text-4xl md:text-6xl lg:text-6xl text-center pb-6`}>Organize your daily Task and Projects with <span className="text-lime-500">TaskyApp</span></h1>
               <p className="text-center text-zinc-400 mx-auto">A Task Manager for personal or team projects including boards, schedule, daily task, project management like a roadmap, memos, boards, and more.</p>
               <div className="flex items-center justify-center mt-6">
               <HoverBorderGradient
@@ -35,7 +38,7 @@ export default function Home() {
           </section>
           <Section>
             <h1 className="text-center text-4xl font-semibold pb-6">Some Features You Don’t Care About It</h1>
-            <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-[950px] mx-auto">
             {coreFeature.map((feature) => (
               <Card key={feature.id} className="p-4 CardStyle">
                 <CardHeader className="flex items-center flex-col gap-3">
@@ -52,6 +55,7 @@ export default function Home() {
             </ul>
           </Section>
         </main>
+        <FooterSite />
       </section>
   );
 }

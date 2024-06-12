@@ -21,12 +21,12 @@ import { PlusIcon } from "@radix-ui/react-icons"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectScrollDownButton, SelectScrollUpButton, SelectSeparator, SelectTrigger, SelectValue } from "../ui/select"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
-import { ScrollArea } from "../ui/scroll-area"
+import { ScrollArea, ScrollBar } from "../ui/scroll-area"
 import { Separator } from "../ui/separator"
 import { workspaceExample } from "@/lib/const"
 import Image from "next/image"
-import NewOrganization from "../global/forms/NewOrganization"
-import NewWorkspace from "../global/forms/NewWorkspace"
+import NewOrganization from "../forms/NewOrganization"
+import NewWorkspace from "../forms/NewWorkspace"
 import EditWorkspace from "../global/edit-workspace"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "../ui/command"
 import React from "react"
@@ -57,7 +57,7 @@ export function Sidebar() {
   const [open, setOpen] = React.useState(false)
 
   return (
-    <aside className="w-full max-w-64 relative h-screen min-h-screen">
+    <aside className="w-full w-64 relative h-screen min-h-screen">
       <SidebarContent borderBottom>
         <Logo />
       </SidebarContent>
@@ -139,28 +139,32 @@ export function Sidebar() {
             </Tooltip>
           </TooltipProvider>
         </div>
-        <div className="w-full pt-4">
-          <div className="grid w-full">
-            {workspaceExample.map((list) => (
-                <Link href={list.url} key={list.id} className="text-sm h-12 px-2 hover:bg-onyx-100 dark:hover:bg-onyx-800 rounded-md flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="size-9 flex items-center justify-center bg-lime-900 rounded-md aspect-square">
-                      <list.icon />
-                    </div>
-                    <span className="overflow-hidden text-clip-1 text-nowrap">
-                      {list.name}
-                    </span>
-                  </div>
-                  <EditWorkspace />
-                </Link>
-            ))}
-          </div>
-        </div>
+          <ScrollArea className="">
+            <div className="w-full h-44 pt-4">
+                <div className="grid w-full">
+                  {workspaceExample.map((list) => (
+                      <Link href={list.url} key={list.id} className="text-sm h-12 px-2 hover:bg-onyx-100 dark:hover:bg-onyx-800 rounded-md flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <div className="size-9 flex items-center justify-center bg-lime-900 rounded-md aspect-square">
+                            <list.icon />
+                          </div>
+                          <span className="overflow-hidden text-clip-1 text-nowrap">
+                            {list.name}
+                          </span>
+                        </div>
+                        <EditWorkspace />
+                      </Link>
+                    ))}
+                </div>
+            </div>
+            <ScrollBar orientation="vertical" />
+          </ScrollArea>
       </SidebarContent>
       <SidebarContent borderTop>
       <footer className="flex items-center justify-evenly">
           <Link className="text-xs" href="/privacy">Privacy</Link>
           <Link className="text-lime-600 text-xs dark:text-lime-400" href="/support">Support</Link>
+          <ModeToggle />
       </footer>
       </SidebarContent>
     </aside>

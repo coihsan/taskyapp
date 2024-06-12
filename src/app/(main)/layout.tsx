@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Sidebar } from "@/components/sidebar";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import HeaderBar from "@/components/headerbar";
 import {useRouter } from "next/navigation";
 
@@ -15,16 +14,11 @@ export default function BoardingLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <main className="flex overflow-hidden h-screen min-h-full py-2">
+      <main className="flex overflow-hidden min-h-[100dvh] h-full py-2">
         <aside className="">
-        <ScrollArea>
           <Sidebar />
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
         </aside>
-        <section className="w-full">
-            {children}
-      </section>
+          {children}
       </main>
   );
 }
