@@ -5,6 +5,7 @@ import "./globals.css";
 import Navigation from "@/components/site/navigation";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark, neobrutalism } from '@clerk/themes';
+import FooterSite from "@/components/site/footer";
 export const metadata: Metadata = {
   title: "TaskyApp",
   description: "Organize your tasks with TaskyApp",
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{children: React.ReactNode;}>) {
   return (
       <ClerkProvider
+      publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
       appearance={{
         baseTheme: [dark, neobrutalism]
       }}
@@ -25,7 +27,9 @@ export default function RootLayout({ children }: Readonly<{children: React.React
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <Navigation />
+              <main>{children}</main>
+            <FooterSite />
           </ThemeProvider>
         </body>
       </html>

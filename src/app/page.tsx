@@ -1,13 +1,10 @@
+import React from "react";
 import { Card, CardHeader, CardContent, CardTitle, CardDescription } from "@/components/ui/card";
 import Image from "next/image";
 import { archivo } from "@/lib/fonts";
-import React, { ReactNode } from "react";
 import { coreFeature } from "@/lib/const";
-import Link from "next/link";
-import { ChevronRightIcon } from "@radix-ui/react-icons";
-import { Button } from "@/components/ui/button";
-import ButtonLink from "@/components/global/ButtonLink";
 import GradientHero from "@/components/design/gradientHero";
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 const Section = ({children} : {children : React.ReactNode} ) =>{
   return(
     <section className="container py-12">
@@ -24,9 +21,14 @@ export default function Home() {
             <div className="max-w-screen-md">
               <h1 className={`${archivo} font-bold text-4xl md:text-6xl lg:text-6xl text-center pb-6`}>Organize your daily Task and Projects with <span className="underline text-lime-500">TaskyApp</span></h1>
               <p className="text-center text-zinc-400 mx-auto">A Task Manager for personal or team projects including boards, schedule, daily task, project management like a roadmap, memos, boards, and more.</p>
-              <div className="flex items-center justify-center gap-2 mt-6">
-                <ButtonLink text="Free! Get Started" variant="primary" href="/login" Icon={true} />
-                <ButtonLink text="About" variant="secondary" href="/demo" Icon={false} />
+              <div className="flex items-center justify-center mt-6">
+              <HoverBorderGradient
+                    containerClassName="rounded-full"
+                    as="button"
+                    className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
+                >
+                    <span>Free! Get Started</span>
+                </HoverBorderGradient>
               </div>
             </div>
             <Image className="rounded-lg border border-white/20 mt-9" src={'/preview.webp'} width={1000} height={700} alt="preview" />

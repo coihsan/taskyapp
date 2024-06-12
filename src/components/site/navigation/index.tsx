@@ -9,7 +9,7 @@ const MenuLink =() =>{
     return (
         <ul className='hidden lg:flex items-center gap-8'>
             {sitelink.map((link) => (
-                <li className='text-onyx-400 textHover' key={link.id}>
+                <li className='text-muted-foreground textHover' key={link.id}>
                     <Link href={link.url}>{link.title}</Link>
                 </li>
             ))}
@@ -30,8 +30,8 @@ const Navigation = () =>{
                         <MenuLink />
                     </div>
                 </div>
-                <div className='flex items-center h-7 space-x-4'>
-                    <Link className='textHover text-sm font-semibold uppercase px-4 py-2 border border-black/10 dark:border-white/10 rounded-md bg-onyx-50 dark:bg-white/5' href='/sign-in'>Login</Link>
+                <div className='flex items-center h-7 space-x-2'>
+                    <Link className='textHover text-sm font-semibold uppercase px-4 py-2 border border-black/10 dark:border-white/10 rounded-md bg-onyx-50 dark:bg-white dark:text-onyx-950' href='/sign-in'>Login</Link>
                     <ModeToggle />
                 </div>
             </nav>

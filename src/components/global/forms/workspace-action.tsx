@@ -13,16 +13,7 @@ declare interface globalTypes {
 export const onProjects = async ({name, description} : Partial<globalTypes>) =>{
     const user = currentUser()
     const { userId } = auth()
-    if (user){
-        const project = await prisma.projects.create({
-            data: {
-                userId: user.id,
-                name,
-                description,
 
-            }
-        })
-    }
     return(
         <div>
             hello
