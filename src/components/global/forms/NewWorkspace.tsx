@@ -1,4 +1,5 @@
 "use client"
+import React, {useState} from "react"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -24,14 +25,34 @@ import { Calendar } from "@/components/ui/calendar"
 import { toast } from "@/components/ui/use-toast"
 import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
-import React from "react"
-const workspaceSchema = z.object({
-    workspaceName: z.string().min(2, {
-      message: "Name must be at least 2 characters.",
-    }),
-  })
+import { useRouter } from "next/navigation"
+import { NewWorkspaceSchema } from "@/lib/types/types"
+import { Switch } from "@/components/ui/switch"
+
 const NewWorkspace = () =>{
-    const form = useForm()
+    const dates = new Date()
+    const [isVisible, setIsVisible] = useState(true)
+    const router = useRouter()
+
+    const form = useForm<z.infer<typeof NewWorkspaceSchema>>({
+        mode: "onChange",
+        resolver: zodResolver(NewWorkspaceSchema),
+        defaultValues: {
+            name: "",
+            description: "",
+            logo: ""
+        },
+    })
+
+    const handleSubmit = async (values: z.infer<typeof NewWorkspaceSchema>) =>{
+        toast({
+            title: "You New Workspace Has Been Created",
+            description: (
+                <p>{dates.getDate()}</p>
+              ),
+        })
+    }
+
     const [date, setDate] = React.useState<DateRange | undefined>({
     from: new Date(2022, 0, 20),
     to: addDays(new Date(2022, 0, 20), 20),
@@ -58,7 +79,7 @@ const NewWorkspace = () =>{
                                     <FormItem>
                                         <FormLabel>Workspace Name</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="Name" {...field} />
+                                            <Input type="text" placeholder="Name" {...field} />
                                         </FormControl>
                                     </FormItem>
                                 )}
@@ -78,7 +99,7 @@ const NewWorkspace = () =>{
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                 <FormField
                                 control={form.control}
-                                name="file"
+                                name={"name"}
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Avatar</FormLabel>
@@ -90,9 +111,16 @@ const NewWorkspace = () =>{
                                 />
                                 <FormField
                                 control={form.control}
-                                name="file"
+                                name="description"
                                 render={({ field }) => (
-                                    <FormItem>
+                                    <>
+                                    {isVisible ? (
+                                        <div className="flex items-center gap-4">
+                                            <span>Add Due Date</span>
+                                            <Switch onClick={() => setIsVisible(false)} />
+                                        </div>
+                                    ) : (
+                                        <FormItem>
                                         <FormLabel>Target</FormLabel>
                                         <Popover>
                                             <PopoverTrigger asChild>
@@ -131,6 +159,8 @@ const NewWorkspace = () =>{
                                             </PopoverContent>
                                         </Popover>
                                     </FormItem>
+                                    )}
+                                    </>
                                 )}
                                 />
                                 </div>

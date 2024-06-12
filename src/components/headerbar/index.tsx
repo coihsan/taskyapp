@@ -15,11 +15,11 @@ const HeaderBar = () =>{
                 <Link className={clsx('py-4 px-4 rounded-md hover:bg-zinc-50/20', {'CardStyle': pathname === '/'}) } href={"/"}>Board</Link>
             </div>
             <Separator orientation="vertical" />
-            <div className="flex items-center gap-3 absolute right-4">
+            <nav className="flex items-center gap-3 absolute right-4">
                 <AddTeam />
                 <UserButton />
                 <ModeToggle />
-            </div>
+            </nav>
         </header>
     )
 }

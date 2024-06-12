@@ -28,7 +28,7 @@ import Image from "next/image"
 import NewOrganization from "../global/forms/NewOrganization"
 import NewWorkspace from "../global/forms/NewWorkspace"
 import EditWorkspace from "../global/edit-workspace"
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../ui/command"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "../ui/command"
 import React from "react"
 import { usePathname } from "next/navigation"
 interface SidebarProps {
@@ -139,44 +139,6 @@ export function Sidebar() {
             </Tooltip>
           </TooltipProvider>
         </div>
-        {/* <div className="pt-4">
-        <Command>
-          <CommandInput
-            placeholder="Search..."
-            autoFocus={true}
-            className="h-full"
-            />
-                  <CommandList>
-                    <CommandEmpty>No label found.</CommandEmpty>
-                    <CommandGroup heading={'By You'}>
-                      {workspaceExample.map((list) => (
-                        <CommandItem
-                          key={list.id}
-                          value={list.name}
-                          onSelect={(value) => {
-                            setLabel(value)
-                            setOpen(false)
-                          }}
-                        >
-                          <div className="flex items-center justify-between">
-                            <Link href={list.url} className="text-sm h-12 px-2 hover:bg-onyx-100 dark:hover:bg-onyx-800 rounded-md flex items-center justify-between">
-                              <div className="flex items-center gap-4">
-                                <div className="size-9 flex items-center justify-center bg-lime-900 rounded-md aspect-square">
-                                  <list.icon />
-                                </div>
-                                <span className="w-full bg-white/10 overflow-hidden text-clip-1 text-nowrap">
-                                  {list.name}
-                                </span>
-                              </div>
-                            </Link>
-                          <EditWorkspace />
-                          </div>
-                        </CommandItem>
-                      ))}
-                      </CommandGroup>
-                  </CommandList>
-                </Command>
-        </div> */}
         <div className="w-full pt-4">
           <div className="grid w-full">
             {workspaceExample.map((list) => (
