@@ -1,9 +1,9 @@
 const page = () => {
-    return(
-        <section>
-            <h1>All Memos</h1>
-        </section>
-    )
-}
+  return (
+    <section>
+      <h1>All Memos</h1>
+    </section>
+  );
+};
 
-export default page
+export default page;

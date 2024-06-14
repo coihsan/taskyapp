@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { DotsHorizontalIcon } from "@radix-ui/react-icons"
+import * as React from "react";
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -11,7 +11,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,18 +24,13 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 
-const labels = [
-  "Up",
-  "To top",
-  "To down",
-  "down",
-]
+const labels = ["Up", "To top", "To down", "down"];
 
 const EditWorkspace = () => {
-  const [label, setLabel] = React.useState("feature")
-  const [open, setOpen] = React.useState(false)
+  const [label, setLabel] = React.useState("feature");
+  const [open, setOpen] = React.useState(false);
 
   return (
     <div className="">
@@ -68,8 +63,8 @@ const EditWorkspace = () => {
                           key={label}
                           value={label}
                           onSelect={(value) => {
-                            setLabel(value)
-                            setOpen(false)
+                            setLabel(value);
+                            setOpen(false);
                           }}
                         >
                           {label}
@@ -89,6 +84,6 @@ const EditWorkspace = () => {
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
-  )
-}
-export default EditWorkspace
+  );
+};
+export default EditWorkspace;

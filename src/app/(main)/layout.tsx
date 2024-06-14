@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Sidebar } from "@/components/sidebar";
 import HeaderBar from "@/components/headerbar";
-import {useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "TaskyApp",
@@ -14,11 +14,11 @@ export default function BoardingLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <main className="flex overflow-hidden min-h-[100dvh] h-full py-2">
-        <aside className="">
-          <Sidebar />
-        </aside>
-          {children}
-      </main>
+    <main className="flex overflow-hidden min-h-[100dvh] h-full py-2">
+      <aside className="">
+        <Sidebar />
+      </aside>
+      {children}
+    </main>
   );
 }

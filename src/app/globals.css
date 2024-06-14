@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-  
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -50,29 +49,28 @@
   }
 }
 
-  @layer base {
-    * {
-      @apply border-border;
-    }
-    body {
-      @apply bg-background text-foreground box-border;
-    }
+@layer base {
+  * {
+    @apply border-border;
   }
-.BoxCards{
-  box-shadow: inset 0 0 12px 4px rgba(255,255,255,.05);
+  body {
+    @apply bg-background text-foreground box-border;
+  }
 }
-  @layer utilities{
-    .CardStyle{
-      @apply border border-black/20 dark:border-white/15 bg-gradient-to-t from-black/10 dark:from-white/5 rounded-xl shadow-[0_0_12px_4px_rgba(0,0,0,0.05)_inset] dark:shadow-[0_0_12px_4px_rgba(255,255,255,0.05)_inset] ;
-    }
-    .borderStyle{
-      @apply border border-black/20 dark:border-white/10
-    }
-    .textHover{
-      @apply hover:text-lime-600 dark:hover:text-lime-400 transitionAll
-    }
-    .transitionAll{
-      @apply transition-all ease-linear duration-150
-    }
-
+.BoxCards {
+  box-shadow: inset 0 0 12px 4px rgba(255, 255, 255, 0.05);
+}
+@layer utilities {
+  .CardStyle {
+    @apply border border-black/20 dark:border-white/15 bg-gradient-to-t from-black/10 dark:from-white/5 rounded-xl shadow-[0_0_12px_4px_rgba(0,0,0,0.05)_inset] dark:shadow-[0_0_12px_4px_rgba(255,255,255,0.05)_inset];
   }
+  .borderStyle {
+    @apply border border-black/20 dark:border-white/10;
+  }
+  .textHover {
+    @apply hover:text-lime-600 dark:hover:text-lime-400 transitionAll;
+  }
+  .transitionAll {
+    @apply transition-all ease-linear duration-150;
+  }
+}

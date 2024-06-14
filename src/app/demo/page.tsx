@@ -1,9 +1,9 @@
-const Demo = () =>{
-    return(
-        <div>
-            <h1>Hello Demo</h1>
-        </div>
-    )
-}
+const Demo = () => {
+  return (
+    <div>
+      <h1>Hello Demo</h1>
+    </div>
+  );
+};
 
-export default Demo
+export default Demo;

@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from "react";
 
 import {
   Select,
@@ -8,8 +8,8 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
+} from "@/components/ui/select";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export function ProfileTab() {
   return (
@@ -22,13 +22,13 @@ export function ProfileTab() {
           <SelectLabel>Fruits</SelectLabel>
           <SelectItem value="apple">
             <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                <AvatarFallback>CN</AvatarFallback>
+              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+              <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <span>Freelancer.com</span>
           </SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>
-  )
+  );
 }

@@ -1,7 +1,5 @@
 const Boards = () => {
-    return(
-        <main>Board Page</main>
-    )
-}
+  return <main>Board Page</main>;
+};
 
-export default Boards
+export default Boards;

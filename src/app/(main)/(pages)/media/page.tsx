@@ -1,10 +1,10 @@
-import React from 'react'
+import React from "react";
 const MediaPage = () => {
-    return(
-        <section>
-            <h1>All Media</h1>
-        </section>
-    )
-}
+  return (
+    <section>
+      <h1>All Media</h1>
+    </section>
+  );
+};
 
-export default MediaPage
+export default MediaPage;

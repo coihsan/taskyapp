@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
-const DeleteButton = () =>{
-    return(
-        <div>
-            <Button>Delete</Button>
-        </div>
-    )
-}
-export default DeleteButton
+const DeleteButton = () => {
+  return (
+    <div>
+      <Button>Delete</Button>
+    </div>
+  );
+};
+export default DeleteButton;

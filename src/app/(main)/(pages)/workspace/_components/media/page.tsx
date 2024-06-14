@@ -1,7 +1,5 @@
 const Funnel = () => {
-    return(
-        <main>Media Page</main>
-    )
-}
+  return <main>Media Page</main>;
+};
 
-export default Funnel
+export default Funnel;

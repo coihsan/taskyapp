@@ -10,10 +10,6 @@ const layout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  return (
-      <section className="flex">
-        {children}
-      </section>
-  );
-}
-export default layout
+  return <section className="flex">{children}</section>;
+};
+export default layout;

@@ -1,7 +1,5 @@
 const Funnel = () => {
-    return(
-        <main>Teams Page</main>
-    )
-}
+  return <main>Teams Page</main>;
+};
 
-export default Funnel
+export default Funnel;
