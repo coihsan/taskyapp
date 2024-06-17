@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
@@ -33,36 +34,95 @@ enum InviteStatus {
 
 model User {
   id           Int            @id     @default(autoincrement())
-  clerkId      String         @unique
-  username     String         @unique
   name         String
   email        String         @unique
+  emailVerified DateTime?
   password     String
+  accounts      Account[]
+  sessions      Session[]
+  Authenticator Authenticator[]
   phoneNumber  String?        @default("000-000-0000")
-  createdAt    DateTime       @default(now()) @db.Date
-  updatedAt    DateTime       @updatedAt @db.Date
-  projects     Projects[]     
-  organization Organization[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
   role         Role?           @default(OWNER)
   avatar       String?
+  // Features
+  projects     Projects[]     
+  organization Organization[]
   notification Notification[]
   status       Status?         @default(ACTIVE)
   comments     Comments[]
-}
 
+}
+model Account {
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:2847927774.
+  userId            Int
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+ 
+  user              User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@id([provider, providerAccountId])
+}
+model Session {
+  sessionToken String   @unique
+  userId       Int
+  expires      DateTime
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+ 
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+ 
+  @@id([identifier, token])
+}
+ 
+// Optional for WebAuthn support
+model Authenticator {
+  credentialID         String  @unique
+  userId               Int
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@id([userId, credentialID])
+}
 model Organization {
   id           String         @id @default(uuid())
-  name         String
+  name         String         @unique
   logo         String?
   createdAt    DateTime       @default(now()) @db.Date
   updatedAt    DateTime       @updatedAt @db.Date
-  userId       String
-  user         User           @relation(fields: [userId], references: [clerkId])
+  userId       Int
   role         Role           @default(OWNER)
   projects     Projects[]
   teams        Teams[]
   notification Notification[]
   Invitation   Invitation[]
+
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Projects {
@@ -85,9 +145,9 @@ model Projects {
   workflows      Workflows[]
   notification   Notification[]
   organizationId String
-  organization   Organization   @relation(fields: [organizationId], references: [id])
-  userId         String
-  user           User           @relation(fields: [userId], references: [clerkId])
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId         Int
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   Invitation     Invitation[]
 }
 
@@ -97,7 +157,7 @@ model Board {
   description String
   status      String
   projectId   String
-  project     Projects @relation(fields: [projectId], references: [id])
+  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 model Tasks {
@@ -108,7 +168,7 @@ model Tasks {
   substask    Substask[]
   Tags        Tag[]
   projectId   String
-  project     Projects   @relation(fields: [projectId], references: [id])
+  project     Projects   @relation(fields: [projectId], references: [id], onDelete: Cascade)
   assigned    Teams[]
   comments    Comments[]
 }
@@ -119,7 +179,7 @@ model Substask {
   description String
   status      TaskStatus
   taskId      String
-  task        Tasks      @relation(fields: [taskId], references: [id])
+  task        Tasks      @relation(fields: [taskId], references: [id], onDelete: Cascade)
 }
 
 model Tag {
@@ -129,7 +189,7 @@ model Tag {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   tagsId    String
-  Tags      Tasks    @relation(fields: [tagsId], references: [id])
+  Tags      Tasks    @relation(fields: [tagsId], references: [id], onDelete: Cascade)
 }
 
 model Comments {
@@ -137,10 +197,10 @@ model Comments {
   createdAt  DateTime     @default(now())
   content    String
   attachment Attachment[]
-  userId     String
-  user       User         @relation(fields: [userId], references: [clerkId])
+  userId     Int
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   taskId     String
-  task       Tasks        @relation(fields: [taskId], references: [id])
+  task       Tasks        @relation(fields: [taskId], references: [id], onDelete: Cascade)
 }
 
 model Attachment {
@@ -149,7 +209,7 @@ model Attachment {
   description String
   link        String   @unique
   commentsId  String
-  comments    Comments @relation(fields: [commentsId], references: [id])
+  comments    Comments @relation(fields: [commentsId], references: [id], onDelete: Cascade)
 }
 
 model Memos {
@@ -162,7 +222,7 @@ model Memos {
   article     String
   published   Boolean  @default(false)
   projectId   String
-  project     Projects @relation(fields: [projectId], references: [id])
+  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 model Funnel {
@@ -173,7 +233,7 @@ model Funnel {
   description String?
   published   Boolean  @default(false)
   projectId   String
-  project     Projects @relation(fields: [projectId], references: [id])
+  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 model Media {
@@ -185,7 +245,7 @@ model Media {
   description String
   link        String   @unique
   projectId   String
-  project     Projects @relation(fields: [projectId], references: [id])
+  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 model Schedule {
@@ -193,7 +253,7 @@ model Schedule {
   title       String
   description String
   projectId   String
-  project     Projects @relation(fields: [projectId], references: [id])
+  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 model Teams {
@@ -202,12 +262,12 @@ model Teams {
   createdAt      DateTime     @default(now()) @db.Date
   status         Status
   organizationId String
-  organization   Organization @relation(fields: [organizationId], references: [id])
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   role           Role
   taskId         String
-  task           Tasks        @relation(fields: [taskId], references: [id])
+  task           Tasks        @relation(fields: [taskId], references: [id], onDelete: Cascade)
   projectId      String
-  project        Projects     @relation(fields: [projectId], references: [id])
+  project        Projects     @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 model Workflows {
@@ -219,7 +279,7 @@ model Workflows {
   cronPath  String?
   publish   Boolean? @default(false)
   projectId String
-  project   Projects @relation(fields: [projectId], references: [id])
+  project   Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 model Notification {
@@ -227,12 +287,12 @@ model Notification {
   title          String
   description    String
   status         String
-  userId         String
-  user           User         @relation(fields: [userId], references: [clerkId])
+  userId         Int
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   organizationId String
-  organization   Organization @relation(fields: [organizationId], references: [id])
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   projectId      String
-  project        Projects     @relation(fields: [projectId], references: [id])
+  project        Projects     @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 enum InvitationStatus {
@@ -246,7 +306,7 @@ model Invitation {
   email    String           @unique
   role     Role    
   organizationId String
-  organization   Organization @relation(fields: [organizationId], references: [id])   
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)   
   projectId      String
-  project        Projects     @relation(fields: [projectId], references: [id])      
+  project        Projects     @relation(fields: [projectId], references: [id], onDelete: Cascade)      
 }

@@ -89,7 +89,7 @@ export function Sidebar() {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <ScrollArea className="w-full relative h-full overflow-y-scroll min-h-screen grid">
+    <ScrollArea className="w-full relative h-full overflow-y-scroll h-screen">
       <SidebarContent borderBottom>
         <Logo />
       </SidebarContent>

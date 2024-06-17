@@ -14,7 +14,7 @@ export default function BoardingLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="flex overflow-hidden min-h-[100dvh] h-full py-2">
+    <main className="flex overflow-hidden h-screen min-h-[100dvh] py-2">
       <aside className="">
         <Sidebar />
       </aside>

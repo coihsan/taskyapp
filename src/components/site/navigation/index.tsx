@@ -4,7 +4,6 @@ import { Separator } from "@/components/ui/separator";
 import { sitelink } from "@/lib/const";
 import { ModeToggle } from "@/components/global/ModeToggle";
 import Logo from "@/components/global/logo";
-import ButtonLink from "@/components/global/ButtonLink";
 const MenuLink = () => {
   return (
     <ul className="hidden lg:flex items-center gap-8">

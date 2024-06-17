@@ -1,11 +1,14 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
-const isPublicRoute = createRouteMatcher(["/", "/sign-in", "/sign-up"]);
-export default clerkMiddleware((auth, req) => {
-  // if(!isPublicRoute(req)){
-  //   auth().protect()
-  // }
-});
+import { NextRequest } from "next/server"
+import authConfig from "./config/auth.config"
+import NextAuth from "next-auth"
+export { auth as middleware } from "@/auth"
+
+const { auth } = NextAuth(authConfig)
+
+export default auth(async function middleware(req: NextRequest) {
+  // Your custom middleware logic goes here
+})
 
 export const config = {
-  matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
-};
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+}
