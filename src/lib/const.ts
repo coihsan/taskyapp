@@ -7,15 +7,28 @@ import FluentDocumentFolder24Regular from "@/components/icons/document-folder";
 import FluentPeopleTeam24Regular from "@/components/icons/people-team";
 import FluentDataFunnel24Regular from "@/components/icons/data-funnel";
 import { WorkflowsIcons } from "@/components/icons/workflows";
+import {FluentHome24Regular} from "@/components/icons/home";
+import {FluentPerson24Regular} from "@/components/icons/person";
+import {FluentSettings24Regular} from "@/components/icons/settings";
+import {FluentSignOut24Regular} from "@/components/icons/sign-out";
+
 export const sitelink = [
   { id: 0, title: "Home", url: "/" },
   { id: 1, title: "Demo", url: "/demo" },
   { id: 2, title: "Support Me", url: "/supportme" },
 ];
+export const menuUser = [
+  { id: 1, title: "Profile", url: "/user/profile", icon:  FluentPerson24Regular},
+  { id: 2, title: "Task", url: "/user/task", icon: FluentTaskListSquare24Regular},
+  { id: 3, title: "Settings", url: "/user/profilesettings", icon: FluentSettings24Regular},
+  { id: 4, title: "Sign Out", url: "/sign-out", icon: FluentSignOut24Regular},
+]
 export const sidebar = [
-  { id: 1, title: "Workspace", url: "/workspace", icons: WorkspaceIcons },
+  { id: 1, title: "View", url: "/view", icons: WorkspaceIcons },
   { id: 2, title: "Schedule", url: "/schedule", icons: CalenderDate },
-  { id: 3, title: "Task", url: "/task", icons: FluentTaskListSquare24Regular },
+  { id: 7, title: "Teams", url: "/teams", icons: FluentPeopleTeam24Regular },
+];
+export const workspaceMenu = [
   {
     id: 4,
     title: "Memos",
@@ -24,9 +37,8 @@ export const sidebar = [
   },
   { id: 5, title: "Funnel", url: "/funnel", icons: FluentDataFunnel24Regular },
   { id: 6, title: "Workflows", url: "/workflows", icons: WorkflowsIcons },
-  { id: 7, title: "Teams", url: "/teams", icons: FluentPeopleTeam24Regular },
-];
 
+]
 export const coreFeature = [
   {
     id: 1,

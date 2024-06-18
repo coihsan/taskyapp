@@ -15,9 +15,7 @@ export default function BoardingLayout({
 }>) {
   return (
     <main className="flex overflow-hidden h-screen min-h-[100dvh] py-2">
-      <aside className="">
         <Sidebar />
-      </aside>
       {children}
     </main>
   );

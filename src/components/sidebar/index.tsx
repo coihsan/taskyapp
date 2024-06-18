@@ -12,12 +12,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { sidebar } from "@/lib/const";
+import { menuUser, sidebar } from "@/lib/const";
 import clsx from "clsx";
 import Link from "next/link";
 import { ModeToggle } from "../global/ModeToggle";
 import Logo from "../global/logo";
-import { PlusIcon } from "@radix-ui/react-icons";
 import {
   Tooltip,
   TooltipContent,
@@ -30,31 +29,25 @@ import {
   SelectGroup,
   SelectItem,
   SelectLabel,
-  SelectScrollDownButton,
-  SelectScrollUpButton,
   SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
-import { Separator } from "../ui/separator";
 import { workspaceExample } from "@/lib/const";
-import Image from "next/image";
 import NewOrganization from "../forms/NewOrganization";
 import NewWorkspace from "../forms/NewWorkspace";
 import EditWorkspace from "../global/edit-workspace";
 import {
   Command,
   CommandEmpty,
-  CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
-  CommandShortcut,
+  CommandGroup
 } from "../ui/command";
-import React from "react";
+import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 interface SidebarProps {
   children: React.ReactNode;
@@ -74,7 +67,7 @@ const SidebarContent = ({
       className={clsx(
         borderTop && "relative border-t border-onyx-100 dark:border-onyx-800",
         borderBottom && "border-b border-onyx-100 dark:border-onyx-800",
-        "py-4 px-4",
+        "px-2 py-4",
         { className },
       )}
     >
@@ -85,11 +78,11 @@ const SidebarContent = ({
 export function Sidebar() {
   const isActive = false;
   const pathname = usePathname();
-  const [label, setLabel] = React.useState("feature");
-  const [open, setOpen] = React.useState(false);
+  const [label, setLabel] = useState("feature");
+  const [open, setOpen] = useState(false);
 
   return (
-    <ScrollArea className="w-full relative h-full overflow-y-scroll h-screen">
+    <ScrollArea className="w-full max-w-72 relative h-full overflow-y-scroll h-screen">
       <SidebarContent borderBottom>
         <Logo />
       </SidebarContent>
@@ -142,14 +135,43 @@ export function Sidebar() {
         </Select>
       </SidebarContent>
       <SidebarContent borderBottom>
-        <span className="text-xs font-medium text-onyx-600 dark:text-onyx-500 uppercase">
-          Menu
+        <span className="text-xs text-onyx-600 dark:text-muted-foreground uppercase">
+            Your
+          </span>
+          <nav className="flex flex-col gap-1 pt-4">
+            {menuUser.map((menu) => (
+              <Link
+                className={clsx(
+                  "flex items-center text-sm h-9 gap-3 pl-2 text-black dark:text-foreground hover:bg-onyx-100 dark:hover:bg-onyx-800 hover:ring-2 hover:ring-onyx-100 dark:hover:ring-onyx-800 rounded-md transitionAll",
+                  {
+                    "borderStyle bg-onyx-50 text-lime-600 dark:text-lime-400 dark:bg-onyx-900":
+                      pathname === menu.url,
+                  },
+                )}
+                href={menu.url}
+                key={menu.id}
+              >
+                <div
+                  className={clsx("text-black dark:text-foreground", {
+                    "text-lime-600 dark:text-lime-400": pathname === menu.url,
+                  })}
+                >
+                  <menu.icon />
+                </div>
+                <span>{menu.title}</span>
+              </Link>
+            ))}
+          </nav>
+      </SidebarContent>
+      <SidebarContent borderBottom>
+        <span className="text-xs text-onyx-600 dark:text-muted-foreground uppercase">
+          Workpace
         </span>
         <nav className="flex flex-col gap-1 pt-4">
           {sidebar.map((item) => (
             <Link
               className={clsx(
-                "flex items-center text-sm h-9 gap-3 pl-2 text-muted-foreground font-medium hover:bg-onyx-100 dark:hover:bg-onyx-800 hover:ring-2 hover:ring-onyx-100 dark:hover:ring-onyx-800 rounded-md transitionAll",
+                "flex items-center text-sm h-9 gap-3 pl-2 text-black dark:text-foreground hover:bg-onyx-100 dark:hover:bg-onyx-800 hover:ring-2 hover:ring-onyx-100 dark:hover:ring-onyx-800 rounded-md transitionAll",
                 {
                   "borderStyle bg-onyx-50 text-lime-600 dark:text-lime-400 dark:bg-onyx-900":
                     pathname === item.url,
@@ -159,7 +181,7 @@ export function Sidebar() {
               key={item.id}
             >
               <div
-                className={clsx("text-muted-foreground", {
+                className={clsx("text-black dark:text-foreground", {
                   "text-lime-600 dark:text-lime-400": pathname === item.url,
                 })}
               >
@@ -171,33 +193,34 @@ export function Sidebar() {
         </nav>
       </SidebarContent>
       <SidebarContent className="grid">
-        <div className="flex items-center justify-between">
-          <span className="text-xs font-medium text-onyx-600 dark:text-onyx-500 uppercase">
-            Workpace
-          </span>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <NewWorkspace />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>New Workpace</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
-        <Command className="w-full h-64 pt-4">
-          <CommandInput placeholder="Type a command or search..." />
-          <CommandList className="">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-onyx-600 dark:text-muted-foreground uppercase">
+              space
+            </span>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <NewWorkspace />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>New Space</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        <Command className="pt-4 z-50">
+          <CommandInput placeholder="Search..." />
+          <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
+            <CommandGroup>
             {workspaceExample.map((list) => (
               <CommandItem className="grid w-full" key={list.id}>
                 <Link
                   href={list.url}
-                  className="text-sm h-12 px-2 hover:bg-onyx-100 dark:hover:bg-onyx-800 rounded-md flex items-center justify-between"
+                  className="text-sm h-9 px-2 hover:bg-onyx-100 dark:hover:bg-onyx-800 rounded-md flex items-center justify-between"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="size-9 flex items-center justify-center bg-lime-900 rounded-md aspect-square">
+                    <div className="size-9 flex items-center justify-center aspect-square">
                       <list.icon />
                     </div>
                     <span className="overflow-hidden text-clip-1 text-nowrap">
@@ -208,6 +231,7 @@ export function Sidebar() {
                 </Link>
               </CommandItem>
             ))}
+            </CommandGroup>
           </CommandList>
         </Command>
       </SidebarContent>

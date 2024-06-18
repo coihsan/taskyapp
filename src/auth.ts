@@ -1,6 +1,5 @@
 import NextAuth from "next-auth"
 import Google from "next-auth/providers/google"
-import Credentials from "next-auth/providers/credentials"
 import type { Provider } from "next-auth/providers"
 import { PrismaNeon } from "@prisma/adapter-neon"
 import { Pool } from "@neondatabase/serverless"
@@ -15,20 +14,19 @@ const neon = new Pool({
 
 
 const providers: Provider[] = [
-Google,
-  Credentials({
-    credentials: { password: { label: "Password", type: "password" } },
-    authorize(c) {
-      if (c.password !== "password") return null
-      return {
-        id: "test",
-        name: "Test User",
-        email: "test@example.com",
+  Google({
+    clientId: process.env.AUTH_GOOGLE_ID,
+    clientSecret: process.env.AUTH_GOOGLE_SECRET,
+    authorization:{
+      URLSearchParams:{
+        prompt:"consent",
+        access_type:"offline",
+        response_type:"code"
       }
-    },
+    }
   }),
-]
- 
+];
+
 export const providerMap = providers.map((provider) => {
   if (typeof provider === "function") {
     const providerData = provider()

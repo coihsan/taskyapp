@@ -1,4 +1,4 @@
-const page = () => {
+const SettingsPage = () => {
   return (
     <section>
       <h1>Settings</h1>
@@ -6,4 +6,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default SettingsPage;
