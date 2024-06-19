@@ -240,6 +240,9 @@ export function Sidebar() {
           <Link className="text-xs" href="/privacy">
             Privacy
           </Link>
+          <Link className="text-xs" href="/policy">
+            Policy
+          </Link>
           <Link
             className="text-lime-600 text-xs dark:text-lime-400"
             href="/support"

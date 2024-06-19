@@ -11,22 +11,26 @@ import {FluentHome24Regular} from "@/components/icons/home";
 import {FluentPerson24Regular} from "@/components/icons/person";
 import {FluentSettings24Regular} from "@/components/icons/settings";
 import {FluentSignOut24Regular} from "@/components/icons/sign-out";
-
+export const RoleTeam = [
+  {id: 0, role: 'View', values: 'view' , desc: 'Only view and comment'},
+  {id: 1, role: 'Staff', values: 'staff' , desc: 'Can view, comment and edit'},
+  {id: 2, role: 'Owner', values: 'owner' , desc: 'Admin level access to all resource'},
+]
 export const sitelink = [
   { id: 0, title: "Home", url: "/" },
   { id: 1, title: "Demo", url: "/demo" },
   { id: 2, title: "Support Me", url: "/supportme" },
 ];
 export const menuUser = [
-  { id: 1, title: "Profile", url: "/user/profile", icon:  FluentPerson24Regular},
-  { id: 2, title: "Task", url: "/user/task", icon: FluentTaskListSquare24Regular},
-  { id: 3, title: "Settings", url: "/user/profilesettings", icon: FluentSettings24Regular},
+  { id: 1, title: "Profile", url: "/account/profile", icon:  FluentPerson24Regular},
+  { id: 2, title: "Task", url: "/account/task", icon: FluentTaskListSquare24Regular},
+  { id: 3, title: "Settings", url: "/account/profilesettings", icon: FluentSettings24Regular},
   { id: 4, title: "Sign Out", url: "/sign-out", icon: FluentSignOut24Regular},
 ]
 export const sidebar = [
-  { id: 1, title: "View", url: "/view", icons: WorkspaceIcons },
-  { id: 2, title: "Schedule", url: "/schedule", icons: CalenderDate },
-  { id: 7, title: "Teams", url: "/teams", icons: FluentPeopleTeam24Regular },
+  { id: 1, title: "View", url: "/account/view", icons: WorkspaceIcons },
+  { id: 2, title: "Schedule", url: "/account/schedule", icons: CalenderDate },
+  { id: 7, title: "Teams", url: "/account/teams", icons: FluentPeopleTeam24Regular },
 ];
 export const workspaceMenu = [
   {

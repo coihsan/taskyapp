@@ -1,7 +1,8 @@
 import { redirect } from "next/navigation"
-import { signIn, providerMap } from "@/auth"
+import { signIn } from "@/auth"
 import { AuthError } from "next-auth"
 import { Button } from "@/components/ui/button"
+import { providerMap } from "@/config/auth.config"
  
 export default async function SignInPage() {
   return (

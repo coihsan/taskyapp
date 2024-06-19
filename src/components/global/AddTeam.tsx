@@ -11,6 +11,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { RoleTeam } from "@/lib/const";
+import { FluentHome24Regular } from "../icons/home";
+import { Role } from "@prisma/client";
+
 export default function AddTeam() {
   return (
     <Dialog>
@@ -19,7 +32,7 @@ export default function AddTeam() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
+          <DialogTitle>New Staff</DialogTitle>
           <DialogDescription>
             Make changes to your profile here. Click save when you{`'`}re done.
           </DialogDescription>
@@ -38,10 +51,37 @@ export default function AddTeam() {
             <Input id="username" value="@peduarte" className="col-span-3" />
           </div>
         </div>
-        <DialogFooter>
+        <Select>
+          <SelectTrigger className="w-[180px] flex items-start [&_[data-description]]:hidden">
+            <SelectValue placeholder="Select role" />
+          </SelectTrigger>
+          <SelectContent>
+              <SelectItem value="view">
+                <div className="grid gap-0.5">
+                  <h3>View</h3>
+                  <p className="text-xs text-muted-foreground" data-description>Only view and comment</p>
+                </div>
+              </SelectItem>
+              <SelectItem value="staff">
+                <div className="grid gap-0.5">
+                  <h3>Staff</h3>
+                  <p className="text-xs text-muted-foreground" data-description>Can view, comment and edit</p>
+                </div>
+              </SelectItem>
+              <SelectItem value="owner">
+                <div className="grid gap-0.5">
+                  <h3>Owner</h3>
+                  <p className="text-xs text-muted-foreground" data-description>Admin level access to all resource</p>
+                </div>
+              </SelectItem>
+          </SelectContent>
+        </Select>
+            <DialogFooter>
           <Button type="submit">Save changes</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
   );
 }
+
+
