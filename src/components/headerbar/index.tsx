@@ -6,6 +6,7 @@ import Link from "next/link";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import AddTeam from "../global/AddTeam";
+import UserButton from "../global/UserButton";
 const HeaderBar = () => {
   const pathname = usePathname();
   return (
@@ -20,7 +21,7 @@ const HeaderBar = () => {
         </Link>
       <Separator orientation="vertical" />
       <div className="flex items-center gap-3 absolute right-4">
-          <AddTeam />
+          <UserButton />
       </div>
     </header>
   );

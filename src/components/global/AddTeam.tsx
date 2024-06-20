@@ -28,9 +28,9 @@ export default function AddTeam() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Invite</Button>
+        <Button variant="default">Invite</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] CardStyle">
         <DialogHeader>
           <DialogTitle>New Staff</DialogTitle>
           <DialogDescription>

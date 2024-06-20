@@ -24,13 +24,14 @@ export const sitelink = [
 export const menuUser = [
   { id: 1, title: "Profile", url: "/account/profile", icon:  FluentPerson24Regular},
   { id: 3, title: "Settings", url: "/account/profilesettings", icon: FluentSettings24Regular},
+  { id: 3, title: "Sign Out", url: "/sign-out", icon: FluentSignOut24Regular},
 ]
 export const sidebar = [
-  { id: 3, title: "Organization", url: "/account/task", icon: FluentTaskListSquare24Regular},
-  { id: 3, title: "Task", url: "/account/task", icon: FluentTaskListSquare24Regular},
-  { id: 1, title: "View", url: "/account/view", icon: WorkspaceIcons },
-  { id: 2, title: "Schedule", url: "/account/schedule", icon: CalenderDate },
-  { id: 7, title: "Teams", url: "/account/teams", icon: FluentPeopleTeam24Regular },
+  { id: 3, title: "Organization", url: "/organization", icon: FluentTaskListSquare24Regular},
+  { id: 3, title: "Task", url: "/organization/task", icon: FluentTaskListSquare24Regular},
+  { id: 1, title: "View", url: "/organization/view", icon: WorkspaceIcons },
+  { id: 2, title: "Schedule", url: "/organization/schedule", icon: CalenderDate },
+  { id: 7, title: "Members", url: "/organization/members", icon: FluentPeopleTeam24Regular },
 ];
 export const workspaceMenu = [
   {

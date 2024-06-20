@@ -71,7 +71,7 @@ const NewWorkspace = () => {
             <PlusIcon className="w-4 h-4" />
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[625px]">
+        <DialogContent className="sm:max-w-[625px] CardStyle">
           <DialogHeader>
             <DialogTitle>New Workspace</DialogTitle>
             <DialogDescription>Create a new workspace</DialogDescription>

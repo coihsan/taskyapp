@@ -37,7 +37,7 @@ export default function Home() {
               schedule, daily task, project management like a roadmap, memos,
               boards, and more.
             </p>
-            <div className="flex items-center gap-3 justify-center mt-6">
+            <div className="grid w-full md:flex items-center gap-3 justify-center mt-6">
               <HoverBorderGradient
                 containerClassName="rounded-full"
                 as="button"
@@ -45,7 +45,7 @@ export default function Home() {
               >
                 <span>Free! Get Started</span>
               </HoverBorderGradient>
-              <Link href={'/how'}>How it's works</Link>
+              <Link className="flex items-center justify-center border px-4 py-2 rounded-full" href={'/how'}>How it's works</Link>
             </div>
           </div>
           <Image
