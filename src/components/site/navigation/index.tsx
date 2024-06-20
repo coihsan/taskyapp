@@ -4,8 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import { sitelink } from "@/lib/const";
 import { ModeToggle } from "@/components/global/ModeToggle";
 import Logo from "@/components/global/logo";
-import { SignIn } from "@/components/auth/sign-in";
-import UserButton from "@/components/auth/user-button";
+import { SignIn } from "@/components/auth/signin-button";
 const MenuLink = () => {
   return (
     <ul className="hidden lg:flex items-center gap-8">
@@ -34,7 +33,7 @@ const Navigation = () => {
           </div>
         </div>
         <div className="flex items-center h-7 space-x-2">
-          <UserButton />
+          <SignIn />
           {/* <Link
             className="textHover text-sm font-semibold uppercase px-4 py-2 border border-black/10 dark:border-white/10 rounded-md bg-onyx-50 dark:bg-white dark:text-onyx-950"
             href="/sign-in"
