@@ -1,12 +1,310 @@
 generator client {
-  provider = "prisma-client-js"
-  previewFeatures = ["multiSchema"]
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id            Int             @id @default(autoincrement())
+  name          String
+  email         String          @unique
+  emailVerified DateTime?
+  bio           String[]
+  avatar        String?
+  password      String
+  phoneNumber   String?         @default("000-000-0000")
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  role          Role?           @default(OWNER)
+  status        Status?         @default(ACTIVE)
+  accounts      Account[]
+  Attachment    Attachment[]
+  Authenticator Authenticator[]
+  comments      Comments[]
+  Funnel        Funnel[]
+  Media         Media[]
+  Memos         Memos[]
+  notification  Notification[]
+  organization  Organization[]
+  Permissions   Permissions[]
+  projects      Projects[]
+  sessions      Session[]
+  task          Tasks[]
+  Workflow      Workflows[]
+}
+
+model Account {
+  userId            Int
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       Int
+  expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+model Authenticator {
+  credentialID         String  @unique
+  userId               Int
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+  user                 User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, credentialID])
+}
+
+model Permissions {
+  id     String  @id @default(uuid())
+  email  String  @unique
+  userId Int
+  access Boolean
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Organization {
+  id           String         @id @default(uuid())
+  name         String         @unique
+  connectAccountId String?               @default("")
+  logo         String?
+  subDomainName String?      @unique
+  createdAt    DateTime       @default(now()) 
+  updatedAt    DateTime       @updatedAt 
+  userId       Int
+  role         Role           @default(OWNER)
+  Invitation   Invitation[]
+  notification Notification[]
+  createdBy    User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projects     Projects[]
+  teams        Teams[]
+}
+
+model Projects {
+  id             String         @id @default(uuid())
+  name           String
+  description    String
+  connectAccountId String?                   @default("")
+  dueDate        DateTime       @default(now()) 
+  createdAt      DateTime       @default(now()) 
+  updatedAt      DateTime       @updatedAt 
+  dueDateFrom    DateTime       
+  dueDateTo      DateTime       
+  status         TaskStatus
+  pathName       String   @default("")
+  organizationId String
+  userId         Int
+  board          Board[]
+  Funnel         Funnel[]
+  Invitation     Invitation[]
+  Media          Media[]
+  Memos          Memos[]
+  notification   Notification[]
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdBy      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Schedule       Schedule[]
+  tasks          Tasks[]
+  Teams          Teams[]
+  workflows      Workflows[]
+}
+
+model Board {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  status      String
+  projectId   String
+  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model Tasks {
+  id          String     @id @default(uuid())
+  title       String
+  description String
+  status      TaskStatus
+  projectId   String
+  userId      Int
+  comments    Comments[]
+  substask    Substask[]
+  Tags        Tag[]
+  project     Projects   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createBy    User       @relation(fields: [userId], references: [id])
+  assigned    Teams[]
+}
+
+model Substask {
+  id          String     @id @default(uuid())
+  title       String
+  description String
+  status      TaskStatus
+  taskId      String
+  task        Tasks      @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
+
+model Tag {
+  id        String   @id @default(uuid())
+  name      String
+  color     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tagsId    String
+  Tags      Tasks    @relation(fields: [tagsId], references: [id], onDelete: Cascade)
+}
+
+model Comments {
+  id         String       @id @default(uuid())
+  createdAt  DateTime     @default(now())
+  content    String
+  userId     Int
+  taskId     String
+  attachment Attachment[]
+  task       Tasks        @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Attachment {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  link        String   @unique
+  commentsId  String
+  userId      Int
+  comments    Comments @relation(fields: [commentsId], references: [id], onDelete: Cascade)
+  createdBy   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Memos {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  status      String
+  article     String
+  published   Boolean  @default(false)
+  projectId   String
+  userId      Int
+  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdBy   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Funnel {
+  id          String   @id @default(uuid())
+  title       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  description String?
+  published   Boolean  @default(false)
+  projectId   String
+  userId      Int
+  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdBy   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Media {
+  id          String   @id @default(uuid())
+  title       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  type        String?
+  description String
+  link        String   @unique
+  projectId   String
+  userId      Int
+  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdBy   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Schedule {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  projectId   String
+  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model Teams {
+  id             String       @id @default(uuid())
+  name           String
+  createdAt      DateTime     @default(now()) 
+  status         Status
+  organizationId String
+  role           Role
+  taskId         String
+  projectId      String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project        Projects     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  task           Tasks        @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
+
+model Workflows {
+  id        String   @id @default(uuid())
+  nodes     String?
+  edges     String?
+  name      String
+  flowPath  String?
+  cronPath  String?
+  publish   Boolean? @default(false)
+  projectId String
+  userId    Int
+  project   Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdBy User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id             String       @id @default(uuid())
+  title          String
+  description    String
+  status         String
+  userId         Int
+  organizationId String
+  projectId      String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project        Projects     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Invitation {
+  id             String       @id @default(uuid())
+  email          String       @unique
+  role           Role
+  organizationId String
+  projectId      String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project        Projects     @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 enum Role {
@@ -32,280 +330,8 @@ enum InviteStatus {
   REJECTED
 }
 
-model User {
-  id           Int            @id     @default(autoincrement())
-  name         String
-  email        String         @unique
-  emailVerified DateTime?
-  password     String
-  accounts      Account[]
-  sessions      Session[]
-  Authenticator Authenticator[]
-  phoneNumber  String?        @default("000-000-0000")
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  role         Role?           @default(OWNER)
-  avatar       String?
-  // Features
-  projects     Projects[]     
-  organization Organization[]
-  notification Notification[]
-  status       Status?         @default(ACTIVE)
-  comments     Comments[]
-
-}
-model Account {
-  userId            Int
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String?
-  access_token      String?
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?
-  session_state     String?
- 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
- 
-  user              User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
-  @@id([provider, providerAccountId])
-}
-model Session {
-  sessionToken String   @unique
-  userId       Int
-  expires      DateTime
- 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
- 
-model VerificationToken {
-  identifier String
-  token      String
-  expires    DateTime
- 
-  @@id([identifier, token])
-}
- 
-// Optional for WebAuthn support
-model Authenticator {
-  credentialID         String  @unique
-  userId               Int
-  providerAccountId    String
-  credentialPublicKey  String
-  counter              Int
-  credentialDeviceType String
-  credentialBackedUp   Boolean
-  transports           String?
- 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
-  @@id([userId, credentialID])
-}
-model Organization {
-  id           String         @id @default(uuid())
-  name         String         @unique
-  logo         String?
-  createdAt    DateTime       @default(now()) @db.Date
-  updatedAt    DateTime       @updatedAt @db.Date
-  userId       Int
-  role         Role           @default(OWNER)
-  projects     Projects[]
-  teams        Teams[]
-  notification Notification[]
-  Invitation   Invitation[]
-
-  createdBy    User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model Projects {
-  id             String @id @default(uuid())
-  name           String
-  description    String
-  dueDate        DateTime       @default(now()) @db.Date
-  createdAt      DateTime       @default(now()) @db.Date
-  updatedAt      DateTime       @updatedAt @db.Date
-  dueDateFrom    DateTime       @db.Date
-  dueDateTo      DateTime       @db.Date
-  tasks          Tasks[]
-  board          Board[]
-  status         TaskStatus
-  Memos          Memos[]
-  Funnel         Funnel[]
-  Media          Media[]
-  Schedule       Schedule[]
-  Teams          Teams[]
-  workflows      Workflows[]
-  notification   Notification[]
-  organizationId String
-  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  userId         Int
-  createdBy      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Invitation     Invitation[]
-}
-
-model Board {
-  id          String   @id @default(uuid()) 
-  title       String
-  description String
-  status      String
-  projectId   String
-  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
-}
-
-model Tasks {
-  id          String     @id @default(uuid()) 
-  title       String
-  description String
-  status      TaskStatus
-  substask    Substask[]
-  Tags        Tag[]
-  projectId   String
-  project     Projects   @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  assigned    Teams[]
-  comments    Comments[]
-}
-
-model Substask {
-  id          String     @id @default(uuid()) 
-  title       String
-  description String
-  status      TaskStatus
-  taskId      String
-  task        Tasks      @relation(fields: [taskId], references: [id], onDelete: Cascade)
-}
-
-model Tag {
-  id        String   @id @default(uuid()) 
-  name      String
-  color     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  tagsId    String
-  Tags      Tasks    @relation(fields: [tagsId], references: [id], onDelete: Cascade)
-}
-
-model Comments {
-  id         String       @id @default(uuid()) 
-  createdAt  DateTime     @default(now())
-  content    String
-  attachment Attachment[]
-  userId     Int
-  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  taskId     String
-  task       Tasks        @relation(fields: [taskId], references: [id], onDelete: Cascade)
-}
-
-model Attachment {
-  id          String   @id @default(uuid()) 
-  title       String
-  description String
-  link        String   @unique
-  commentsId  String
-  comments    Comments @relation(fields: [commentsId], references: [id], onDelete: Cascade)
-}
-
-model Memos {
-  id          String   @id @default(uuid()) 
-  title       String
-  description String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  status      String
-  article     String
-  published   Boolean  @default(false)
-  projectId   String
-  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
-}
-
-model Funnel {
-  id          String   @id @default(uuid()) 
-  title       String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  description String?
-  published   Boolean  @default(false)
-  projectId   String
-  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
-}
-
-model Media {
-  id          String   @id @default(uuid()) 
-  title       String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  type        String?
-  description String
-  link        String   @unique
-  projectId   String
-  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
-}
-
-model Schedule {
-  id          String   @id @default(uuid()) 
-  title       String
-  description String
-  projectId   String
-  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
-}
-
-model Teams {
-  id             String       @id @default(uuid()) 
-  name           String
-  createdAt      DateTime     @default(now()) @db.Date
-  status         Status
-  organizationId String
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  role           Role
-  taskId         String
-  task           Tasks        @relation(fields: [taskId], references: [id], onDelete: Cascade)
-  projectId      String
-  project        Projects     @relation(fields: [projectId], references: [id], onDelete: Cascade)
-}
-
-model Workflows {
-  id        String   @id @default(uuid()) 
-  nodes     String?
-  edges     String?
-  name      String
-  flowPath  String?
-  cronPath  String?
-  publish   Boolean? @default(false)
-  projectId String
-  project   Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
-}
-
-model Notification {
-  id             String       @id @default(uuid()) 
-  title          String
-  description    String
-  status         String
-  userId         Int
-  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  organizationId String
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  projectId      String
-  project        Projects     @relation(fields: [projectId], references: [id], onDelete: Cascade)
-}
-
 enum InvitationStatus {
   ACCEPTED
   REVOKED
   PENDING
-}
-
-model Invitation {
-  id       String           @id @default(uuid())
-  email    String           @unique
-  role     Role    
-  organizationId String
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)   
-  projectId      String
-  project        Projects     @relation(fields: [projectId], references: [id], onDelete: Cascade)      
 }

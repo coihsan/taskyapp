@@ -1,5 +1,11 @@
 "use client";
 import React from "react";
+import {
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton
+} from '@clerk/nextjs'
 import { ModeToggle } from "../global/ModeToggle";
 import { Separator } from "../ui/separator";
 import Link from "next/link";
@@ -23,6 +29,14 @@ const HeaderBar = () => {
       <Separator orientation="vertical" />
       <div className="flex items-center gap-3 absolute right-4">
         <AddTeam />
+        <div className="flex items-center justify-center bg-white rounded-full p-px">
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+        </div>
       </div>
     </header>
   );

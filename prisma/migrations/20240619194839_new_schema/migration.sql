@@ -19,12 +19,13 @@ CREATE TABLE "User" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "emailVerified" TIMESTAMP(3),
+    "bio" TEXT[],
+    "avatar" TEXT,
     "password" TEXT NOT NULL,
     "phoneNumber" TEXT DEFAULT '000-000-0000',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "role" "Role" DEFAULT 'OWNER',
-    "avatar" TEXT,
     "status" "Status" DEFAULT 'ACTIVE',
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -82,6 +83,16 @@ CREATE TABLE "Authenticator" (
 );
 
 -- CreateTable
+CREATE TABLE "Permissions" (
+    "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "userId" INTEGER NOT NULL,
+    "access" BOOLEAN NOT NULL,
+
+    CONSTRAINT "Permissions_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Organization" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
@@ -129,6 +140,7 @@ CREATE TABLE "Tasks" (
     "description" TEXT NOT NULL,
     "status" "TaskStatus" NOT NULL,
     "projectId" TEXT NOT NULL,
+    "userId" INTEGER NOT NULL,
 
     CONSTRAINT "Tasks_pkey" PRIMARY KEY ("id")
 );
@@ -174,6 +186,7 @@ CREATE TABLE "Attachment" (
     "description" TEXT NOT NULL,
     "link" TEXT NOT NULL,
     "commentsId" TEXT NOT NULL,
+    "userId" INTEGER NOT NULL,
 
     CONSTRAINT "Attachment_pkey" PRIMARY KEY ("id")
 );
@@ -189,6 +202,7 @@ CREATE TABLE "Memos" (
     "article" TEXT NOT NULL,
     "published" BOOLEAN NOT NULL DEFAULT false,
     "projectId" TEXT NOT NULL,
+    "userId" INTEGER NOT NULL,
 
     CONSTRAINT "Memos_pkey" PRIMARY KEY ("id")
 );
@@ -202,6 +216,7 @@ CREATE TABLE "Funnel" (
     "description" TEXT,
     "published" BOOLEAN NOT NULL DEFAULT false,
     "projectId" TEXT NOT NULL,
+    "userId" INTEGER NOT NULL,
 
     CONSTRAINT "Funnel_pkey" PRIMARY KEY ("id")
 );
@@ -216,6 +231,7 @@ CREATE TABLE "Media" (
     "description" TEXT NOT NULL,
     "link" TEXT NOT NULL,
     "projectId" TEXT NOT NULL,
+    "userId" INTEGER NOT NULL,
 
     CONSTRAINT "Media_pkey" PRIMARY KEY ("id")
 );
@@ -254,6 +270,7 @@ CREATE TABLE "Workflows" (
     "cronPath" TEXT,
     "publish" BOOLEAN DEFAULT false,
     "projectId" TEXT NOT NULL,
+    "userId" INTEGER NOT NULL,
 
     CONSTRAINT "Workflows_pkey" PRIMARY KEY ("id")
 );
@@ -292,6 +309,9 @@ CREATE UNIQUE INDEX "Session_sessionToken_key" ON "Session"("sessionToken");
 CREATE UNIQUE INDEX "Authenticator_credentialID_key" ON "Authenticator"("credentialID");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Permissions_email_key" ON "Permissions"("email");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Organization_name_key" ON "Organization"("name");
 
 -- CreateIndex
@@ -313,6 +333,9 @@ ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId"
 ALTER TABLE "Authenticator" ADD CONSTRAINT "Authenticator_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Permissions" ADD CONSTRAINT "Permissions_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Organization" ADD CONSTRAINT "Organization_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -326,6 +349,9 @@ ALTER TABLE "Board" ADD CONSTRAINT "Board_projectId_fkey" FOREIGN KEY ("projectI
 
 -- AddForeignKey
 ALTER TABLE "Tasks" ADD CONSTRAINT "Tasks_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Tasks" ADD CONSTRAINT "Tasks_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Substask" ADD CONSTRAINT "Substask_taskId_fkey" FOREIGN KEY ("taskId") REFERENCES "Tasks"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -343,13 +369,25 @@ ALTER TABLE "Comments" ADD CONSTRAINT "Comments_taskId_fkey" FOREIGN KEY ("taskI
 ALTER TABLE "Attachment" ADD CONSTRAINT "Attachment_commentsId_fkey" FOREIGN KEY ("commentsId") REFERENCES "Comments"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Attachment" ADD CONSTRAINT "Attachment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Memos" ADD CONSTRAINT "Memos_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Memos" ADD CONSTRAINT "Memos_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Funnel" ADD CONSTRAINT "Funnel_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Funnel" ADD CONSTRAINT "Funnel_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Media" ADD CONSTRAINT "Media_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Media" ADD CONSTRAINT "Media_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Schedule" ADD CONSTRAINT "Schedule_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -365,6 +403,9 @@ ALTER TABLE "Teams" ADD CONSTRAINT "Teams_projectId_fkey" FOREIGN KEY ("projectI
 
 -- AddForeignKey
 ALTER TABLE "Workflows" ADD CONSTRAINT "Workflows_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Workflows" ADD CONSTRAINT "Workflows_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Notification" ADD CONSTRAINT "Notification_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
