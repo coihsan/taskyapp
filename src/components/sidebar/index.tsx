@@ -39,7 +39,6 @@ import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import { SidebarContent } from "../global/SidebarContent";
 import { Button } from "../ui/button";
-import OrganizationProfilePage from "../OrganizationProfile";
 
 const labels = ["Up", "To top", "To down", "down"];
 
@@ -53,7 +52,6 @@ export function Sidebar() {
         <SidebarContent borderBottom>
           <Logo />
         </SidebarContent>
-        <OrganizationProfilePage />
         <SidebarContent borderBottom>
           <Select>
             <SelectTrigger className="h-12">
