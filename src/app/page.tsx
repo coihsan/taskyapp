@@ -13,6 +13,7 @@ import GradientHero from "@/components/design/gradientHero";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import Navigation from "@/components/site/navigation";
 import FooterSite from "@/components/site/footer";
+import Link from "next/link";
 const Section = ({ children }: { children: React.ReactNode }) => {
   return <section className="container py-12">{children}</section>;
 };
@@ -36,7 +37,7 @@ export default function Home() {
               schedule, daily task, project management like a roadmap, memos,
               boards, and more.
             </p>
-            <div className="flex items-center justify-center mt-6">
+            <div className="flex items-center gap-3 justify-center mt-6">
               <HoverBorderGradient
                 containerClassName="rounded-full"
                 as="button"
@@ -44,6 +45,7 @@ export default function Home() {
               >
                 <span>Free! Get Started</span>
               </HoverBorderGradient>
+              <Link href={'/how'}>How it's works</Link>
             </div>
           </div>
           <Image

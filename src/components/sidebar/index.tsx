@@ -1,9 +1,5 @@
 "use client";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible"
+
 import { menuUser, sidebar } from "@/lib/const";
 import clsx from "clsx";
 import Link from "next/link";
@@ -43,6 +39,7 @@ import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import { SidebarContent } from "../global/SidebarContent";
 import { Button } from "../ui/button";
+import OrganizationProfilePage from "../OrganizationProfile";
 
 const labels = ["Up", "To top", "To down", "down"];
 
@@ -50,23 +47,13 @@ export function Sidebar() {
   const isActive = false;
   const pathname = usePathname();
   const [label, setLabel] = useState("feature");
-  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Collapsible
-    open={isOpen}
-      onOpenChange={setIsOpen}
-      className="w-[350px] space-y-2">
-        <CollapsibleTrigger asChild>
-          <Button variant="ghost" size="sm">
-            <span className="sr-only">Toggle</span>
-          </Button>
-        </CollapsibleTrigger>
-      <CollapsibleContent>
       <ScrollArea className="w-full max-w-72 relative h-full overflow-y-scroll h-screen">
         <SidebarContent borderBottom>
           <Logo />
         </SidebarContent>
+        <OrganizationProfilePage />
         <SidebarContent borderBottom>
           <Select>
             <SelectTrigger className="h-12">
@@ -235,7 +222,5 @@ export function Sidebar() {
         </SidebarContent>
         <ScrollBar orientation="vertical" />
       </ScrollArea>
-      </CollapsibleContent>
-    </Collapsible>
   );
 }
