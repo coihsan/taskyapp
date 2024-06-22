@@ -1,6 +1,5 @@
 import NextAuth from "next-auth"
 import { db } from "./lib/db"
-import { PrismaClient } from "@prisma/client"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { PrismaNeon } from "@prisma/adapter-neon"
 import { Pool } from "@neondatabase/serverless"

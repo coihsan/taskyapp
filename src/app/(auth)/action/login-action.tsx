@@ -1,10 +1,13 @@
 "use server"
+
 import * as z from 'zod';
 import { LoginSchema, SignupSchema } from './schema';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { db } from '@/lib/db';
 import { getUserByEmail } from '@/lib/data/user';
-
+import { signIn } from '@/auth';
+import { DEFAULT_LOGIN_REDIRECT } from '../../../../routes';
+import { AuthError } from 'next-auth';
 export const loginAction = async (values : z.infer<typeof LoginSchema>) =>{
     const validatedFields = LoginSchema.safeParse(values);
 
@@ -12,19 +15,23 @@ export const loginAction = async (values : z.infer<typeof LoginSchema>) =>{
         return {error : "Invalid credentials!" }
     }
     const {email, password} = validatedFields.data;
-
-    const existingUser = await db.user.findUnique({
-        where: {
+    try {
+        await signIn("credentials", {
             email,
-            password
+            password,
+            redirectTo: DEFAULT_LOGIN_REDIRECT
+        });
+    } catch (error) {
+        if (error instanceof AuthError) {
+            switch (error.type) {
+                case "CredentialsSignin":
+                return {error: "Invalid credentials!"}
+            default: 
+                return {error: "Something went wrong!"}
+            }
         }
-    })
-
-    if (!existingUser){
-        return {error: "User does not exist"}
+        throw error;
     }
-
-    return {success: "Login Successful"}
 }
 
 export const SignupAction = async (values : z.infer<typeof SignupSchema>) =>{
