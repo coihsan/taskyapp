@@ -117,7 +117,7 @@ model Projects {
   id             String         @id @default(uuid())
   name           String
   description    String
-  connectAccountId String?                   @default("")
+  connectAccountId String?      @default("")
   dueDate        DateTime       @default(now()) 
   createdAt      DateTime       @default(now()) 
   updatedAt      DateTime       @updatedAt 
@@ -310,6 +310,7 @@ model Invitation {
 enum Role {
   STAFF
   OWNER
+  VIEW
 }
 
 enum Status {
@@ -322,12 +323,6 @@ enum TaskStatus {
   INPROGRESS
   COMPLETED
   ARCHIVE
-}
-
-enum InviteStatus {
-  PENDING
-  ACCEPTED
-  REJECTED
 }
 
 enum InvitationStatus {
