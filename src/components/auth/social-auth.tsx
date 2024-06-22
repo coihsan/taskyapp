@@ -9,7 +9,7 @@ const SocialAuth = () =>{
             <Button
             size={'lg'}
             className="w-full flex items-center gap-x-3 justify-center"
-            variant="secondary"
+            variant="default"
             onClick={() => {}}
             >
                 <RiGoogleFill className="size-6" />
@@ -18,7 +18,7 @@ const SocialAuth = () =>{
             <Button
             size={'lg'}
             className="w-full flex items-center gap-x-3 justify-center"
-            variant="secondary"
+            variant="default"
             onClick={() => {}}
             >
                 <RiGithubFill className="size-6" />

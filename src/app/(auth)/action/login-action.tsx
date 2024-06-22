@@ -3,6 +3,7 @@ import * as z from 'zod';
 import { LoginSchema, SignupSchema } from './schema';
 import bcrypt from 'bcrypt';
 import { db } from '@/lib/db';
+import { getUserByEmail } from '@/lib/data/user';
 
 export const loginAction = async (values : z.infer<typeof LoginSchema>) =>{
     const validatedFields = LoginSchema.safeParse(values);
@@ -35,11 +36,7 @@ export const SignupAction = async (values : z.infer<typeof SignupSchema>) =>{
     const {email, password, name} = validatedFields.data;
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const existingUser = await db.user.findUnique({
-        where: {
-            email
-        }
-    })
+    const existingUser = await getUserByEmail(email)
 
     if (existingUser){
         return {error: "User already exists"}
