@@ -16,7 +16,7 @@ model User {
   emailVerified DateTime?
   bio           String[]
   avatar        String?
-  password      String
+  password      String?
   phoneNumber   String?         @default("000-000-0000")
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt

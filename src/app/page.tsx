@@ -14,6 +14,7 @@ import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import Navigation from "@/components/site/navigation";
 import FooterSite from "@/components/site/footer";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 const Section = ({ children }: { children: React.ReactNode }) => {
   return <section className="container py-12">{children}</section>;
 };
@@ -29,13 +30,11 @@ export default function Home() {
             <h1
               className={`${archivo} font-bold text-4xl md:text-6xl lg:text-6xl text-center pb-6`}
             >
-              Organize your daily Task and Projects with{" "}
-              <span className="text-lime-500">TaskyApp</span>
+              It's a Primitive Task Management{" "}
+              <span className="text-lime-500">App</span>
             </h1>
             <p className="text-center text-zinc-400 mx-auto">
-              A Task Manager for personal or team projects including boards,
-              schedule, daily task, project management like a roadmap, memos,
-              boards, and more.
+              A Task manager for personal or organization use, this is not just Agile-Method. With Primitive App, you can add some feature what you like.
             </p>
             <div className="grid w-full md:flex items-center gap-3 justify-center mt-6">
               <HoverBorderGradient
@@ -45,7 +44,9 @@ export default function Home() {
               >
                 <span>Free! Get Started</span>
               </HoverBorderGradient>
-              <Link className="flex items-center justify-center border px-4 py-2 rounded-full" href={'/how'}>How it's works</Link>
+              <Button className="rounded-full" variant={'link'}>
+                <Link href={'/how'}>How it's works</Link>
+              </Button>
             </div>
           </div>
           <Image

@@ -1,13 +1,12 @@
 "use client"
 import LoginWrapper from "../action/login-wrapper";
-import { Form, FormField, FormLabel, FormMessage, FormControl, FormItem} from "@/components/ui/form";
+import { Form, FormField, FormLabel, FormControl, FormItem, FormMessage} from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import * as z from 'zod'
 import { useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
 import FromAuthError from "@/components/auth/form-auth-error";
 import FormAuthSuccess from "@/components/auth/form-auth-success";
 import { loginAction } from "./login-action";
@@ -44,14 +43,15 @@ const onSubmit = (values : z.infer<typeof LoginSchema>) =>{
 
   return(
     <LoginWrapper
-    headerLabel="Enter your email below to login to your account"
+    headerDescription="Enter your email below to login to your account"
+    headerLabel="Access your account"
     backButtonLabel="Don't have an account?"
     backButtonHref="/sign-up"
     showSocial>
       <Form {...form}>
         <form 
-        onSubmit={form.handleSubmit(() => {onSubmit})}
-        className="space-y-4">
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-4 w-full">
             <div className="space-y-4">
                 <FormField
                     control={form.control}
@@ -63,6 +63,7 @@ const onSubmit = (values : z.infer<typeof LoginSchema>) =>{
                             <FormControl>
                                 <Input type="email" placeholder="achonk@gmail.com" {...field} />
                             </FormControl>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
@@ -74,8 +75,9 @@ const onSubmit = (values : z.infer<typeof LoginSchema>) =>{
                         <FormItem>
                             <FormLabel>Password</FormLabel>
                             <FormControl>
-                                <Input type="email" placeholder="********" {...field} />
+                                <Input type="password" placeholder="********" {...field} />
                             </FormControl>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
@@ -85,11 +87,6 @@ const onSubmit = (values : z.infer<typeof LoginSchema>) =>{
             <Button className="w-full" variant={'default'} type="submit">
                 Login
             </Button>
-            {/* <div className="flex items-center space-x-3 w-full">
-                <Separator orientation="horizontal" />
-                <div className="w-max text-sm text-muted-foreground">OR</div>
-                <Separator orientation="horizontal" />
-            </div> */}
         </form>
       </Form>
     </LoginWrapper>

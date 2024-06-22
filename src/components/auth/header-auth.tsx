@@ -1,16 +1,19 @@
 import Image from 'next/image';
 import React from 'react'
+import Logo from '../global/logo';
 interface HeaderAuthProps {
     label: string,
-    headerCard: string
+    description: string
 }
 
-const HeaderAuth = ({ label }: HeaderAuthProps) => {
+const HeaderAuth = ({ label, description }: HeaderAuthProps) => {
     return (
         <div className="w-full flex flex-col gap-y-4 items-center">
-            <Image className='pb-2' src={'/logo.svg'} width={128} height={128} alt={'Logo'} />
-            <h1 className="text-3xl font-bold">Login</h1>
-            <p className='text-muted-foreground text-sm'>{label}</p>
+            <Logo />
+            <div className='mt-4'>
+                <h1 className="text-2xl font-semibold">{label}</h1>
+                <p className='text-muted-foreground text-sm'>{description}</p>
+            </div>
         </div>
     )
 }

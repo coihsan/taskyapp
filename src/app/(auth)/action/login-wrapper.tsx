@@ -3,18 +3,20 @@
 import BackButtonAuth from "@/components/auth/back-button-auth"
 import HeaderAuth from "@/components/auth/header-auth"
 import SocialAuth from "@/components/auth/social-auth"
+import { ArrowLeftIcons } from "@/components/icons/arrow-left"
+import { Button } from "@/components/ui/button"
 import { 
     Card,
     CardContent,
-    CardDescription,
     CardFooter,
     CardHeader,
-    CardTitle,
  } from "@/components/ui/card"
+import Link from "next/link"
 
 interface LoginWrapperProps{
     children: React.ReactNode,
     headerLabel: string,
+    headerDescription: string,
     backButtonLabel: string,
     backButtonHref: string,
     showSocial?: boolean
@@ -23,27 +25,48 @@ interface LoginWrapperProps{
 const LoginWrapper = ({
     children,
     headerLabel,
+    headerDescription,
     backButtonLabel,
     backButtonHref,
     showSocial
 } : LoginWrapperProps) =>{
     return(
-        <Card className="max-w-[400px] w-full CardStyle">
-            <CardHeader>
-                <HeaderAuth label={headerLabel} />
-            </CardHeader>
-            <CardContent>
-                {children}
-            </CardContent>
-            {showSocial && (
+        <div className="max-w-[400px] w-full ">
+            <Button variant={'link'}>
+                <Link className="flex items-center gap-2 mb-3" href={'/'}>
+                    <ArrowLeftIcons />
+                    <span>Back</span>
+                </Link>
+            </Button>
+            <Card className="CardStyle">
+                <CardHeader>
+                    <HeaderAuth label={headerLabel} description={headerDescription} />
+                </CardHeader>
+                <CardContent>
+                    {children}
+                </CardContent>
+                <CardContent>
+                    <div className="relative">
+                        <div className="absolute inset-0 flex items-center">
+                            <span className="w-full border-t" />
+                        </div>
+                        <div className="relative flex justify-center text-xs uppercase">
+                            <span className="p-3 text-muted-foreground backdrop-blur-md rounded-full">
+                            Or
+                            </span>
+                        </div>
+                    </div>
+                    </CardContent>
+                {showSocial && (
+                    <CardFooter>
+                        <SocialAuth />
+                    </CardFooter>
+                )}
                 <CardFooter>
-                    <SocialAuth />
+                    <BackButtonAuth href={backButtonHref} label={backButtonLabel} />
                 </CardFooter>
-            )}
-            <CardFooter>
-                <BackButtonAuth href={backButtonHref} label={backButtonLabel} />
-            </CardFooter>
-        </Card>
+            </Card>
+        </div>
     )
 }
 

@@ -9,7 +9,7 @@ interface BackButtonAuthProps{
 }
 const BackButtonAuth = ({href, label} : BackButtonAuthProps) =>{
     return(
-        <Button className="font-normal w-full">
+        <Button variant={'link'} className="font-normal w-full">
             <Link href={href}>
                 {label}
             </Link>
