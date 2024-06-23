@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-import ("./ngrok.config.js");
+// import ("./ngrok.config.js");
 const nextConfig = {
   images: {
     remotePatterns: [

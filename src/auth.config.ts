@@ -8,10 +8,6 @@ import bcrypt from 'bcryptjs';
 
 export default { providers: [
   Credentials({
-    credentials: {
-      email: {},
-      password: {},
-    },
    async authorize(credentials) {
     const validatedFieldss = LoginSchema.safeParse(credentials) 
 

@@ -33,10 +33,10 @@ const SignupForm = () =>{
                 setError(data.error)
             })
             .catch(error => {
-                setError(error)
+                setError(error.message);
             })
         })
-}
+    }
   return(
     <LoginWrapper
     headerDescription="Enter your information to create an account"
@@ -94,7 +94,7 @@ const SignupForm = () =>{
             </div>
             <FromAuthError message={error} />
             <FormAuthSuccess message={success} />
-            <Button className="w-full" variant={'default'} type="submit">
+            <Button disabled={isPending} className="w-full" variant={'default'} type="submit">
                 Create an account
             </Button>
         </form>

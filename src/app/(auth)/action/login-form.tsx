@@ -18,6 +18,7 @@ const LoginForm = () =>{
     const [success, setSuccess] = useState<string | undefined>("")
     const [isPending, startTransition] = useTransition()
     const form = useForm<z.infer<typeof LoginSchema>>({
+        mode: "onChange",
         resolver: zodResolver(LoginSchema),
         defaultValues: {
           email: "",
@@ -33,6 +34,7 @@ const onSubmit = (values : z.infer<typeof LoginSchema>) =>{
         loginAction(values)
         .then((data) =>{
             setError(data?.error)
+            setSuccess(data?.success)
         })
         .catch((error) =>{
             setError(error)
@@ -83,7 +85,7 @@ const onSubmit = (values : z.infer<typeof LoginSchema>) =>{
             </div>
             <FromAuthError message={error} />
             <FormAuthSuccess message={success} />
-            <Button className="w-full" variant={'default'} type="submit">
+            <Button disabled={isPending} className="w-full" variant={'default'} type="submit">
                 Login
             </Button>
         </form>

@@ -34,6 +34,7 @@ export const loginAction = async (values : z.infer<typeof LoginSchema>) =>{
         }
         throw error;
     }
+    return {success: "Login Successful"}
 }
 // For sign up
 export const SignupAction = async (values : z.infer<typeof SignupSchema>) =>{
@@ -41,7 +42,7 @@ export const SignupAction = async (values : z.infer<typeof SignupSchema>) =>{
 
     if (!validatedFields.success){
         return {error : "Invalid credentials!" }
-    }
+    } 
     const {email, password, name} = validatedFields.data;
     const hashedPassword = await bcrypt.hash(password, 10);
 

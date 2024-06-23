@@ -1,14 +1,11 @@
 -- CreateEnum
-CREATE TYPE "Role" AS ENUM ('STAFF', 'OWNER');
+CREATE TYPE "Role" AS ENUM ('USER', 'ADMIN', 'VIEW');
 
 -- CreateEnum
 CREATE TYPE "Status" AS ENUM ('ACTIVE', 'INACTIVE');
 
 -- CreateEnum
 CREATE TYPE "TaskStatus" AS ENUM ('PENDING', 'INPROGRESS', 'COMPLETED', 'ARCHIVE');
-
--- CreateEnum
-CREATE TYPE "InviteStatus" AS ENUM ('PENDING', 'ACCEPTED', 'REJECTED');
 
 -- CreateEnum
 CREATE TYPE "InvitationStatus" AS ENUM ('ACCEPTED', 'REVOKED', 'PENDING');
@@ -19,13 +16,13 @@ CREATE TABLE "User" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "emailVerified" TIMESTAMP(3),
+    "password" TEXT,
     "bio" TEXT[],
     "avatar" TEXT,
-    "password" TEXT NOT NULL,
     "phoneNumber" TEXT DEFAULT '000-000-0000',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "role" "Role" DEFAULT 'OWNER',
+    "role" "Role" DEFAULT 'USER',
     "status" "Status" DEFAULT 'ACTIVE',
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -96,11 +93,13 @@ CREATE TABLE "Permissions" (
 CREATE TABLE "Organization" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "connectAccountId" TEXT DEFAULT '',
     "logo" TEXT,
-    "createdAt" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATE NOT NULL,
+    "subDomainName" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
     "userId" INTEGER NOT NULL,
-    "role" "Role" NOT NULL DEFAULT 'OWNER',
+    "role" "Role" NOT NULL DEFAULT 'ADMIN',
 
     CONSTRAINT "Organization_pkey" PRIMARY KEY ("id")
 );
@@ -110,12 +109,14 @@ CREATE TABLE "Projects" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "dueDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "createdAt" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATE NOT NULL,
-    "dueDateFrom" DATE NOT NULL,
-    "dueDateTo" DATE NOT NULL,
+    "connectAccountId" TEXT DEFAULT '',
+    "dueDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "dueDateFrom" TIMESTAMP(3) NOT NULL,
+    "dueDateTo" TIMESTAMP(3) NOT NULL,
     "status" "TaskStatus" NOT NULL,
+    "pathName" TEXT NOT NULL DEFAULT '',
     "organizationId" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
 
@@ -250,7 +251,7 @@ CREATE TABLE "Schedule" (
 CREATE TABLE "Teams" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "createdAt" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "status" "Status" NOT NULL,
     "organizationId" TEXT NOT NULL,
     "role" "Role" NOT NULL,
@@ -315,6 +316,9 @@ CREATE UNIQUE INDEX "Permissions_email_key" ON "Permissions"("email");
 CREATE UNIQUE INDEX "Organization_name_key" ON "Organization"("name");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Organization_subDomainName_key" ON "Organization"("subDomainName");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Attachment_link_key" ON "Attachment"("link");
 
 -- CreateIndex
@@ -360,10 +364,10 @@ ALTER TABLE "Substask" ADD CONSTRAINT "Substask_taskId_fkey" FOREIGN KEY ("taskI
 ALTER TABLE "Tag" ADD CONSTRAINT "Tag_tagsId_fkey" FOREIGN KEY ("tagsId") REFERENCES "Tasks"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Comments" ADD CONSTRAINT "Comments_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Comments" ADD CONSTRAINT "Comments_taskId_fkey" FOREIGN KEY ("taskId") REFERENCES "Tasks"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Comments" ADD CONSTRAINT "Comments_taskId_fkey" FOREIGN KEY ("taskId") REFERENCES "Tasks"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Comments" ADD CONSTRAINT "Comments_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Attachment" ADD CONSTRAINT "Attachment_commentsId_fkey" FOREIGN KEY ("commentsId") REFERENCES "Comments"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -396,10 +400,10 @@ ALTER TABLE "Schedule" ADD CONSTRAINT "Schedule_projectId_fkey" FOREIGN KEY ("pr
 ALTER TABLE "Teams" ADD CONSTRAINT "Teams_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Teams" ADD CONSTRAINT "Teams_taskId_fkey" FOREIGN KEY ("taskId") REFERENCES "Tasks"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Teams" ADD CONSTRAINT "Teams_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Teams" ADD CONSTRAINT "Teams_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Teams" ADD CONSTRAINT "Teams_taskId_fkey" FOREIGN KEY ("taskId") REFERENCES "Tasks"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Workflows" ADD CONSTRAINT "Workflows_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -408,13 +412,13 @@ ALTER TABLE "Workflows" ADD CONSTRAINT "Workflows_projectId_fkey" FOREIGN KEY ("
 ALTER TABLE "Workflows" ADD CONSTRAINT "Workflows_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Notification" ADD CONSTRAINT "Notification_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "Notification" ADD CONSTRAINT "Notification_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Notification" ADD CONSTRAINT "Notification_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Notification" ADD CONSTRAINT "Notification_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Invitation" ADD CONSTRAINT "Invitation_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;

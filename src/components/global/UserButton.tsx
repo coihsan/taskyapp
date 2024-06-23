@@ -10,19 +10,10 @@ import {
 import { Button } from "../ui/button"
 import Image from "next/image"
 import Link from "next/link"
-import { auth, signOut } from "@/auth"
-import { db } from "@/lib/db"
 import { ModeToggle } from "./ModeToggle"
 import { menuUser } from "@/lib/const"
 
 const UserButton = () =>{
-  
-// const getUserInfo = await db.user.findFirst({
-//   select: {
-//     email: true,
-//     name: true,
-//   },
-// })
     return(
         <div className="">
           <DropdownMenu>
@@ -56,7 +47,7 @@ const UserButton = () =>{
                   </DropdownMenuItem>
                 ))}
               <DropdownMenuSeparator />
-                <div className="w-full">
+                <div className="flex items-center justify-center w-full">
                   <ModeToggle />
                 </div>
             </DropdownMenuContent>

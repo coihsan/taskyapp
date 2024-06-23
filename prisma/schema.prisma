@@ -20,7 +20,7 @@ model User {
   phoneNumber   String?         @default("000-000-0000")
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
-  role          Role?           @default(OWNER)
+  role          Role?           @default(USER)
   status        Status?         @default(ACTIVE)
   accounts      Account[]
   Attachment    Attachment[]
@@ -105,7 +105,7 @@ model Organization {
   createdAt    DateTime       @default(now()) 
   updatedAt    DateTime       @updatedAt 
   userId       Int
-  role         Role           @default(OWNER)
+  role         Role           @default(ADMIN)
   Invitation   Invitation[]
   notification Notification[]
   createdBy    User           @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -308,8 +308,8 @@ model Invitation {
 }
 
 enum Role {
-  STAFF
-  OWNER
+  USER
+  ADMIN
   VIEW
 }
 

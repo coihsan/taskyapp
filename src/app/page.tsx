@@ -55,6 +55,7 @@ export default function Home() {
             width={1000}
             height={700}
             alt="preview"
+            priority
           />
         </section>
         <Section>
