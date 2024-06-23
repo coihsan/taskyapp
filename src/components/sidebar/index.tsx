@@ -37,35 +37,6 @@ export function Sidebar() {
             
           <ListWorkspace />
         </SidebarContent>
-        <SidebarContent borderBottom borderTop>
-          <span className="text-xs text-onyx-600 dark:text-muted-foreground uppercase">
-              Your
-            </span>
-            <nav className="flex flex-col gap-1 pt-4">
-              {menuUser.map((menu) => (
-                <Link
-                  className={clsx(
-                    "flex items-center text-sm h-9 gap-3 pl-2 text-black dark:text-foreground hover:bg-onyx-100 dark:hover:bg-onyx-800 hover:ring-2 hover:ring-onyx-100 dark:hover:ring-onyx-800 rounded-md transitionAll",
-                    {
-                      "borderStyle bg-onyx-50 text-lime-600 dark:text-lime-400 dark:bg-onyx-900":
-                        pathname === menu.url,
-                    },
-                  )}
-                  href={menu.url}
-                  key={menu.id}
-                >
-                  <div
-                    className={clsx("text-black dark:text-foreground", {
-                      "text-lime-600 dark:text-lime-400": pathname === menu.url,
-                    })}
-                  >
-                    <menu.icon />
-                  </div>
-                  <span>{menu.title}</span>
-                </Link>
-              ))}
-            </nav>
-        </SidebarContent>
         <SidebarContent borderTop>
           <FooterOnSidebar />
         </SidebarContent>

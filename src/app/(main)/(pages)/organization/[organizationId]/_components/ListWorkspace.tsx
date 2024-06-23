@@ -1,12 +1,14 @@
+"use client"
 import NewWorkspace from '@/components/forms/NewWorkspace'
 import EditWorkspace from '@/components/global/edit-workspace'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { workspaceExample } from '@/lib/const'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 
 export default function ListWorkspace() {
+  const [isVisible, setIsVisible] = useState(false)
   return (
     <div>
         <div className="flex items-center justify-between">

@@ -1,7 +1,6 @@
 import React from "react"
 import {
     DropdownMenu,
-    DropdownMenuCheckboxItem,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuLabel,
@@ -11,10 +10,22 @@ import {
 import { Button } from "../ui/button"
 import Image from "next/image"
 import Link from "next/link"
+import { auth, signOut } from "@/auth"
+import { db } from "@/lib/db"
+import { ModeToggle } from "./ModeToggle"
+import { menuUser } from "@/lib/const"
 
 const UserButton = () =>{
+  
+// const getUserInfo = await db.user.findFirst({
+//   select: {
+//     email: true,
+//     name: true,
+//   },
+// })
     return(
-        <DropdownMenu>
+        <div className="">
+          <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="outline"
@@ -30,24 +41,27 @@ const UserButton = () =>{
                 />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="CardStyle" align="end">
+            <DropdownMenuContent className="CardStyle min-w-[200px] w-full" align="end">
               <DropdownMenuLabel className="grid gap-1">
                 <span>shadcn</span>
-                <span className="text-xs text-muted-foreground">youremail@gmail.com</span>
+                <span className="text-xs text-muted-foreground">ihsan.onlinefs@gmail.com</span>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Link href={'/account/profile'}>Profile</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href={'/account/settings'}>Settings</Link>
-              </DropdownMenuItem>
+                {menuUser.map((menu) =>(
+                  <DropdownMenuItem>
+                      <Link className="flex items-center gap-2" href={menu.url} key={menu.id}>
+                        <menu.icon />
+                        <span>{menu.title}</span>
+                      </Link>
+                  </DropdownMenuItem>
+                ))}
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Link href={'/sign-out'}>Logout</Link>
-              </DropdownMenuItem>
+                <div className="w-full">
+                  <ModeToggle />
+                </div>
             </DropdownMenuContent>
         </DropdownMenu>
+        </div>
     )
 }
 

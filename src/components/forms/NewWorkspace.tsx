@@ -34,7 +34,7 @@ import { toast } from "@/components/ui/use-toast";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
-import { NewWorkspaceSchema } from "@/lib/types/types";
+import { NewWorkspaceSchema } from "@/lib/queries";
 import { Switch } from "@/components/ui/switch";
 
 const NewWorkspace = () => {

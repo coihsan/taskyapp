@@ -1,11 +1,15 @@
-"use client";
+"use server";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { sitelink } from "@/lib/const";
 import { ModeToggle } from "@/components/global/ModeToggle";
 import Logo from "@/components/global/logo";
 import { Button } from "@/components/ui/button";
+
+import { auth } from "@/auth"
+
 const MenuLink = () => {
+  
   return (
     <ul className="hidden lg:flex items-center gap-8">
       {sitelink.map((link) => (
@@ -16,7 +20,8 @@ const MenuLink = () => {
     </ul>
   );
 };
-const Navigation = () => {
+const Navigation = async () => {
+  const session = await auth()
   return (
     <header className="mx-auto w-full border-b-[1px] border-black/10 dark:border-white/10 bg-transparent">
       <nav className="flex items-center justify-between w-full max-w-screen-xl mx-auto px-4 py-4 bg-white-30">
@@ -34,7 +39,9 @@ const Navigation = () => {
         </div>
         <div className="flex items-center h-7 space-x-2">
           <Button variant={'default'}>
-            <Link href="/sign-in">Login</Link>
+            <Link href={session ? "/account/profile" : "/sign-in"}>
+              {session ? "Dashboard" : "Sign In"}
+            </Link>
           </Button>
           <ModeToggle />
         </div>

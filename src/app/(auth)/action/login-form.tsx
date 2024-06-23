@@ -32,8 +32,7 @@ const onSubmit = (values : z.infer<typeof LoginSchema>) =>{
     startTransition(() => {
         loginAction(values)
         .then((data) =>{
-            setError(data.error)
-            setSuccess(data.success)
+            setError(data?.error)
         })
         .catch((error) =>{
             setError(error)

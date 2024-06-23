@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { ModeToggle } from "./ModeToggle"
 
 const FooterOnSidebar = () => {
   return (
@@ -16,7 +15,6 @@ const FooterOnSidebar = () => {
             >
               Support
             </Link>
-            <ModeToggle />
     </footer>
   )
 }

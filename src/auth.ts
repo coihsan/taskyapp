@@ -3,7 +3,7 @@ import { db } from "./lib/db"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { PrismaNeon } from "@prisma/adapter-neon"
 import { Pool } from "@neondatabase/serverless"
-import authConfig from "./config/auth.config"
+import authConfig from "./auth.config"
 
 const neon = new Pool({
   connectionString: process.env.AUTH_POSTGRES_PRISMA_URL,
@@ -20,10 +20,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     async redirect({ url, baseUrl }) {
       return baseUrl;
+    },
+    async session({ session, user, token }) {
+      return session
+    },
+    async jwt({ token, user, account, profile }) {
+      return token
     }
   },
   pages: {
-    signIn: "/auth/sign-in",
+    signIn: "/sign-in",
   },
   ...authConfig,
 })

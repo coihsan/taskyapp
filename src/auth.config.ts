@@ -13,13 +13,14 @@ export default { providers: [
       password: {},
     },
    async authorize(credentials) {
-    const validatedFields = LoginSchema.safeParse(credentials) 
+    const validatedFieldss = LoginSchema.safeParse(credentials) 
 
-    if(validatedFields.success){
-      const { email, password } = validatedFields.data
+    if(validatedFieldss.success){
+      const { email, password } = validatedFieldss.data
 
       const user = await getUserByEmail(email)
       if (!user || !user.password) return null
+
       const passwordMatch = await bcrypt.compare(password, user.password)
       if (passwordMatch) return user
     }
