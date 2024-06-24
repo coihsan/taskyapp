@@ -9,10 +9,6 @@ import bcrypt from 'bcryptjs';
 export default {
   providers: [
     Credentials({
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
-      },
     async authorize(credentials) {
       const validatedFields = LoginSchema.safeParse(credentials) 
 
@@ -36,6 +32,13 @@ export default {
     Google ({
       clientId: process.env.AUTH_GOOGLE_ID,
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
     }),
 ] } satisfies NextAuthConfig
 
