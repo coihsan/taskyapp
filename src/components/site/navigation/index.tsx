@@ -43,7 +43,6 @@ const Navigation = async () => {
               {session ? "Dashboard" : "Sign In"}
             </Link>
           </Button>
-          <ModeToggle />
         </div>
       </nav>
     </header>

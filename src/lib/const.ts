@@ -11,6 +11,7 @@ import {FluentHome24Regular} from "@/components/icons/home";
 import {FluentPerson24Regular} from "@/components/icons/person";
 import {FluentSettings24Regular} from "@/components/icons/settings";
 import {FluentSignOut24Regular} from "@/components/icons/sign-out";
+
 export const RoleTeam = [
   {id: 0, role: 'View', values: 'view' , desc: 'Only view and comment'},
   {id: 1, role: 'Staff', values: 'staff' , desc: 'Can view, comment and edit'},

@@ -6,23 +6,29 @@ import { LoginSchema } from "@/app/(auth)/action/schema"
 import { getUserByEmail } from "@/lib/data/user"
 import bcrypt from 'bcryptjs';
 
-export default { providers: [
-  Credentials({
-   async authorize(credentials) {
-    const validatedFieldss = LoginSchema.safeParse(credentials) 
+export default {
+  providers: [
+    Credentials({
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
+      },
+    async authorize(credentials) {
+      const validatedFields = LoginSchema.safeParse(credentials) 
 
-    if(validatedFieldss.success){
-      const { email, password } = validatedFieldss.data
+      if(validatedFields.success){
+        const { email, password } = validatedFields.data
 
-      const user = await getUserByEmail(email)
-      if (!user || !user.password) return null
+        const user = await getUserByEmail(email)
+        if (!user || !user.password) return null
 
-      const passwordMatch = await bcrypt.compare(password, user.password)
-      if (passwordMatch) return user
-    }
-    return null
-   },
-  }),
+        const passwordMatch = await bcrypt.compare(password, user.password,)
+
+        if (passwordMatch) return user
+      }
+      return null
+    },
+    }),
     GitHub({
         clientId: process.env.AUTH_GITHUB_ID,
         clientSecret: process.env.AUTH_GITHUB_SECRET,

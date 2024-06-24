@@ -1,3 +1,5 @@
+import { auth } from "@/auth"
+
 import React from "react"
 import {
     DropdownMenu,
@@ -12,8 +14,10 @@ import Image from "next/image"
 import Link from "next/link"
 import { ModeToggle } from "./ModeToggle"
 import { menuUser } from "@/lib/const"
+import { SignOutButton } from "../auth/signout-button"
 
-const UserButton = () =>{
+const UserButton = async () =>{
+  const session = await auth()
     return(
         <div className="">
           <DropdownMenu>
@@ -34,7 +38,7 @@ const UserButton = () =>{
             </DropdownMenuTrigger>
             <DropdownMenuContent className="CardStyle min-w-[200px] w-full" align="end">
               <DropdownMenuLabel className="grid gap-1">
-                <span>shadcn</span>
+                <span>{session?.user?.name}</span>
                 <span className="text-xs text-muted-foreground">ihsan.onlinefs@gmail.com</span>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
@@ -48,6 +52,7 @@ const UserButton = () =>{
                 ))}
               <DropdownMenuSeparator />
                 <div className="flex items-center justify-center w-full">
+                  <SignOutButton />
                   <ModeToggle />
                 </div>
             </DropdownMenuContent>
