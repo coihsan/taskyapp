@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Sidebar } from "@/components/sidebar";
-import HeaderBar from "@/components/headerbar";
-import { useRouter } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "TaskyApp",

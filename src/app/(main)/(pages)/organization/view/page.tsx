@@ -62,7 +62,7 @@ export default function Component() {
                   alt="Product image"
                   className="aspect-square rounded-md object-cover"
                   height="64"
-                  src="/placeholder.svg"
+                  src="/profile.jpeg"
                   width="64"
                 />
               </TableCell>
@@ -99,7 +99,7 @@ export default function Component() {
                   alt="Product image"
                   className="aspect-square rounded-md object-cover"
                   height="64"
-                  src="/placeholder.svg"
+                  src="/profile.jpeg"
                   width="64"
                 />
               </TableCell>
@@ -136,7 +136,7 @@ export default function Component() {
                   alt="Product image"
                   className="aspect-square rounded-md object-cover"
                   height="64"
-                  src="/placeholder.svg"
+                  src="/profile.jpeg"
                   width="64"
                 />
               </TableCell>
@@ -171,7 +171,7 @@ export default function Component() {
                   alt="Product image"
                   className="aspect-square rounded-md object-cover"
                   height="64"
-                  src="/placeholder.svg"
+                  src="/profile.jpeg"
                   width="64"
                 />
               </TableCell>
@@ -208,7 +208,7 @@ export default function Component() {
                   alt="Product image"
                   className="aspect-square rounded-md object-cover"
                   height="64"
-                  src="/placeholder.svg"
+                  src="/profile.jpeg"
                   width="64"
                 />
               </TableCell>
@@ -245,7 +245,7 @@ export default function Component() {
                   alt="Product image"
                   className="aspect-square rounded-md object-cover"
                   height="64"
-                  src="/placeholder.svg"
+                  src="/profile.jpeg"
                   width="64"
                 />
               </TableCell>

@@ -1,10 +1,14 @@
+import clsx from "clsx";
+
 interface LogoProps {
   className?: string;
+  center?: boolean;
+  pb?: boolean
 }
 
-export default function Logo({ className }: LogoProps) {
+export default function Logo({ className, center }: LogoProps) {
   return (
-    <div className={className}>
+    <div className={clsx(center ? "w-full mx-auto flex justify-center" : "" , `${className}`)}>
       <svg
         width="139"
         height="32"
