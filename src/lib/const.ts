@@ -29,10 +29,9 @@ export const menuUser = [
 ]
 export const sidebar = [
   { id: 4, title: "Organization", url: "/organization", icon: FluentTaskListSquare24Regular},
-  { id: 3, title: "Task", url: "/organization/task", icon: FluentTaskListSquare24Regular},
   { id: 1, title: "View", url: "/organization/view", icon: WorkspaceIcons },
-  { id: 2, title: "Schedule", url: "/organization/schedule", icon: CalenderDate },
-  { id: 7, title: "Members", url: "/organization/members", icon: FluentPeopleTeam24Regular },
+  { id: 2, title: "Upcomming", url: "/organization/schedule", icon: CalenderDate },
+  { id: 7, title: "Teams", url: "/organization/members", icon: FluentPeopleTeam24Regular },
 ];
 export const workspaceMenu = [
   {

@@ -4,11 +4,14 @@ import EditWorkspace from '@/components/global/edit-workspace'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { workspaceExample } from '@/lib/const'
+import { getAllSpace } from '@/lib/data/organization'
 import Link from 'next/link'
 import React, { useState } from 'react'
 
-export default function ListWorkspace() {
+export default async function ListWorkspace() {
   const [isVisible, setIsVisible] = useState(false)
+  const { title, description } = await getAllSpace()
+
   return (
     <div>
         <div className="flex items-center justify-between">

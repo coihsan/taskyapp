@@ -119,6 +119,7 @@ model Organization {
 model Projects {
   id             String         @id @default(uuid())
   title          String
+  icon           String?
   description    String
   connectAccountId String?      @default("")
   dueDate        DateTime       @default(now()) 

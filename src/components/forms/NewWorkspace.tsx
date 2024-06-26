@@ -34,7 +34,7 @@ import { toast } from "@/components/ui/use-toast";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
-import { NewWorkspaceSchema } from "@/lib/schema";
+import { NewSpaceSchema } from "@/lib/schema";
 import { Switch } from "@/components/ui/switch";
 
 const NewWorkspace = () => {
@@ -42,9 +42,9 @@ const NewWorkspace = () => {
   const [isVisible, setIsVisible] = useState(true);
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof NewWorkspaceSchema>>({
+  const form = useForm<z.infer<typeof NewSpaceSchema>>({
     mode: "onChange",
-    resolver: zodResolver(NewWorkspaceSchema),
+    resolver: zodResolver(NewSpaceSchema),
     defaultValues: {
       name: "",
       description: "",
@@ -52,7 +52,7 @@ const NewWorkspace = () => {
     },
   });
 
-  const handleSubmit = async (values: z.infer<typeof NewWorkspaceSchema>) => {
+  const handleSubmit = async (values: z.infer<typeof NewSpaceSchema>) => {
     toast({
       title: "You New Workspace Has Been Created",
       description: <p>{dates.getDate()}</p>,
