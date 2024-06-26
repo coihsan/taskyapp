@@ -1,3 +1,4 @@
+"use client"
 import { sidebar } from '@/lib/const'
 import clsx from 'clsx';
 import Link from 'next/link'

@@ -1,4 +1,3 @@
-"use client"
 import NewWorkspace from '@/components/forms/NewWorkspace'
 import EditWorkspace from '@/components/global/edit-workspace'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
@@ -8,9 +7,9 @@ import { getAllSpace } from '@/lib/data/organization'
 import Link from 'next/link'
 import React, { useState } from 'react'
 
-export default async function ListWorkspace() {
-  const [isVisible, setIsVisible] = useState(false)
-  const { title, description } = await getAllSpace()
+
+export async function ListWorkspace() {
+  // const project = await getAllSpace();
 
   return (
     <div>
@@ -34,7 +33,12 @@ export default async function ListWorkspace() {
             <CommandList>
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup>
-              {workspaceExample.map((list) => (
+              {/* {project?.map((space) =>(
+                <ul key={space.id}>
+                  <li>{space.title}</li>
+                </ul>
+              ))} */}
+              {/* {workspaceExample.map((list) => (
                 <CommandItem className="grid w-full" key={list.id}>
                   <Link
                     href={list.url}
@@ -51,7 +55,7 @@ export default async function ListWorkspace() {
                     <EditWorkspace />
                   </Link>
                 </CommandItem>
-              ))}
+              ))} */}
               </CommandGroup>
             </CommandList>
           </Command>

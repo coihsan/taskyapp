@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Sidebar } from "@/components/sidebar";
+import HeaderBar from "@/components/headerbar";
 
 export const metadata: Metadata = {
   title: "TaskyApp",
@@ -14,7 +15,10 @@ export default function BoardingLayout({
   return (
       <main className="flex overflow-hidden h-screen min-h-[100dvh] py-2">
         <Sidebar />
-      {children}
+        <aside className="w-full border-l-[1px] h-screen CardStyle border-t-[1px] border-muted-foreground/20 overflow-scroll">
+          <HeaderBar />
+          {children}
+        </aside>
     </main>
   );
 }
