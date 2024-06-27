@@ -31,12 +31,14 @@ const ProfilePage = async () =>{
                     {enabled ? null : <Button size={'sm'} variant={'destructive'} onClick={() => setIsEnable(true)}>Cancel</Button>}
                 </div> */}
             </div>
-            <Image className='rounded-lg' 
-            src={`${userInfo.imageUrl}`} 
-            width={300} 
-            height={300} 
-            alt={`${userInfo.id}`} 
-            />
+            <div className='bg-white/50 p-1 rounded-full w-max'>
+                <Image className='rounded-full aspect-square border' 
+                src={`${userInfo.imageUrl}`} 
+                width={200} 
+                height={200} 
+                alt={`${userInfo.id}`} 
+                />
+            </div>
 
             <Button type='submit'>Save</Button>
         </div>

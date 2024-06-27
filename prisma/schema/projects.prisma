@@ -1,0 +1,82 @@
+model Projects {
+  id             String         @id @default(uuid())
+  title          String?
+  icon           String?
+  description    String?
+  connectAccountId String?      @default("")
+  dueDate        DateTime       @default(now()) 
+  createdAt      DateTime       @default(now()) 
+  updatedAt      DateTime       @updatedAt 
+  dueDateFrom    DateTime       
+  dueDateTo      DateTime       
+  status         TaskStatus?
+  pathName       String   @default("")
+  organizationId String
+  userId         String
+  board          Board[]
+  Funnel         Funnel[]
+  Invitation     Invitation[]
+  Media          Media[]
+  Memos          Memos[]
+  notification   Notification[]
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdBy      User           @relation(fields: [userId], references: [clerkId], onDelete: Cascade)
+  Schedule       Schedule[]
+  tasks          Tasks[]
+  Teams          Teams[]
+  workflows      Workflows[]
+  @@index([userId])
+}
+
+model Memos {
+  id          String   @id @default(uuid())
+  title       String?
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  status      String?
+  article     String
+  published   Boolean  @default(false)
+  projectId   String
+  userId      String
+  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdBy   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId])
+}
+
+model Funnel {
+  id          String   @id @default(uuid())
+  title       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  description String?
+  published   Boolean  @default(false)
+  projectId   String
+  userId      String
+  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdBy   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId])
+}
+
+model Media {
+  id          String   @id @default(uuid())
+  title       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  type        String?
+  description String?
+  link        String   @unique
+  projectId   String
+  userId      String
+  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdBy   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId])
+}
+
+model Schedule {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  projectId   String
+  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}

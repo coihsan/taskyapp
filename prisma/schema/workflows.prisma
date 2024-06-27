@@ -1,0 +1,14 @@
+model Workflows {
+  id        String   @id @default(uuid())
+  nodes     String?
+  edges     String?
+  name      String
+  flowPath  String?
+  cronPath  String?
+  publish   Boolean? @default(false)
+  projectId String
+  userId    String
+  project   Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdBy User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId])
+}

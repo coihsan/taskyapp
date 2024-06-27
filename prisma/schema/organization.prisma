@@ -1,0 +1,32 @@
+model Organization {
+  id           String         @id @default(uuid())
+  name         String         @unique
+  connectAccountId String?    @default("")
+  logo         String?
+  subDomainName String?       @unique
+  createdAt    DateTime       @default(now()) 
+  updatedAt    DateTime       @updatedAt 
+  userId       String
+  role         Role           @default(ADMIN)
+  Invitation   Invitation[]
+  notification Notification[]
+  createdBy    User           @relation(fields: [userId], references: [clerkId], onDelete: Cascade)
+  projects     Projects[]
+  teams        Teams[]
+  @@index([userId])
+}
+
+model Teams {
+  id             String       @id @default(uuid())
+  name           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String
+  createdAt      DateTime     @default(now()) 
+  status         Status
+  organizationId String
+  role           Role
+  taskId         String
+  projectId      String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project        Projects     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  task           Tasks        @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
