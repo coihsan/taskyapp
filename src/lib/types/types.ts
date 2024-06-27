@@ -1,3 +1,11 @@
+export interface userProps {
+  firstName: string,
+  lastName: string,
+  imageUrl: string,
+  id: string,
+  emailUser: string
+}
+
 export interface cardType {
   id: number;
   title?: string;

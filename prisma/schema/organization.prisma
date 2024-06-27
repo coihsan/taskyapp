@@ -1,6 +1,7 @@
 model Organization {
   id           String         @id @default(uuid())
   name         String         @unique
+  description  String?
   connectAccountId String?    @default("")
   logo         String?
   subDomainName String?       @unique

@@ -1,4 +1,5 @@
 "use client";
+import React, {useTransition} from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,14 +11,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { addDays, format } from "date-fns";
 import { DateRange } from "react-day-picker";
-import { CalendarIcon, PlusIcon } from "@radix-ui/react-icons";
+import { PlusIcon } from "@radix-ui/react-icons";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -26,24 +25,37 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { cn } from "@/lib/utils";
-import { Calendar } from "../ui/calendar";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 import { Separator } from "../ui/separator";
 import { Textarea } from "../ui/textarea";
-import React from "react";
-const workspaceSchema = z.object({
-  workspaceName: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
-  }),
-});
+import { NewOrganizationSchema } from "@/lib/schema";
+import { createNewOrganization } from "@/lib/action/organization-action";
+import { useRouter } from "next/navigation";
+import { useModal } from "@/providers/modal-provider";
+import Loading from "../global/loading";
+
 const NewOrganization = () => {
-  const form = useForm();
-  const [date, setDate] = React.useState<DateRange | undefined>({
-    from: new Date(2022, 0, 20),
-    to: addDays(new Date(2022, 0, 20), 20),
+  const router = useRouter()
+  const { setClose } = useModal()
+  const form = useForm<z.infer<typeof NewOrganizationSchema>>({
+    mode: "onChange",
+    resolver: zodResolver(NewOrganizationSchema),
+    defaultValues:{
+      name: '',
+      description: '',
+      logo: ''
+    }
   });
+
+  const handleSubmit = async(values : z.infer<typeof NewOrganizationSchema>) =>{
+    const organization = await createNewOrganization(values.name, values.description, values.logo)
+    if(organization){
+      toast.message(organization.message)
+      router.refresh()
+    }
+    setClose()
+  }
+  const isLoading = form.formState.isLoading
   return (
     <>
       <Dialog>
@@ -62,9 +74,12 @@ const NewOrganization = () => {
             <DialogDescription>Create a new organization</DialogDescription>
           </DialogHeader>
           <Form {...form}>
-            <form className="space-y-4">
+            <form className="space-y-4"
+            onSubmit={form.handleSubmit(handleSubmit)}
+            >
               <FormField
                 control={form.control}
+                disabled={isLoading}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
@@ -72,11 +87,13 @@ const NewOrganization = () => {
                     <FormControl>
                       <Input placeholder="Name" {...field} />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
               <FormField
                 control={form.control}
+                disabled={isLoading}
                 name="description"
                 render={({ field }) => (
                   <FormItem>
@@ -84,19 +101,22 @@ const NewOrganization = () => {
                     <FormControl>
                       <Textarea placeholder="Type your description here." />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
-                  name="file"
+                  disabled={isLoading}
+                  name="logo"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Avatar</FormLabel>
                       <FormControl>
                         <Input type="file" {...field} />
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -107,7 +127,13 @@ const NewOrganization = () => {
                   Cancel
                 </Button>
                 <Button variant={"default"} type="submit">
-                  Save changes
+                  {isLoading ? (
+                    <>
+                      <Loading /> saving
+                    </>
+                  ) : (
+                    "Save changes"
+                  )}
                 </Button>
               </DialogFooter>
             </form>
