@@ -1,0 +1,7 @@
+model Schedule {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  projectId   String
+  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}

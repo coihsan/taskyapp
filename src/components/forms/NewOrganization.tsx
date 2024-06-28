@@ -12,8 +12,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { addDays, format } from "date-fns";
-import { DateRange } from "react-day-picker";
 import { PlusIcon } from "@radix-ui/react-icons";
 import {
   Form,
@@ -36,7 +34,6 @@ import { useModal } from "@/providers/modal-provider";
 import Loading from "../global/loading";
 
 const NewOrganization = () => {
-  const [isPending, startTransition] = useTransition();
   const router = useRouter()
   const { setClose } = useModal()
   const form = useForm<z.infer<typeof NewOrganizationSchema>>({
@@ -81,27 +78,25 @@ const NewOrganization = () => {
             >
               <FormField
                 control={form.control}
-                disabled={isLoading}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Workspace Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Name" {...field} />
+                      <Input disabled={isLoading} placeholder="Name" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <FormField
-                control={form.control}
                 disabled={isLoading}
                 name="description"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Description</FormLabel>
                     <FormControl>
-                      <Textarea placeholder="Type your description here." />
+                      <Textarea disabled={isLoading} placeholder="Type your description here." />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -110,13 +105,12 @@ const NewOrganization = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
-                  disabled={isLoading}
                   name="logo"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Avatar</FormLabel>
                       <FormControl>
-                        <Input type="file" {...field} />
+                        <Input disabled={isLoading} type="file" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -130,7 +124,7 @@ const NewOrganization = () => {
                     Cancel
                   </Button>
                 </DialogClose>
-                <Button variant={"default"} type="submit">
+                <Button disabled={isLoading} variant={"default"} type="submit">
                   {isLoading ? (
                     <>
                       <Loading /> saving

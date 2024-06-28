@@ -1,10 +1,11 @@
 'use server'
 import {db} from "@/lib/db";
-import { unstable_noStore as noStore } from 'next/cache';
 import { clerkClient, currentUser, auth, getAuth } from "@clerk/nextjs/server";
 import { redirect } from 'next/navigation'
 import { User } from "@prisma/client";
 import { v4 } from 'uuid';
+
+// Create a new organization
 
 export const createNewOrganization = async (name: string, description: string, logo: string) =>{
     const user = await currentUser();
@@ -24,21 +25,51 @@ export const createNewOrganization = async (name: string, description: string, l
     return {name, description, logo}
 }
 
+// Create a new workspace
+
+export const createNewWorkspace = async (
+    organizationId: string,
+    title: string,
+    description: string,
+    dueDateFrom: string,
+    dueDateTo: string,
+    id: string,
+    userId: string
+    
+    ) =>{
+    const user = await currentUser()
+
+    if(user){
+        const createSpace = await db.projects.create({
+            where: {
+                userId: user.id
+            },
+            data:{
+                organizationId: organizationId,
+                title: title,
+                id: id,
+                description: description,
+                dueDateFrom: dueDateFrom,
+                dueDateTo: dueDateTo,
+                userId: userId
+            }
+        })
+        return createSpace
+    }
+}
+
+// Get all organization of user
 export const getAllOrganization = async () =>{
     const user = await currentUser()
-    if(!user){
-        return null
-    }
-    const organization = await db.organization.findFirst({
-        where: {
-            userId: user.id,
-        },
-    })
-    const NameOrg = organization?.name
-    const DescriptionOrg = organization?.description
-    const LogoOrg = organization?.logo
+    
+    const organization = await db.organization.findMany()
 
-    return {NameOrg, DescriptionOrg, LogoOrg}
+    return organization.map((list) => ({
+        id: list.id,
+        name: list.name,
+        description: list.description,
+        logo: list.logo
+    }))
 }
 
 export const getAllSpace = async () => {

@@ -30,12 +30,13 @@ import { z } from "zod";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
 import { NewSpaceSchema } from "@/lib/schema";
 import { Switch } from "@/components/ui/switch";
+import { createNewWorkspace } from "@/app/(main)/organization/_action/organization-action";
 
 const NewWorkspace = () => {
   const dates = new Date();
@@ -45,18 +46,21 @@ const NewWorkspace = () => {
   const form = useForm<z.infer<typeof NewSpaceSchema>>({
     mode: "onChange",
     resolver: zodResolver(NewSpaceSchema),
-    defaultValues: {
+    defaultValues: { 
       name: "",
       description: "",
-      logo: "",
+      dueDateFrom: dates,
+      dueDateTo: dates
     },
   });
 
   const handleSubmit = async (values: z.infer<typeof NewSpaceSchema>) => {
-    toast({
-      title: "You New Workspace Has Been Created",
-      description: <p>{dates.getDate()}</p>,
-    });
+    const workspace = await createNewWorkspace(values.ora, values.name, values.description, values.dueDateTo, values.dueDateFrom)
+    if (workspace) {
+      toast.message('Workspace created');
+      router.refresh();
+    }
+    setIsVisible(true)
   };
 
   const [date, setDate] = React.useState<DateRange | undefined>({
@@ -87,6 +91,7 @@ const NewWorkspace = () => {
                     <FormControl>
                       <Input type="text" placeholder="Name" {...field} />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -99,6 +104,7 @@ const NewWorkspace = () => {
                     <FormControl>
                       <Textarea placeholder="Type your description here." />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -112,6 +118,7 @@ const NewWorkspace = () => {
                       <FormControl>
                         <Input type="file" {...field} />
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />

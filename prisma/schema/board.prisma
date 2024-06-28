@@ -13,14 +13,10 @@ model Tasks {
   description String
   status      TaskStatus
   projectId   String
-  userId      String
-  comments    Comments[]
   substask    Substask[]
   Tags        Tag[]
   project     Projects   @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  createBy    User       @relation(fields: [userId], references: [id])
   assigned    Teams[]
-  @@index([userId])
 }
 
 model Substask {
@@ -42,26 +38,9 @@ model Tag {
   Tags      Tasks    @relation(fields: [tagsId], references: [id], onDelete: Cascade)
 }
 
-model Comments {
-  id         String       @id @default(uuid())
-  createdAt  DateTime     @default(now())
-  content    String
-  userId     String
-  taskId     String
-  attachment Attachment[]
-  task       Tasks        @relation(fields: [taskId], references: [id], onDelete: Cascade)
-  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  @@index([userId])
-}
-
 model Attachment {
   id          String   @id @default(uuid())
   title       String?
   description String?
   link        String   @unique
-  commentsId  String
-  userId      String
-  comments    Comments @relation(fields: [commentsId], references: [id], onDelete: Cascade)
-  createdBy   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  @@index([userId])
 }

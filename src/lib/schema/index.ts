@@ -20,7 +20,8 @@ export const NewOrganizationSchema = z.object({
 export const NewSpaceSchema = z.object({
   name: z.string().min(1, "Required"),
   description: z.string().min(1, "Optional"),
-  logo: z.string().optional(),
+  dueDateFrom: z.date(),
+  dueDateTo: z.date(),
 });
 
 export const NewWorkflowFormSchema = z.object({

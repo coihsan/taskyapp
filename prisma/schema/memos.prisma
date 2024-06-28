@@ -1,0 +1,14 @@
+model Memos {
+  id          String   @id @default(uuid())
+  title       String?
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  status      String?
+  article     String
+  published   Boolean  @default(false)
+  projectId   String
+  userId      String
+  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  @@index([userId])
+}

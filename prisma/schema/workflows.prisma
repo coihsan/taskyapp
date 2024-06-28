@@ -7,8 +7,5 @@ model Workflows {
   cronPath  String?
   publish   Boolean? @default(false)
   projectId String
-  userId    String
   project   Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  createdBy User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  @@index([userId])
 }

@@ -9,9 +9,16 @@ const isPublicRoute = createRouteMatcher([
 ]);
 
 export default clerkMiddleware((auth, request) => {
+  const user = auth()
+
     if(!isPublicRoute(request)) {
       auth().protect();
     }
+
+    // if(user && user.orgPermissions){
+    //   return user.orgPermissions
+    // }
+
   });
 
 export const config = {

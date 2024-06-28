@@ -1,0 +1,12 @@
+model Funnel {
+  id          String   @id @default(uuid())
+  title       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  description String?
+  published   Boolean  @default(false)
+  projectId   String
+  userId      String
+  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  @@index([userId])
+}

@@ -1,3 +1,5 @@
+import { Prisma } from "@prisma/client";
+
 export interface userProps {
   firstName: string,
   lastName: string,
@@ -48,3 +50,5 @@ export type Person = {
   status: string
   progress: number
 }
+
+export type AuthUserOrganization = Prisma.PrismaClientKnownRequestError | Prisma.PrismaClientUnknownRequestError
