@@ -1,17 +1,17 @@
 import React from 'react'
-import { getAllOrganization } from '../../../../../lib/action/organization-action'
+import { getAllOrganization } from '../../_action/organization-action'
 import NewOrganization from '@/components/forms/NewOrganization'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from '@/components/ui/select'
-import ShortName from '../../../../../lib/action/short-name'
+import ShortName from '../../_action/short-name'
 
 const OrganizaztionList = async () => {
   const list = await getAllOrganization()
 
   return (
-    <div className='CardStyle'>
+    <div className=''>
         <Select>
-            <SelectTrigger className="h-12">
+            <SelectTrigger className="h-12 CardStyle rounded-full">
               <SelectValue placeholder="Select a organization" />
             </SelectTrigger>
             <SelectContent className='CardStyle'>

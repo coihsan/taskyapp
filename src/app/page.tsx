@@ -15,6 +15,7 @@ import Navigation from "@/components/site/navigation";
 import FooterSite from "@/components/site/footer";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { FluentArrowUpRight24Filled } from "@/components/icons/arrow-up-right";
 const Section = ({ children }: { children: React.ReactNode }) => {
   return <section className="container py-12">{children}</section>;
 };
@@ -44,8 +45,9 @@ export default function Home() {
               >
                 <span>Free! Get Started</span>
               </HoverBorderGradient>
-              <Button className="rounded-full" variant={'link'}>
+              <Button className="rounded-full flex items-center gap-2" variant={'link'}>
                 <Link href={'/how'}>How it's works</Link>
+                <FluentArrowUpRight24Filled />
               </Button>
             </div>
           </div>

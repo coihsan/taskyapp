@@ -3,6 +3,7 @@ import React, {useTransition} from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -29,7 +30,7 @@ import { toast } from "sonner";
 import { Separator } from "../ui/separator";
 import { Textarea } from "../ui/textarea";
 import { NewOrganizationSchema } from "@/lib/schema";
-import { createNewOrganization } from "@/lib/action/organization-action";
+import { createNewOrganization } from "@/app/(main)/organization/_action/organization-action";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/providers/modal-provider";
 import Loading from "../global/loading";
@@ -43,7 +44,7 @@ const NewOrganization = () => {
     defaultValues:{
       name: '',
       description: '',
-      logo: ''
+      logo: '',
     }
   });
 
@@ -68,7 +69,7 @@ const NewOrganization = () => {
             New Organization
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[625px]">
+        <DialogContent className="sm:max-w-[625px] CardStyle">
           <DialogHeader>
             <DialogTitle>New Organization</DialogTitle>
             <DialogDescription>Create a new organization</DialogDescription>
@@ -122,10 +123,12 @@ const NewOrganization = () => {
                 />
               </div>
               <Separator />
-              <DialogFooter className="flex flex-wrap flex-1 gap-3">
-                <Button variant={"secondary"} type="submit">
-                  Cancel
-                </Button>
+              <DialogFooter className="flex flex-wrap flex-1 gap-2">
+                <DialogClose asChild>
+                  <Button type="button" variant="secondary">
+                    Cancel
+                  </Button>
+                </DialogClose>
                 <Button variant={"default"} type="submit">
                   {isLoading ? (
                     <>

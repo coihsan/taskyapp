@@ -1,9 +1,10 @@
-import { db } from '@/lib/db'
+import {db} from "@/lib/db";
 import { clerkClient, currentUser, auth, getAuth } from "@clerk/nextjs/server";
 import { redirect } from 'next/navigation'
 import { User } from "@prisma/client";
 import { v4 } from 'uuid';
-import type { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
+
 export const createNewOrganization = async (name: string, description: string, logo: string) =>{
     const user = await currentUser();
 

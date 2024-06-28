@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Sidebar } from "@/components/sidebar";
+import { Sidebar } from "@/app/(main)/organization/_components/sidebar";
 import HeaderBar from "@/components/headerbar";
 import { checkUser } from "./account/_action/account-action";
 

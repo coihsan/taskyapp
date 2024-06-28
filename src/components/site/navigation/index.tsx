@@ -5,6 +5,7 @@ import { sitelink } from "@/lib/const";
 import { currentUser } from '@clerk/nextjs/server';
 import Logo from "@/components/global/logo";
 import { Button } from "@/components/ui/button";
+import ChevronRight from "@/components/icons/chevron-right";
 
 const MenuLink = async () => {
 
@@ -36,8 +37,11 @@ const Navigation = async () => {
           </div>
         </div>
         <div className="flex items-center h-7 space-x-2">
-          <Button variant={'default'}>
-            <Link className="uppercase" href={user ? '/account/profile' : '/sign-in'}>{user ? "Dashboard" : "Sign In"}</Link>
+          <Button variant={'ghost'}>
+            <Link className="uppercase flex items-center gap-2" href={user ? '/account/profile' : '/sign-in'}>
+            {user ? "Dashboard" : "Sign In"}
+            <ChevronRight />
+            </Link>
           </Button>
         </div>
       </nav>
