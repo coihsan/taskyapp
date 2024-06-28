@@ -28,10 +28,10 @@ export const menuUser = [
   { id: 2, title: "Sign Out", url: "/sign-out", icon: FluentSignOut24Regular},
 ]
 export const sidebar = [
-  { id: 4, title: "Organization", url: "/organization", icon: FluentTaskListSquare24Regular},
   { id: 1, title: "View", url: "/organization/view", icon: WorkspaceIcons },
   { id: 2, title: "Upcomming", url: "/organization/schedule", icon: CalenderDate },
   { id: 7, title: "Teams", url: "/organization/members", icon: FluentPeopleTeam24Regular },
+  { id: 4, title: "Organization", url: "/organization", icon: FluentTaskListSquare24Regular},
 ];
 export const workspaceMenu = [
   {

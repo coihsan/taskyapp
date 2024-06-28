@@ -18,6 +18,7 @@ import { SignOutButton } from "@clerk/nextjs"
 import { FluentPerson24Regular } from "../icons/person";
 import { FluentSettings24Regular } from "../icons/settings";
 import { FluentSignOut24Regular } from "../icons/sign-out";
+import { AspectRatio } from "../ui/aspect-ratio";
 
 const UserButtonCustom = () =>{
 const { isLoaded, isSignedIn, user } = useUser()
@@ -33,13 +34,15 @@ const { isLoaded, isSignedIn, user } = useUser()
                 size="icon"
                 className="overflow-hidden rounded-full"
               >
-                <Image
-                  src={`${user.imageUrl}`}
-                  width={36}
-                  height={36}
-                  alt="Avatar"
-                  className="overflow-hidden rounded-full"
-                />
+                <AspectRatio ratio={1 /1} className="bg-muted">
+                  <Image
+                    src={`${user.imageUrl}`}
+                    width={36}
+                    height={36}
+                    alt="Avatar"
+                    className="overflow-hidden rounded-full"
+                  />
+                </AspectRatio>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="CardStyle min-w-[200px] w-full" align="end">

@@ -36,6 +36,7 @@ import { useModal } from "@/providers/modal-provider";
 import Loading from "../global/loading";
 
 const NewOrganization = () => {
+  const [isPending, startTransition] = useTransition();
   const router = useRouter()
   const { setClose } = useModal()
   const form = useForm<z.infer<typeof NewOrganizationSchema>>({

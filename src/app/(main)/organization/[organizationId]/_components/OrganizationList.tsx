@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { getAllOrganization } from '../../_action/organization-action'
 import NewOrganization from '@/components/forms/NewOrganization'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -7,6 +7,7 @@ import ShortName from '../../_action/short-name'
 
 const OrganizaztionList = async () => {
   const list = await getAllOrganization()
+
 
   return (
     <div className=''>
@@ -23,11 +24,11 @@ const OrganizaztionList = async () => {
                   <div className="flex items-center gap-4 w-full overflow-hidden">
                     <div className="">
                       <Avatar>
-                        <AvatarImage src="/profile.jpeg" alt="@shadcn" />
-                        <AvatarFallback><ShortName text={`${list.organizationName}`} /></AvatarFallback>
+                        <AvatarImage src={`${list?.LogoOrg}`} alt="@shadcn" />
+                        <AvatarFallback><ShortName text={`${list?.NameOrg}`} /></AvatarFallback>
                       </Avatar>
                     </div>
-                    <p className="truncate overflow-hidden">{list?.organizationName && list.error}</p>
+                    <p className="truncate overflow-hidden">{list?.NameOrg}</p>
                   </div>
                 </SelectItem>
               </SelectGroup>
