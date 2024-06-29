@@ -2,14 +2,14 @@ import NewWorkspace from '@/components/forms/NewWorkspace'
 import EditWorkspace from '@/components/global/edit-workspace'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
-import { workspaceExample } from '@/lib/const'
-import { getAllSpace } from '@/lib/data/organization'
+import { getAllSpace } from '../../_action/organization-action'
 import Link from 'next/link'
 import React, { useState } from 'react'
+import FluentDocumentFolder24Regular from '@/components/icons/document-folder'
 
 
 export async function ListWorkspace() {
-  // const project = await getAllSpace();
+  const project = await getAllSpace();
 
   return (
     <div>
@@ -33,21 +33,14 @@ export async function ListWorkspace() {
             <CommandList>
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup>
-              {/* {project?.map((space) =>(
-                <ul key={space.id}>
-                  <li>{space.title}</li>
-                </ul>
-              ))} */}
-              {/* {workspaceExample.map((list) => (
-                <CommandItem className="grid w-full" key={list.id}>
+              {project.map((list) => {
+                return(
+                  <CommandItem className="grid w-full" key={list.id}>
                   <Link
-                    href={list.url}
+                    href={'/'}
                     className="text-sm h-9 px-2 hover:bg-onyx-100 dark:hover:bg-onyx-800 rounded-md flex items-center justify-between"
                   >
                     <div className="flex items-center gap-4">
-                      <div className="size-9 flex items-center justify-center aspect-square">
-                        <list.icon />
-                      </div>
                       <span className="overflow-hidden text-clip-1 text-nowrap">
                         {list.name}
                       </span>
@@ -55,7 +48,8 @@ export async function ListWorkspace() {
                     <EditWorkspace />
                   </Link>
                 </CommandItem>
-              ))} */}
+                )
+              })}
               </CommandGroup>
             </CommandList>
           </Command>

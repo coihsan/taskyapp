@@ -33,29 +33,25 @@ export const createNewWorkspace = async (
     description: string,
     dueDateFrom: string,
     dueDateTo: string,
-    id: string,
-    userId: string
     
     ) =>{
     const user = await currentUser()
 
     if(user){
         const createSpace = await db.projects.create({
-            where: {
-                userId: user.id
-            },
             data:{
+                userId: user.id,
                 organizationId: organizationId,
                 title: title,
-                id: id,
-                description: description,
-                dueDateFrom: dueDateFrom,
-                dueDateTo: dueDateTo,
-                userId: userId
+                description,
+                dueDateFrom,
+                dueDateTo
             }
         })
-        return createSpace
+        if(createSpace) return { message: 'Workspace created' }
+        return { message: 'Oops! try again' }
     }
+    return {organizationId, title, description, dueDateFrom, dueDateTo}
 }
 
 // Get all organization of user
@@ -72,17 +68,16 @@ export const getAllOrganization = async () =>{
     }))
 }
 
-export const getAllSpace = async () => {
-    const user = await currentUser();
+export const getAllSpace = async () =>{
+    const user = await currentUser()
+    
+    const organization = await db.projects.findMany()
 
-    if(user){
-        const project = await db.projects.findMany({
-            where: {
-                userId: `${user.id}`
-            },
-            select: {title: true, description: true, id: true}
-        })
-
-        if (project) return project
-    }
+    return organization.map((list) => ({
+        id: list.id,
+        name: list.title,
+        description: list.description,
+    }))
 }
+
+

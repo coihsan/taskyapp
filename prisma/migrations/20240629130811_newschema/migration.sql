@@ -22,47 +22,48 @@ CREATE TABLE "Board" (
 );
 
 -- CreateTable
-CREATE TABLE "Tasks" (
+CREATE TABLE "Column" (
     "id" TEXT NOT NULL,
-    "title" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
-    "status" "TaskStatus" NOT NULL,
-    "projectId" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "boardId" TEXT NOT NULL,
 
-    CONSTRAINT "Tasks_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Column_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Substask" (
+CREATE TABLE "Card" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "status" "TaskStatus" NOT NULL,
-    "taskId" TEXT NOT NULL,
+    "content" TEXT,
+    "columnId" TEXT NOT NULL,
+    "active" BOOLEAN NOT NULL DEFAULT false,
 
-    CONSTRAINT "Substask_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Card_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Tag" (
+CREATE TABLE "SubTask" (
     "id" TEXT NOT NULL,
-    "name" TEXT,
-    "color" TEXT,
+    "title" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "isComplete" BOOLEAN NOT NULL,
+    "status" "TaskStatus" NOT NULL DEFAULT 'INPROGRESS',
+    "cardId" TEXT NOT NULL,
+
+    CONSTRAINT "SubTask_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Tags" (
+    "id" TEXT NOT NULL,
+    "tag_name" TEXT,
+    "color" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "tagsId" TEXT NOT NULL,
+    "cardId" TEXT NOT NULL,
 
-    CONSTRAINT "Tag_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Attachment" (
-    "id" TEXT NOT NULL,
-    "title" TEXT,
-    "description" TEXT,
-    "link" TEXT NOT NULL,
-
-    CONSTRAINT "Attachment_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Tags_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -85,11 +86,10 @@ CREATE TABLE "Media" (
     "title" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "type" TEXT,
+    "type" TEXT NOT NULL,
     "description" TEXT,
     "link" TEXT NOT NULL,
     "projectId" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
 
     CONSTRAINT "Media_pkey" PRIMARY KEY ("id")
 );
@@ -127,6 +127,15 @@ CREATE TABLE "Organization" (
 );
 
 -- CreateTable
+CREATE TABLE "OrganizationUser" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "organizationId" TEXT NOT NULL,
+
+    CONSTRAINT "OrganizationUser_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Projects" (
     "id" TEXT NOT NULL,
     "title" TEXT,
@@ -138,8 +147,18 @@ CREATE TABLE "Projects" (
     "dueDateTo" TIMESTAMP(3),
     "status" "TaskStatus",
     "organizationId" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
 
     CONSTRAINT "Projects_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "ProjectUser" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "projectUserId" TEXT NOT NULL,
+
+    CONSTRAINT "ProjectUser_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -194,8 +213,7 @@ CREATE TABLE "Teams" (
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "clerkId" TEXT NOT NULL,
-    "firstName" TEXT NOT NULL,
-    "lastName" TEXT NOT NULL,
+    "fullName" TEXT,
     "emailUser" TEXT NOT NULL,
     "emailVerified" TIMESTAMP(3),
     "password" TEXT,
@@ -204,8 +222,6 @@ CREATE TABLE "User" (
     "phoneNumber" TEXT DEFAULT '000-000-0000',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "status" "Status" DEFAULT 'ACTIVE',
-    "organizationId" TEXT NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -295,7 +311,10 @@ CREATE TABLE "Workflows" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Attachment_link_key" ON "Attachment"("link");
+CREATE INDEX "Card_columnId_idx" ON "Card"("columnId");
+
+-- CreateIndex
+CREATE INDEX "Tags_cardId_idx" ON "Tags"("cardId");
 
 -- CreateIndex
 CREATE INDEX "Funnel_userId_idx" ON "Funnel"("userId");
@@ -304,7 +323,7 @@ CREATE INDEX "Funnel_userId_idx" ON "Funnel"("userId");
 CREATE UNIQUE INDEX "Media_link_key" ON "Media"("link");
 
 -- CreateIndex
-CREATE INDEX "Media_userId_idx" ON "Media"("userId");
+CREATE INDEX "Media_projectId_idx" ON "Media"("projectId");
 
 -- CreateIndex
 CREATE INDEX "Memos_userId_idx" ON "Memos"("userId");
@@ -314,6 +333,15 @@ CREATE UNIQUE INDEX "Organization_subDomainName_key" ON "Organization"("subDomai
 
 -- CreateIndex
 CREATE INDEX "Organization_userId_idx" ON "Organization"("userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "OrganizationUser_organizationId_userId_key" ON "OrganizationUser"("organizationId", "userId");
+
+-- CreateIndex
+CREATE INDEX "Projects_userId_idx" ON "Projects"("userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "ProjectUser_projectUserId_userId_key" ON "ProjectUser"("projectUserId", "userId");
 
 -- CreateIndex
 CREATE INDEX "Notification_userId_idx" ON "Notification"("userId");
@@ -343,13 +371,16 @@ CREATE UNIQUE INDEX "Permissions_email_key" ON "Permissions"("email");
 ALTER TABLE "Board" ADD CONSTRAINT "Board_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Tasks" ADD CONSTRAINT "Tasks_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Column" ADD CONSTRAINT "Column_boardId_fkey" FOREIGN KEY ("boardId") REFERENCES "Board"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Substask" ADD CONSTRAINT "Substask_taskId_fkey" FOREIGN KEY ("taskId") REFERENCES "Tasks"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Card" ADD CONSTRAINT "Card_columnId_fkey" FOREIGN KEY ("columnId") REFERENCES "Column"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Tag" ADD CONSTRAINT "Tag_tagsId_fkey" FOREIGN KEY ("tagsId") REFERENCES "Tasks"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "SubTask" ADD CONSTRAINT "SubTask_cardId_fkey" FOREIGN KEY ("cardId") REFERENCES "Card"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Tags" ADD CONSTRAINT "Tags_cardId_fkey" FOREIGN KEY ("cardId") REFERENCES "Card"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Funnel" ADD CONSTRAINT "Funnel_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -361,7 +392,19 @@ ALTER TABLE "Media" ADD CONSTRAINT "Media_projectId_fkey" FOREIGN KEY ("projectI
 ALTER TABLE "Memos" ADD CONSTRAINT "Memos_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "OrganizationUser" ADD CONSTRAINT "OrganizationUser_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "OrganizationUser" ADD CONSTRAINT "OrganizationUser_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Projects" ADD CONSTRAINT "Projects_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ProjectUser" ADD CONSTRAINT "ProjectUser_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ProjectUser" ADD CONSTRAINT "ProjectUser_projectUserId_fkey" FOREIGN KEY ("projectUserId") REFERENCES "Projects"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Schedule" ADD CONSTRAINT "Schedule_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -386,12 +429,6 @@ ALTER TABLE "Teams" ADD CONSTRAINT "Teams_organizationId_fkey" FOREIGN KEY ("org
 
 -- AddForeignKey
 ALTER TABLE "Teams" ADD CONSTRAINT "Teams_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Teams" ADD CONSTRAINT "Teams_taskId_fkey" FOREIGN KEY ("taskId") REFERENCES "Tasks"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "User" ADD CONSTRAINT "User_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ExtendedProfile" ADD CONSTRAINT "ExtendedProfile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

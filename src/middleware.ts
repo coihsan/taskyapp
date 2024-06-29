@@ -8,18 +8,31 @@ const isPublicRoute = createRouteMatcher([
     '/policy',
 ]);
 
-export default clerkMiddleware((auth, request) => {
-  const user = auth()
+export default clerkMiddleware((auth, req, res) => {
+  const user = auth();
+  const url = req.nextUrl;
+  const searchParams = url.searchParams.toString()
+  const hostname = req.headers
 
-    if(!isPublicRoute(request)) {
+  const pathWithSearchParams = `${url.pathname}${
+    searchParams.length > 0 ? `?${searchParams}` : ''
+  }`
+
+  const customSubDomain = hostname
+      .get('host')
+      ?.split(`${process.env.NEXT_PUBLIC_DOMAIN}`)
+      .filter(Boolean)[0]
+
+    if(!isPublicRoute(req)) {
       auth().protect();
     }
 
-    // if(user && user.orgPermissions){
-    //   return user.orgPermissions
+    // if(!user.userId && !isPublicRoute(req)){
+
+    //   return user.redirectToSignIn()
     // }
 
-  });
+});
 
 export const config = {
   matcher: [ '/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],

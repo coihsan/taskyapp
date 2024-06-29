@@ -11,8 +11,18 @@ model Organization {
   Invitation   Invitation[]
   notification Notification[]
   userId       String
-  user         User[]           
+  user         OrganizationUser[]       
   projects     Projects[]
   teams        Teams[]
   @@index([userId])
+}
+
+model OrganizationUser {
+  id              String  @id @default(uuid())
+  userId          String
+  user            User        @relation(fields: [userId], references: [id])
+  organizationId  String
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, userId])
 }

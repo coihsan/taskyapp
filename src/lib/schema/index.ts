@@ -14,14 +14,16 @@ export const EditUserProfileSchema = z.object({
 export const NewOrganizationSchema = z.object({
   name: z.string().min(1, "Required"),
   description: z.string(),
-  logo: z.any()
+  logo: z.any(),
+  role: z.string()
 });
 
 export const NewSpaceSchema = z.object({
-  name: z.string().min(1, "Required"),
+  title: z.string().min(1, "Required"),
   description: z.string().min(1, "Optional"),
-  dueDateFrom: z.date(),
-  dueDateTo: z.date(),
+  dueDateFrom: z.date().optional().transform(toString),
+  dueDateTo: z.date().optional().transform(toString),
+  organizationId: z.string()
 });
 
 export const NewWorkflowFormSchema = z.object({

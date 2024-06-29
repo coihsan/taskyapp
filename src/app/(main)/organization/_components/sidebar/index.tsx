@@ -20,9 +20,6 @@ export function Sidebar() {
   return (
       <ScrollArea className="w-full max-w-72 relative h-full overflow-y-scroll h-screen">
         <SidebarContent borderBottom>
-          <Logo />
-        </SidebarContent>
-        <SidebarContent borderBottom>
           <OrganizaztionList />
         </SidebarContent>
         <SidebarContent borderBottom>

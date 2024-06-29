@@ -1,32 +1,30 @@
 model User {
-  id            String          @id @default(uuid())
-  clerkId       String         @unique
-  firstName      String
-  lastName       String
-  emailUser        String          @unique
-  emailVerified DateTime?
-  password      String?
-  bio           String[]
-  imageUrl      String?
-  phoneNumber   String?         @default("000-000-0000")
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  status        Status?         @default(ACTIVE)
-  accounts      Account[]
-  Authenticator Authenticator[]
-  notification  Notification[]
-  organizationId String
-  organization  Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  Permissions   Permissions[]
-  sessions      Session[]
-  profile      ExtendedProfile?
+  id                String          @id @default(uuid())
+  clerkId           String          @unique
+  fullName          String?
+  emailUser         String          @unique
+  emailVerified     DateTime?
+  password          String?
+  bio               String[]
+  imageUrl          String?
+  phoneNumber       String?         @default("000-000-0000")
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  accounts          Account[]
+  Authenticator     Authenticator[]
+  notification      Notification[]
+  Permissions       Permissions[]
+  sessions          Session[]
+  profile           ExtendedProfile?
+  organizationUser  OrganizationUser[]
+  projectsUser      ProjectUser[]
 }
 
 model ExtendedProfile {
-  id     Int     @id @default(autoincrement())
+  id     Int       @id @default(autoincrement())
   userId String    @unique
   bio    String?
-  user   User?   @relation(fields: [userId], references: [id])
+  user   User?     @relation(fields: [userId], references: [id])
 }
 
 model Account {

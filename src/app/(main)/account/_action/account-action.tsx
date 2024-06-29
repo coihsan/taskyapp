@@ -13,7 +13,7 @@ export const getUserDetails = async () =>{
     })
     const userDetail = userInfo
 
-    const name = `${userDetail?.firstName}` + " " + `${userDetail?.lastName}`
+    const name = `${userDetail?.fullName}`
     const avatar = userDetail?.imageUrl
     const email = userDetail?.emailUser
     const userId = userDetail?.id
@@ -27,12 +27,6 @@ export const updateUser = async (user: Partial<User>) => {
     const response = await db.user.update({
       where: { emailUser: user.emailUser },
       data: { ...user },
-    })
-  
-    await clerkClient.users.updateUserMetadata(response.id, {
-      privateMetadata: {
-        role: user.role || 'SUBACCOUNT_USER',
-      },
     })
   
     return response
@@ -49,11 +43,7 @@ export const updateUser = async (user: Partial<User>) => {
         emailUser: user.emailAddresses[0].emailAddress,
       },
       include: {
-        organization: {
-          include: {
-            projects: true
-          },
-        },
+        organizationUser: true,
         Permissions: true,
       },
     })
@@ -85,8 +75,7 @@ export const updateUser = async (user: Partial<User>) => {
         data:{
             clerkId: user.id,
             emailUser: user.emailAddresses[0].emailAddress,
-            firstName:`${ user.firstName}`,
-            lastName: `${user.lastName}`,
+            fullName: user.fullName,
             imageUrl: user.imageUrl,
         }
     })
@@ -103,11 +92,11 @@ export const getUserInformation = async (id: string) =>{
 
     const getUser = await db.user.findUnique({
         where: {
-            emailUser: user.emailAddresses[0].emailAddress,
+          emailUser: user.emailAddresses[0].emailAddress,
         },
         include:{
-            organization: true,
-            projects: true
+          organizationUser: true,
+          projectsUser: true
         }
     })
     return getUser
@@ -124,11 +113,11 @@ export const setDeleteUser = async () =>{
 
     const deleteUSer = await db.user.delete({
         where: {
-            clerkId: user.emailAddresses[0].emailAddress
+          clerkId: user.emailAddresses[0].emailAddress
         },
         include:{
-            organization: true,
-            projects: true
+          organizationUser: true,
+          projectsUser: true
         }
     })
     return deleteUSer

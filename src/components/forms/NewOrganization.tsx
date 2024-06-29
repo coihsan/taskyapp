@@ -1,5 +1,5 @@
 "use client";
-import React, {useTransition} from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -24,18 +24,21 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { toast } from "sonner";
-import { Separator } from "../ui/separator";
 import { Textarea } from "../ui/textarea";
 import { NewOrganizationSchema } from "@/lib/schema";
 import { createNewOrganization } from "@/app/(main)/organization/_action/organization-action";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/providers/modal-provider";
 import Loading from "../global/loading";
+import FileUploader from "../global/Uploader";
+import { useToast } from '../ui/use-toast'
+import { ToastAction } from "../ui/toast";
 
 const NewOrganization = () => {
   const router = useRouter()
+  const { toast } = useToast()
   const { setClose } = useModal()
+
   const form = useForm<z.infer<typeof NewOrganizationSchema>>({
     mode: "onChange",
     resolver: zodResolver(NewOrganizationSchema),
@@ -43,18 +46,25 @@ const NewOrganization = () => {
       name: '',
       description: '',
       logo: '',
+      role: 'ADMIN'
     }
   });
 
   const handleSubmit = async(values : z.infer<typeof NewOrganizationSchema>) =>{
     const organization = await createNewOrganization(values.name, values.description, values.logo)
     if(organization){
-      toast.message(organization.message)
+      toast({
+        title: 'Organization created',
+        action: (
+          <ToastAction altText="Goto organization to undo">Undo</ToastAction>
+        ),
+      })
       router.refresh()
+      setClose()
     }
-    setClose()
   }
   const isLoading = form.formState.isLoading
+
   return (
     <>
       <Dialog>
@@ -76,6 +86,22 @@ const NewOrganization = () => {
             <form className="space-y-4"
             onSubmit={form.handleSubmit(handleSubmit)}
             >
+              <FormField 
+              control={form.control}
+              name="logo"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Logo</FormLabel>
+                  <FormControl>
+                      <FileUploader
+                        onChange={field.onChange}
+                        value={field.value}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+              )}
+              />
               <FormField
                 control={form.control}
                 name="name"
@@ -96,28 +122,12 @@ const NewOrganization = () => {
                   <FormItem>
                     <FormLabel>Description</FormLabel>
                     <FormControl>
-                      <Textarea disabled={isLoading} placeholder="Type your description here." />
+                      <Textarea disabled={isLoading} placeholder="Type your description here." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <FormField
-                  control={form.control}
-                  name="logo"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Avatar</FormLabel>
-                      <FormControl>
-                        <Input disabled={isLoading} type="file" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <Separator />
               <DialogFooter className="flex flex-wrap flex-1 gap-2">
                 <DialogClose asChild>
                   <Button type="button" variant="secondary">

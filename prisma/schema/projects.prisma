@@ -9,16 +9,27 @@ model Projects {
   dueDateTo      DateTime?       
   status         TaskStatus?
   organizationId String
-  board          Board[]
-  Funnel         Funnel[]
+  pathName        String        @default("")
   Invitation     Invitation[]
-  Media          Media[]
-  Memos          Memos[]
   notification   Notification[]
   organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   Schedule       Schedule[]
-  tasks          Tasks[]
   Teams          Teams[]
   workflows      Workflows[]
+  userId         String
+  user           ProjectUser[]
+  board          Board[]
+  Funnel         Funnel[]
+  Media          Media[]
+  Memos          Memos[]
+  @@index([userId])
 }
 
+model ProjectUser {
+  id              String      @id @default(uuid())
+  userId          String
+  user            User        @relation(fields: [userId], references: [id])
+  projectUserId   String
+  projects        Projects    @relation(fields: [projectUserId], references: [id])
+  @@unique([projectUserId, userId])
+}

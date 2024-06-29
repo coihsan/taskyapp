@@ -5,42 +5,48 @@ model Board {
   status      String
   projectId   String
   project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  columns     Column[]
+}
+model Column {
+  id      String    @id @default(uuid())
+  name    String
+  boardId String
+  board   Board  @relation(fields: [boardId], references: [id])
+  cards   Card[]
 }
 
-model Tasks {
+model Card {
+  id        String     @id @default(uuid())
+  title     String
+  description String
+  content   String?
+  columnId  String
+  column    Column  @relation(fields: [columnId], references: [id])
+  active    Boolean @default(false)
+  sub_task  SubTask[]
+  tags      Tags[]
+
+  @@index([columnId])
+}
+
+model SubTask {
   id          String     @id @default(uuid())
   title       String
   description String
-  status      TaskStatus
-  projectId   String
-  substask    Substask[]
-  Tags        Tag[]
-  project     Projects   @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  assigned    Teams[]
+  isComplete  Boolean
+  status      TaskStatus  @default(INPROGRESS)
+  cardId      String
+  card        Card @relation(fields: [cardId], references: [id])
 }
 
-model Substask {
-  id          String     @id @default(uuid())
-  title       String
-  description String
-  status      TaskStatus
-  taskId      String
-  task        Tasks      @relation(fields: [taskId], references: [id], onDelete: Cascade)
-}
+model Tags {
+  id            String   @id @default(uuid())
+  tag_name      String?
+  color         String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  cardId        String
+  card          Card @relation(fields: [cardId], references: [id])
 
-model Tag {
-  id        String   @id @default(uuid())
-  name      String?
-  color     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  tagsId    String
-  Tags      Tasks    @relation(fields: [tagsId], references: [id], onDelete: Cascade)
-}
-
-model Attachment {
-  id          String   @id @default(uuid())
-  title       String?
-  description String?
-  link        String   @unique
+  @@index([cardId])
 }

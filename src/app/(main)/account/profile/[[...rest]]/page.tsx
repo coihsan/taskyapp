@@ -14,14 +14,12 @@ const ProfilePage = async () =>{
             <p>{email}</p>
             <div className='py-6 flex items-center'>
             </div>
-            <AspectRatio ratio={1 / 1} className='bg-muted p-1 rounded-full w-max'>
-                <Image className='rounded-full aspect-square border' 
+            <Image className='rounded-full aspect-square border w-max' 
                 src={`${avatar}`} 
                 width={200} 
                 height={200} 
                 alt={`${userId}`} 
-                />
-            </AspectRatio>
+            />
 
             <Button type='submit'>Save</Button>
         </div>
