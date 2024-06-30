@@ -1,5 +1,5 @@
 import React from "react";
-import Loading from "./loading";
+import Loading from "@/components/global/loading";
 
 const LoadingPage = () => {
   return (
@@ -9,4 +9,4 @@ const LoadingPage = () => {
   );
 };
 
-export default LoadingPage;
+export default LoadingPage

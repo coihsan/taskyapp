@@ -11,8 +11,8 @@ export function ModeToggle() {
 
   return (
     <div>
-      <Tabs defaultValue={`${setTheme}`} className="w-full">
-      <TabsList>
+      <Tabs defaultValue={`${setTheme}`} className="w-full ">
+      <TabsList className="CardStyle">
         <TabsTrigger onClick={() => setTheme("light")} value="light"><SunIcon /></TabsTrigger>
         <TabsTrigger onClick={() => setTheme("dark")} value="dark"><MoonIcon /></TabsTrigger>
         <TabsTrigger onClick={() => setTheme("sytem")} value="sytem"><DesktopIcon /></TabsTrigger>

@@ -6,6 +6,7 @@ import TBreadcrumbs from "../global/TBreacrumbs";
 import Logo from "../global/logo";
 import NotificationUser from "../global/notification-user";
 import { FluentSlashForward24Filled } from "../icons/slash-icon";
+import { ModeToggle } from "../global/ModeToggle";
 
 const HeaderBar = () => {
   
@@ -20,6 +21,7 @@ const HeaderBar = () => {
       <div className="flex items-center gap-3 absolute right-4">
           <NotificationUser />
           <UserButtonCustom />
+          <ModeToggle />
       </div>
     </header>
   );

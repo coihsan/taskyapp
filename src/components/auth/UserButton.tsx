@@ -68,9 +68,6 @@ const { isLoaded, isSignedIn, user } = useUser()
                   <SignOutButton redirectUrl="/sign-in" />
                 </DropdownMenuItem>
               <DropdownMenuSeparator />
-                <div className="flex items-center justify-center w-full">
-                  <ModeToggle />
-                </div>
             </DropdownMenuContent>
         </DropdownMenu>
         </div>

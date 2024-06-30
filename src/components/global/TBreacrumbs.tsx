@@ -11,11 +11,6 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { usePathname } from "next/navigation"
-import { FluentHome24Regular } from "../icons/home"
-
-type TBreadCrumbProps = {
-
-}
 
 const TBreadcrumbs = () =>{
     const paths = usePathname()
@@ -25,31 +20,31 @@ const TBreadcrumbs = () =>{
         <Breadcrumb>
             <BreadcrumbList>
                 <BreadcrumbItem>
-                <BreadcrumbLink asChild>
-                    <Link href="/">Dashboard</Link>
-                </BreadcrumbLink>
+                    <BreadcrumbLink asChild>
+                        <Link href="/">Dashboard</Link>
+                    </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 {pathNames.map((link, index) => {
                     let href = `${pathNames.slice(0, index + 1).join('/')}`;
                     let itemLink = link[0].toUpperCase() + link.slice(1, link.length)
                     return(
-                        <>
-                        {index === 0 && (
-                            <BreadcrumbItem key={index} >
-                                <BreadcrumbLink>
-                                    <Link href="/components">{itemLink}</Link>
-                                </BreadcrumbLink>
-                                {pathNames.length !== index + 1 && <BreadcrumbSeparator />}
-                            </BreadcrumbItem>
-                        )}
-                            {index === 1 && (
-                                <BreadcrumbItem >
-                                    <BreadcrumbPage>{itemLink}</BreadcrumbPage>
-                                    {pathNames.length !== index + 1 && <BreadcrumbSeparator />}
-                                </BreadcrumbItem>
-                            )}
-                        </>
+                            <React.Fragment key={index}>
+                                {index === 0 && (
+                                    <BreadcrumbItem>
+                                        <BreadcrumbLink>
+                                            <Link href={href}>{itemLink}</Link>
+                                        </BreadcrumbLink>
+                                        {pathNames.length !== index + 1 && <BreadcrumbSeparator />}
+                                    </BreadcrumbItem>
+                                )}
+                                    {index === 1 && (
+                                        <BreadcrumbItem>
+                                            <BreadcrumbPage>{itemLink}</BreadcrumbPage>
+                                            {pathNames.length !== index + 1 && <BreadcrumbSeparator />}
+                                        </BreadcrumbItem>
+                                    )}
+                            </React.Fragment>
                     )
                 })}
             </BreadcrumbList>

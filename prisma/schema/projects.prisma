@@ -5,8 +5,7 @@ model Projects {
   connectAccountId String?      @default("")
   createdAt      DateTime       @default(now()) 
   updatedAt      DateTime       @updatedAt 
-  dueDateFrom    DateTime?       
-  dueDateTo      DateTime?       
+  dueDate        DateTime?      @default(now())     
   status         TaskStatus?
   organizationId String
   pathName        String        @default("")

@@ -18,7 +18,7 @@ const WorkspaceMenu = () =>{
                 className={clsx(
                   "flex items-center text-sm h-9 gap-3 pl-2 text-black dark:text-foreground hover:bg-onyx-100 dark:hover:bg-onyx-800 hover:ring-2 hover:ring-onyx-100 dark:hover:ring-onyx-800 rounded-md transitionAll",
                   {
-                    "borderStyle bg-onyx-50 text-lime-600 dark:text-lime-400 dark:bg-onyx-900":
+                    "borderStyle ButtonStyle font-bold":
                       pathname === item.url,
                   },
                 )}
