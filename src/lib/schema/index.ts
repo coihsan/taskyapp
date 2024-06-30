@@ -21,8 +21,7 @@ export const NewOrganizationSchema = z.object({
 export const NewSpaceSchema = z.object({
   title: z.string().min(1, "Required"),
   description: z.string().min(1, "Optional"),
-  dueDateFrom: z.date().optional().transform(toString),
-  dueDateTo: z.date().optional().transform(toString),
+  dueDate: z.date().optional().transform(toString),
   organizationId: z.string()
 });
 

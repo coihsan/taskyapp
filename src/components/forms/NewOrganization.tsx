@@ -50,13 +50,13 @@ const NewOrganization = () => {
     }
   });
 
-  const handleSubmit = async(values : z.infer<typeof NewOrganizationSchema>) =>{
+  const onSubmit = async(values : z.infer<typeof NewOrganizationSchema>) =>{
     const organization = await createNewOrganization(values.name, values.description, values.logo)
     if(organization){
       toast({
         title: 'Organization created',
         action: (
-          <ToastAction altText="Goto organization to undo">Undo</ToastAction>
+          <ToastAction altText="Goto organization to undo" />
         ),
       })
       router.refresh()
@@ -84,7 +84,7 @@ const NewOrganization = () => {
           </DialogHeader>
           <Form {...form}>
             <form className="space-y-4"
-            onSubmit={form.handleSubmit(handleSubmit)}
+            onSubmit={form.handleSubmit(onSubmit)}
             >
               <FormField 
               control={form.control}

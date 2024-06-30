@@ -2,7 +2,7 @@
 import {db} from "@/lib/db";
 import { clerkClient, currentUser, auth, getAuth } from "@clerk/nextjs/server";
 import { redirect } from 'next/navigation'
-import { User } from "@prisma/client";
+import { Projects, Role, User } from "@prisma/client";
 import { v4 } from 'uuid';
 
 // Create a new organization
@@ -28,31 +28,28 @@ export const createNewOrganization = async (name: string, description: string, l
 // Create a new workspace
 
 export const createNewWorkspace = async (
-    organizationId: string,
-    title: string,
-    description: string,
-    dueDateFrom: string,
-    dueDateTo: string,
-    
-    ) =>{
-    const user = await currentUser()
+    title: string, 
+    description: string, 
+    dueDate: string, 
+    organizationId: string) => {
+
+    const user = await currentUser();
 
     if(user){
-        const createSpace = await db.projects.create({
+        const newWorkspace = await db.projects.create({
             data:{
                 userId: user.id,
-                organizationId: organizationId,
-                title: title,
+                title,
                 description,
-                dueDateFrom,
-                dueDateTo
+                dueDate,
+                organizationId
             }
         })
-        if(createSpace) return { message: 'Workspace created' }
+        if (newWorkspace) return { message: 'Workspace created' }
         return { message: 'Oops! try again' }
-    }
-    return {organizationId, title, description, dueDateFrom, dueDateTo}
+     }
 }
+
 
 // Get all organization of user
 export const getAllOrganization = async () =>{
@@ -68,15 +65,20 @@ export const getAllOrganization = async () =>{
     }))
 }
 
+// Get all workspace of user
+
 export const getAllSpace = async () =>{
     const user = await currentUser()
     
-    const organization = await db.projects.findMany()
+    const organization = await db.projects.findMany({
+        where:{
+            userId: user?.id
+        }
+    })
 
     return organization.map((list) => ({
-        id: list.id,
-        name: list.title,
-        description: list.description,
+        userId: list.userId,
+        title: list.title,
     }))
 }
 

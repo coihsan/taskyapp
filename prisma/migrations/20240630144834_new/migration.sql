@@ -143,10 +143,10 @@ CREATE TABLE "Projects" (
     "connectAccountId" TEXT DEFAULT '',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "dueDateFrom" TIMESTAMP(3),
-    "dueDateTo" TIMESTAMP(3),
+    "dueDate" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "status" "TaskStatus",
     "organizationId" TEXT NOT NULL,
+    "pathName" TEXT NOT NULL DEFAULT '',
     "userId" TEXT NOT NULL,
 
     CONSTRAINT "Projects_pkey" PRIMARY KEY ("id")

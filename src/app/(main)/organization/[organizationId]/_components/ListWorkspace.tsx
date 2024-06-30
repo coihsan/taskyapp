@@ -4,8 +4,7 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { getAllSpace } from '../../_action/organization-action'
 import Link from 'next/link'
-import React, { useState } from 'react'
-import FluentDocumentFolder24Regular from '@/components/icons/document-folder'
+import React from 'react'
 
 
 export async function ListWorkspace() {
@@ -35,14 +34,14 @@ export async function ListWorkspace() {
               <CommandGroup>
               {project.map((list) => {
                 return(
-                  <CommandItem className="grid w-full" key={list.id}>
+                  <CommandItem className="grid w-full" key={list.userId}>
                   <Link
                     href={'/'}
                     className="text-sm h-9 px-2 hover:bg-onyx-100 dark:hover:bg-onyx-800 rounded-md flex items-center justify-between"
                   >
                     <div className="flex items-center gap-4">
                       <span className="overflow-hidden text-clip-1 text-nowrap">
-                        {list.name}
+                        {list.title}
                       </span>
                     </div>
                     <EditWorkspace />

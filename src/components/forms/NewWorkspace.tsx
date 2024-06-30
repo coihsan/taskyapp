@@ -1,4 +1,5 @@
 "use client";
+
 import React, {useState} from "react";
 import { useFormStatus } from "react-dom";
 import { Button } from "@/components/ui/button";
@@ -61,15 +62,14 @@ const NewWorkspace = ({data} : Props) => {
     defaultValues:{
       title: '',
       description: '',
-      dueDateFrom: data?.dueDateFrom?.toString(),
-      dueDateTo: data?.dueDateTo?.toString(),
-      organizationId: data?.organizationId
+      dueDate: addDays(new Date(), 7).toDateString(),
+      organizationId: data?.organizationId,
     }
   });
 
   const onSubmit = async(values : z.infer<typeof NewSpaceSchema>) =>{
     try {
-      const workspace = await createNewWorkspace(values.title, values.description, values.dueDateTo, values.dueDateFrom ,values.organizationId)
+      const workspace = await createNewWorkspace(values.title, values.description, values.dueDate ,values.organizationId)
       if(workspace){
         toast({
           title: 'Space created',
@@ -126,7 +126,7 @@ const NewWorkspace = ({data} : Props) => {
               />
               <FormField
               control={form.control}
-              name="dueDateFrom"
+              name="dueDate"
               render={({field }) =>(
                 <FormItem>
                   <FormLabel>
