@@ -1,28 +1,30 @@
 model Organization {
-  id           String         @id @default(uuid())
-  name         String
-  description  String?
-  connectAccountId String?    @default("")
-  logo         String?        @default("/avatar1.png")
-  subDomainName String?       @unique
-  createdAt    DateTime       @default(now()) 
-  updatedAt    DateTime       @updatedAt 
-  role         Role           @default(ADMIN)
-  Invitation   Invitation[]
-  notification Notification[]
-  userId       String
-  user         OrganizationUser[]       
-  projects     Projects[]
-  teams        Teams[]
+  id               String             @id @default(uuid())
+  name             String
+  description      String?
+  connectAccountId String?            @default("")
+  organizationLogo String?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  role             Role               @default(ADMIN)
+  Invitation       Invitation[]
+  notification     Notification[]
+  ownerId          Int
+  owner            User               @relation(fields: [ownerId], references: [id])
+  userId           String
+  user             OrganizationUser[]
+  projects         Projects[]
+  teams            Teams[]
+
   @@index([userId])
 }
 
 model OrganizationUser {
-  id              String  @id @default(uuid())
-  userId          String
-  user            User        @relation(fields: [userId], references: [id])
-  organizationId  String
-  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  id             String       @id @default(uuid())
+  userId         Int
+  user           User         @relation(fields: [userId], references: [id])
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   @@unique([organizationId, userId])
 }

@@ -1,30 +1,34 @@
 model User {
-  id                String          @id @default(uuid())
-  clerkId           String          @unique
-  fullName          String?
-  username          String          @unique
-  emailUser         String          @unique
-  emailVerified     DateTime?
-  password          String?
-  imageUrl          String?
-  phoneNumber       String?         @default("000-0000-0000")
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
-  accounts          Account[]
-  notification      Notification[]
-  Permissions       Permissions[]
-  sessions          Session[]
-  profile           ExtendedProfile?
-  organizationUser  OrganizationUser[]
-  projectsUser      ProjectUser[]
+  id               Int                @id @default(autoincrement())
+  clerkId          String             @unique
+  fullName         String?
+  username         String             @unique
+  emailUser        String             @unique
+  emailVerified    DateTime?
+  password         String?
+  imageUrl         String?
+  phoneNumber      String?            @default("000-0000-0000")
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  accounts         Account[]
+  notification     Notification[]
+  Permissions      Permissions[]
+  sessions         Session[]
+  profile          ExtendedProfile?
+  organizationUser OrganizationUser[]
+  projectsUser     ProjectUser[]
+  Organization     Organization[]
+  Projects         Projects[]
+
+  @@index([clerkId])
 }
 
 model ExtendedProfile {
-  id     Int       @id @default(autoincrement())
-  userId String    @unique
-  status  String @db.Text
+  id     Int     @id @default(autoincrement())
+  userId Int     @unique
+  status String  @db.Text
   bio    String?
-  user   User?     @relation(fields: [userId], references: [id])
+  user   User?   @relation(fields: [userId], references: [id])
 }
 
 model Account {
@@ -47,14 +51,14 @@ model Account {
 }
 
 model Session {
-  sessionToken String   @unique
+  sessionToken String    @unique
   userId       String
   expires      DateTime
   lastSignInAt DateTime?
   lastActiveAt DateTime?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  user         User     @relation(fields: [userId], references: [clerkId], onDelete: Cascade)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  user         User      @relation(fields: [userId], references: [clerkId], onDelete: Cascade)
 }
 
 model Permissions {

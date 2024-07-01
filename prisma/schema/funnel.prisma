@@ -8,5 +8,6 @@ model Funnel {
   projectId   String
   userId      String
   project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
   @@index([userId])
 }

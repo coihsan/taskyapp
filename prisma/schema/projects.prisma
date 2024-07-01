@@ -1,34 +1,38 @@
 model Projects {
-  id             String         @id @default(uuid())
-  title          String?
-  description    String?
-  connectAccountId String?      @default("")
-  createdAt      DateTime       @default(now()) 
-  updatedAt      DateTime       @updatedAt 
-  dueDate        DateTime?      @default(now())     
-  status         TaskStatus?
-  organizationId String
-  pathName        String        @default("")
-  Invitation     Invitation[]
-  notification   Notification[]
-  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  Schedule       Schedule[]
-  Teams          Teams[]
-  workflows      Workflows[]
-  userId         String
-  user           ProjectUser[]
-  board          Board[]
-  Funnel         Funnel[]
-  Media          Media[]
-  Memos          Memos[]
-  @@index([userId])
+  id               String         @id @default(uuid())
+  title            String?
+  description      String?
+  connectAccountId String?        @default("")
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  dueDate          DateTime?      @default(now())
+  status           TaskStatus?
+  organizationId   String
+  pathName         String         @default("")
+  Invitation       Invitation[]
+  notification     Notification[]
+  organization     Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  Schedule         Schedule[]
+  Teams            Teams[]
+  workflows        Workflows[]
+  is_adminId       Int
+  is_admin         User           @relation(fields: [is_adminId], references: [id])
+  userId           String
+  user             ProjectUser[]
+  board            Board[]
+  Funnel           Funnel[]
+  Media            Media[]
+  Memos            Memos[]
+
+  @@index([userId, organizationId])
 }
 
 model ProjectUser {
-  id              String      @id @default(uuid())
-  userId          String
-  user            User        @relation(fields: [userId], references: [id])
-  projectUserId   String
-  projects        Projects    @relation(fields: [projectUserId], references: [id])
+  id            String   @id @default(uuid())
+  userId        Int
+  user          User     @relation(fields: [userId], references: [id])
+  projectUserId String
+  projects      Projects @relation(fields: [projectUserId], references: [id])
+
   @@unique([projectUserId, userId])
 }

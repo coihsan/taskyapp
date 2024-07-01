@@ -7,22 +7,32 @@ import { v4 } from 'uuid';
 
 // Create a new organization
 
-export const createNewOrganization = async (name: string, description: string, logo: string) =>{
+export const createNewOrganization = async (
+    name: string, 
+    description: string, 
+    organizationLogo: string,
+    ) =>{
     const user = await currentUser();
 
     if(user){
         const newOrganization = await db.organization.create({
             data:{
-                userId: user.id,
                 name,
+                userId: user.id,
                 description,
-                logo
+                organizationLogo,
+                ownerId: parseInt(user.id),
+                user:{
+                    create:{
+                        userId: parseInt(user.id)
+                    }
+                }
             }
         })
         if (newOrganization) return { message: 'Organization created' }
         return { message: 'Oops! try again' }
     }
-    return {name, description, logo}
+    return {name, description, organizationLogo}
 }
 
 // Create a new workspace
@@ -38,18 +48,23 @@ export const createNewWorkspace = async (
     if(user){
         const newWorkspace = await db.projects.create({
             data:{
+                is_adminId: parseInt(user.id),
                 userId: user.id,
                 title,
                 description,
                 dueDate,
-                organizationId
+                organizationId,
+                user:{
+                    create:{
+                        userId: parseInt(user.id)
+                    }
+                }
             }
         })
         if (newWorkspace) return { message: 'Workspace created' }
         return { message: 'Oops! try again' }
      }
 }
-
 
 // Get all organization of user
 export const getAllOrganization = async () =>{
@@ -61,7 +76,7 @@ export const getAllOrganization = async () =>{
         id: list.id,
         name: list.name,
         description: list.description,
-        logo: list.logo
+        logo: list.organizationLogo
     }))
 }
 

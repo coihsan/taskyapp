@@ -73,9 +73,9 @@ export default function Home() {
                   </div>
                   <CardTitle className="text-xl">{feature.title}</CardTitle>
                 </CardHeader>
-                <CardDescription className="text-center text-onyx-500">
+                <CardContent className="text-center text-onyx-500">
                   {feature.description}
-                </CardDescription>
+                </CardContent>
               </Card>
             ))}
           </ul>

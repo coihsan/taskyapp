@@ -32,11 +32,11 @@ export const updateUser = async (user: Partial<User>) => {
     return response
   }
 
-  export const getAuthUserDetails = async () => {
-    const user = await currentUser()
-    if (!user) {
-      return
-    }
+export const getAuthUserDetails = async () => {
+  const user = await currentUser()
+  if (!user) {
+    return
+  }
   
     const userData = await db.user.findUnique({
       where: {
@@ -49,17 +49,15 @@ export const updateUser = async (user: Partial<User>) => {
     })
   
     return userData
-  }
+}
 
 
-  export const checkUser = async () =>{
-    const user = await currentUser()
+export const checkUser = async () =>{
+  const user = await currentUser()
 
-    // check user logged in or not
     if(!user){
         return null
     };
-    // if the user is already in the database
     const loggedInUser = await db.user.findUnique({
         where: {
             clerkId: user.id
@@ -68,28 +66,14 @@ export const updateUser = async (user: Partial<User>) => {
     if(loggedInUser){
         return loggedInUser
     }
-
-    // if the user is not in the database, create a new user
-
     const createUser = await db.user.create({
         data:{
             clerkId: user.id,
             emailUser: user.emailAddresses[0].emailAddress,
             fullName: user.fullName,
             imageUrl: user.imageUrl,
-            username: `${user.username}`
+            username: `${user.username}`,
         },
-        select:{
-          profile: true,
-          accounts:{
-            select:{
-              userId: true,
-              type: true,
-              provider: true,
-              providerAccountId: true
-            }
-          }
-        }
     })
     return createUser
 }
