@@ -11,6 +11,8 @@ import {FluentHome24Regular} from "@/components/icons/home";
 import {FluentPerson24Regular} from "@/components/icons/person";
 import {FluentSettings24Regular} from "@/components/icons/settings";
 import {FluentSignOut24Regular} from "@/components/icons/sign-out";
+import { FluentDataUsage24Regular } from "@/components/icons/data-usage";
+import { FluentColor24Regular } from "@/components/icons/color-icons";
 
 export const RoleTeam = [
   {id: 0, role: 'View', values: 'view' , desc: 'Only view and comment'},
@@ -33,6 +35,12 @@ export const sidebar = [
   { id: 7, title: "Teams", url: "/organization/members", icon: FluentPeopleTeam24Regular },
   { id: 4, title: "Organization", url: "/organization", icon: FluentTaskListSquare24Regular},
 ];
+export const sidebaraccountuser = [
+  {id: 0, title: "Profile", url: "/account/profile", icon: FluentPerson24Regular},
+  {id: 1, title: "Settings", url: "/account/settings", icon: FluentSettings24Regular},
+  {id: 2, title: "Preferences", url: "/account/preferences", icon: FluentColor24Regular},
+  {id: 3, title: "Usage", url: "/account/usage", icon: FluentDataUsage24Regular}
+]
 export const workspaceMenu = [
   {
     id: 4,

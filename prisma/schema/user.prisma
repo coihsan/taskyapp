@@ -2,16 +2,15 @@ model User {
   id                String          @id @default(uuid())
   clerkId           String          @unique
   fullName          String?
+  username          String          @unique
   emailUser         String          @unique
   emailVerified     DateTime?
   password          String?
-  bio               String[]
   imageUrl          String?
-  phoneNumber       String?         @default("000-000-0000")
+  phoneNumber       String?         @default("000-0000-0000")
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
   accounts          Account[]
-  Authenticator     Authenticator[]
   notification      Notification[]
   Permissions       Permissions[]
   sessions          Session[]
@@ -23,6 +22,7 @@ model User {
 model ExtendedProfile {
   id     Int       @id @default(autoincrement())
   userId String    @unique
+  status  String @db.Text
   bio    String?
   user   User?     @relation(fields: [userId], references: [id])
 }
@@ -50,31 +50,11 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
+  lastSignInAt DateTime?
+  lastActiveAt DateTime?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   user         User     @relation(fields: [userId], references: [clerkId], onDelete: Cascade)
-}
-
-model VerificationToken {
-  identifier String
-  token      String
-  expires    DateTime
-
-  @@id([identifier, token])
-}
-
-model Authenticator {
-  credentialID         String  @unique
-  userId               String
-  providerAccountId    String
-  credentialPublicKey  String
-  counter              Int
-  credentialDeviceType String
-  credentialBackedUp   Boolean
-  transports           String?
-  user                 User    @relation(fields: [userId], references: [clerkId], onDelete: Cascade)
-
-  @@id([userId, credentialID])
 }
 
 model Permissions {

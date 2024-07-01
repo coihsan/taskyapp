@@ -67,7 +67,6 @@ const { isLoaded, isSignedIn, user } = useUser()
                   <FluentSignOut24Regular />
                   <SignOutButton redirectUrl="/sign-in" />
                 </DropdownMenuItem>
-              <DropdownMenuSeparator />
             </DropdownMenuContent>
         </DropdownMenu>
         </div>

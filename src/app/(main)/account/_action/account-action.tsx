@@ -63,7 +63,7 @@ export const updateUser = async (user: Partial<User>) => {
     const loggedInUser = await db.user.findUnique({
         where: {
             clerkId: user.id
-        }
+        },
     })
     if(loggedInUser){
         return loggedInUser
@@ -77,6 +77,18 @@ export const updateUser = async (user: Partial<User>) => {
             emailUser: user.emailAddresses[0].emailAddress,
             fullName: user.fullName,
             imageUrl: user.imageUrl,
+            username: `${user.username}`
+        },
+        select:{
+          profile: true,
+          accounts:{
+            select:{
+              userId: true,
+              type: true,
+              provider: true,
+              providerAccountId: true
+            }
+          }
         }
     })
     return createUser

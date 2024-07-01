@@ -1,6 +1,6 @@
 import React from "react";
 
-const OrganizationAccount = () => {
+const OrboardingAccount = () => {
   return (
     <div className="flex justify-center h-screen items-center mt-4">
       <div className="max-w-[850px] border-[1px] p-4 rounded-xl">
@@ -9,4 +9,4 @@ const OrganizationAccount = () => {
     </div>
   );
 };
-export default OrganizationAccount;
+export default OrboardingAccount;

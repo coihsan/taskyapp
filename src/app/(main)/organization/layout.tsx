@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Sidebar } from "@/app/(main)/organization/_components/sidebar";
 import HeaderBar from "@/components/headerbar";
-import { checkUser } from "./account/_action/account-action";
+import { checkUser } from "../account/_action/account-action";
 import { Toaster } from "@/components/ui/toaster"
 import ModalProvider from "@/providers/modal-provider";
 export const metadata: Metadata = {

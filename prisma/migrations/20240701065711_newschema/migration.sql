@@ -214,12 +214,12 @@ CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "clerkId" TEXT NOT NULL,
     "fullName" TEXT,
+    "username" TEXT NOT NULL,
     "emailUser" TEXT NOT NULL,
     "emailVerified" TIMESTAMP(3),
     "password" TEXT,
-    "bio" TEXT[],
     "imageUrl" TEXT,
-    "phoneNumber" TEXT DEFAULT '000-000-0000',
+    "phoneNumber" TEXT DEFAULT '000-0000-0000',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -230,6 +230,7 @@ CREATE TABLE "User" (
 CREATE TABLE "ExtendedProfile" (
     "id" SERIAL NOT NULL,
     "userId" TEXT NOT NULL,
+    "status" TEXT NOT NULL,
     "bio" TEXT,
 
     CONSTRAINT "ExtendedProfile_pkey" PRIMARY KEY ("id")
@@ -259,31 +260,10 @@ CREATE TABLE "Session" (
     "sessionToken" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "expires" TIMESTAMP(3) NOT NULL,
+    "lastSignInAt" TIMESTAMP(3),
+    "lastActiveAt" TIMESTAMP(3),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL
-);
-
--- CreateTable
-CREATE TABLE "VerificationToken" (
-    "identifier" TEXT NOT NULL,
-    "token" TEXT NOT NULL,
-    "expires" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "VerificationToken_pkey" PRIMARY KEY ("identifier","token")
-);
-
--- CreateTable
-CREATE TABLE "Authenticator" (
-    "credentialID" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
-    "providerAccountId" TEXT NOT NULL,
-    "credentialPublicKey" TEXT NOT NULL,
-    "counter" INTEGER NOT NULL,
-    "credentialDeviceType" TEXT NOT NULL,
-    "credentialBackedUp" BOOLEAN NOT NULL,
-    "transports" TEXT,
-
-    CONSTRAINT "Authenticator_pkey" PRIMARY KEY ("userId","credentialID")
 );
 
 -- CreateTable
@@ -353,6 +333,9 @@ CREATE UNIQUE INDEX "Invitation_email_key" ON "Invitation"("email");
 CREATE UNIQUE INDEX "User_clerkId_key" ON "User"("clerkId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "User_emailUser_key" ON "User"("emailUser");
 
 -- CreateIndex
@@ -360,9 +343,6 @@ CREATE UNIQUE INDEX "ExtendedProfile_userId_key" ON "ExtendedProfile"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Session_sessionToken_key" ON "Session"("sessionToken");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Authenticator_credentialID_key" ON "Authenticator"("credentialID");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Permissions_email_key" ON "Permissions"("email");
@@ -438,9 +418,6 @@ ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId"
 
 -- AddForeignKey
 ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("clerkId") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Authenticator" ADD CONSTRAINT "Authenticator_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("clerkId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Permissions" ADD CONSTRAINT "Permissions_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("clerkId") ON DELETE CASCADE ON UPDATE CASCADE;
