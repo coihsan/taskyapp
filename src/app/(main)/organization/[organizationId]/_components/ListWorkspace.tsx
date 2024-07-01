@@ -17,24 +17,18 @@ export async function ListWorkspace() {
             space
             </span>
             <TooltipProvider>
-            <Tooltip>
-                <TooltipTrigger asChild>
-                <NewWorkspace />
-                </TooltipTrigger>
+              <Tooltip>
+                <TooltipTrigger><NewWorkspace /></TooltipTrigger>
                 <TooltipContent>
-                <p>New Space</p>
+                  <p>New Space</p>
                 </TooltipContent>
-            </Tooltip>
+              </Tooltip>
             </TooltipProvider>
         </div>
-        <Command className="pt-4 h-72 z-50">
-            <CommandInput placeholder="Search..." />
-            <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
-              <CommandGroup>
+        <div className="pt-4 h-72 z-50">
               {project.map((list) => {
                 return(
-                  <CommandItem className="grid w-full" key={list.userId}>
+                  <div className="grid w-full" key={list.userId}>
                   <Link
                     href={'/'}
                     className="text-sm h-9 px-2 hover:bg-onyx-100 dark:hover:bg-onyx-800 rounded-md flex items-center justify-between"
@@ -46,12 +40,10 @@ export async function ListWorkspace() {
                     </div>
                     <EditWorkspace />
                   </Link>
-                </CommandItem>
+                </div>
                 )
               })}
-              </CommandGroup>
-            </CommandList>
-          </Command>
+          </div>
     </div>
   )
 }

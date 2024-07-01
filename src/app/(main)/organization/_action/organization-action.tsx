@@ -72,11 +72,11 @@ export const getAllOrganization = async () =>{
     
     const organization = await db.organization.findMany()
 
-    return organization.map((list) => ({
+    return organization.map((list) =>({
         id: list.id,
         name: list.name,
         description: list.description,
-        logo: list.organizationLogo
+        organizationLogo: list.organizationLogo,
     }))
 }
 

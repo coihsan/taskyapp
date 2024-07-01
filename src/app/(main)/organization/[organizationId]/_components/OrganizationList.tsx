@@ -12,7 +12,7 @@ const OrganizaztionList = async () => {
   return (
     <div className=''>
         <Select>
-            <SelectTrigger className="h-12 CardStyle rounded-full">
+            <SelectTrigger className="h-12 CardStyle">
               <SelectValue placeholder="Select a organization" />
             </SelectTrigger>
             <SelectContent className='CardStyle'>
@@ -25,7 +25,7 @@ const OrganizaztionList = async () => {
                     <div className="flex items-center gap-4 w-full overflow-hidden">
                       <div className="">
                         <Avatar>
-                          <AvatarImage src={`${list.logo}`} alt="@shadcn" />
+                          <AvatarImage src={`${list.organizationLogo}`} alt="@shadcn" />
                           <AvatarFallback className='bg-lime-500'><ShortName text={list.name} /></AvatarFallback>
                         </Avatar>
                       </div>

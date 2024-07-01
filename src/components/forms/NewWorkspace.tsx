@@ -16,7 +16,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { CalendarIcon, PlusIcon } from "@radix-ui/react-icons";
+import { CalendarIcon } from "@radix-ui/react-icons";
 import {
   Form,
   FormControl,
@@ -41,6 +41,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { cn } from "@/lib/utils";
 import { DateRange } from "react-day-picker";
 import { addDays, format } from "date-fns";
+import { FluentAdd24Filled } from "../icons/add-24-filled";
 
 type Props = {
   data?: Partial<Projects>
@@ -99,7 +100,7 @@ const NewWorkspace = ({data} : Props) => {
             variant={"ghost"}
             size={'icon'}
           >
-            <PlusIcon className="w-4 h-4" />
+            <FluentAdd24Filled />
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[625px] CardStyle">

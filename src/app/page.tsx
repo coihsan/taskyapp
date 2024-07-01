@@ -35,7 +35,7 @@ export default function Home() {
               <span className="text-lime-500">App</span>
             </h1>
             <p className="text-center text-zinc-400 mx-auto">
-              A Task manager for personal or organization use, this is not just Agile-Method. With Primitive App, you can add some feature what you like.
+              A Task manager for personal or organization, this is not just Agile-Method. With Primitive App, you can add some feature what you like.
             </p>
             <div className="grid w-full md:flex items-center gap-3 justify-center mt-6">
               <HoverBorderGradient

@@ -10,17 +10,17 @@ import { usePathname } from "next/navigation";
 import { SidebarContent } from "../../../../../components/global/SidebarContent";
 import {ListWorkspace} from "@/app/(main)/organization/[organizationId]/_components/ListWorkspace";
 import WorkspaceMenu from "@/app/(main)/organization/[organizationId]/_components/WorkspaceMenu";
-import OrganizaztionList from "@/app/(main)/organization/[organizationId]/_components/OrganizationList";
 import FooterOnSidebar from "../../../../../components/global/FooterOnSidebar";
+import OrganizationProfile from "../../[organizationId]/_components/organization-profile";
 
 const labels = ["Up", "To top", "To down", "down"];
 
 export function Sidebar() {
 
   return (
-      <ScrollArea className="w-full max-w-80 relative h-full overflow-y-scroll h-screen">
+      <ScrollArea className="w-full w-80 relative h-full overflow-y-scroll h-screen">
         <SidebarContent borderBottom>
-          <OrganizaztionList />
+          <OrganizationProfile />
         </SidebarContent>
         <SidebarContent borderBottom>
           <WorkspaceMenu />

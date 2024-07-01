@@ -6,7 +6,7 @@ import TBreadcrumbs from "../global/TBreacrumbs";
 import Logo from "../global/logo";
 import NotificationUser from "../global/notification-user";
 import { FluentSlashForward24Filled } from "../icons/slash-icon";
-import { ModeToggle } from "../global/ModeToggle";
+import OrganizationButton from "../global/organization-button";
 
 const HeaderBar = () => {
   
@@ -19,9 +19,9 @@ const HeaderBar = () => {
       <HeaderOption />
       <FluentSlashForward24Filled />
       <div className="flex items-center gap-3 absolute right-4">
+          <OrganizationButton />
           <NotificationUser />
           <UserButtonCustom />
-          <ModeToggle />
       </div>
     </header>
   );

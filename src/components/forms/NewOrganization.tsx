@@ -56,7 +56,7 @@ const NewOrganization = () => {
       toast({
         title: 'Organization created',
         action: (
-          <ToastAction altText="Goto organization to undo" />
+          <ToastAction altText="Goto organization to undo">Undo</ToastAction>
         ),
       })
       router.refresh()
@@ -74,7 +74,7 @@ const NewOrganization = () => {
             variant={"ghost"}
           >
             <PlusIcon className="w-4 h-4" />
-            New Organization
+            
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[625px] CardStyle">
